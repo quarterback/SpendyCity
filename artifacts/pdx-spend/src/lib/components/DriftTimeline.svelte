@@ -16,11 +16,20 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 24, right: 36, bottom: 36, left: 60 };
 
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
+
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -110,6 +119,35 @@
           .attr('y', labelY)
           .text((d.note ?? '').toUpperCase());
       });
+
+    // hover layer
+    const guide = g.append('line')
+      .attr('y1', 0).attr('y2', innerH)
+      .attr('stroke', '#161513').attr('stroke-width', 1).attr('stroke-dasharray', '2 3')
+      .attr('opacity', 0);
+    const dot = g.append('circle')
+      .attr('r', 4).attr('fill', '#b23c1a').attr('stroke', '#f7f5f0').attr('stroke-width', 1.4)
+      .attr('opacity', 0);
+
+    g.append('rect')
+      .attr('width', innerW).attr('height', innerH)
+      .attr('fill', 'transparent').style('cursor', 'crosshair')
+      .on('mousemove', (event: MouseEvent) => {
+        const [mx] = d3.pointer(event, svgEl);
+        const yr = x.invert(mx - margin.left);
+        const point = drift.reduce((best, p) =>
+          Math.abs(p.year - yr) < Math.abs(best.year - yr) ? p : best, drift[0]);
+        if (!point) return;
+        guide.attr('x1', x(point.year)).attr('x2', x(point.year)).attr('opacity', 1);
+        dot.attr('cx', x(point.year)).attr('cy', y(point.actualUse)).attr('opacity', 1);
+        const noteLine = point.note ? `<span class="sub">${point.note}</span>` : '';
+        showTip(event, `<strong>${point.year}</strong> · ${Math.round(point.actualUse)}% on voter intent<span class="sub">${100 - Math.round(point.actualUse)}% drifted</span>${noteLine}`);
+      })
+      .on('mouseleave', () => {
+        guide.attr('opacity', 0);
+        dot.attr('opacity', 0);
+        hideTip();
+      });
   }
 
   $effect(() => { void drift; void renderedW; draw(); });
@@ -126,6 +164,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Drift between voter intent and actual disposition"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>

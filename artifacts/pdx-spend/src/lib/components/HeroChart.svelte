@@ -15,6 +15,7 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 30, right: 30, bottom: 60, left: 30 };
 
@@ -24,8 +25,16 @@
     return `$${n}`;
   }
 
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
+
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -48,6 +57,10 @@
       const bw = x.bandwidth();
       const restrictedH = innerH - y(r.restricted);
       const movableH = innerH - y(r.movable);
+      const movablePct = r.balance > 0 ? Math.round((r.movable / r.balance) * 100) : 0;
+      const tipHtml =
+        `<strong>${r.shortName}</strong> · ${fmt(r.balance)} sitting` +
+        `<span class="sub">${fmt(r.movable)} re-aimed (${movablePct}%) · ${fmt(r.restricted)} still on-mission</span>`;
 
       // restricted base block
       g.append('rect')
@@ -55,7 +68,10 @@
         .attr('y', innerH - restrictedH)
         .attr('width', bw)
         .attr('height', restrictedH)
-        .attr('fill', '#161513');
+        .attr('fill', '#161513')
+        .style('cursor', 'pointer')
+        .on('mouseenter mousemove', (event: MouseEvent) => showTip(event, tipHtml))
+        .on('mouseleave', hideTip);
 
       // movable on top, in accent
       g.append('rect')
@@ -63,7 +79,21 @@
         .attr('y', innerH - restrictedH - movableH)
         .attr('width', bw)
         .attr('height', movableH)
-        .attr('fill', '#b23c1a');
+        .attr('fill', '#b23c1a')
+        .style('cursor', 'pointer')
+        .on('mouseenter mousemove', (event: MouseEvent) => showTip(event, tipHtml))
+        .on('mouseleave', hideTip);
+
+      // transparent hit area covering the full bar column for easier hovering
+      g.append('rect')
+        .attr('x', rx)
+        .attr('y', 0)
+        .attr('width', bw)
+        .attr('height', innerH)
+        .attr('fill', 'transparent')
+        .style('cursor', 'pointer')
+        .on('mouseenter mousemove', (event: MouseEvent) => showTip(event, tipHtml))
+        .on('mouseleave', hideTip);
 
       // total label above bar
       g.append('text')
@@ -121,6 +151,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Money sitting in each of the seven funds today"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>

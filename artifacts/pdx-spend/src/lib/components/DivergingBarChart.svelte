@@ -16,8 +16,16 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 28, right: 90, bottom: 36, left: 92 };
+
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
 
   function fmt(n: number) {
     if (Math.abs(n) >= 1e9) return `$${(n / 1e9).toFixed(1)}B`;
@@ -28,6 +36,7 @@
 
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -65,6 +74,9 @@
 
     const barH = y.bandwidth() / 2 - 1;
 
+    const tipFor = (d: PromiseVsHappened) =>
+      `<strong>${d.cycle}</strong> · ${fmt(d.delivered)} delivered<span class="sub">of ${fmt(d.promised)} promised · gap ${fmt(d.promised - d.delivered)}</span>`;
+
     // promised bar (lighter)
     g.selectAll('rect.promised')
       .data(data)
@@ -75,7 +87,10 @@
       .attr('y', (d) => (y(d.cycle) ?? 0) + 0)
       .attr('width', (d) => x(d.promised))
       .attr('height', barH)
-      .attr('fill', '#c5bfae');
+      .attr('fill', '#c5bfae')
+      .style('cursor', 'pointer')
+      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
+      .on('mouseleave', hideTip);
 
     g.selectAll('rect.delivered')
       .data(data)
@@ -86,7 +101,25 @@
       .attr('y', (d) => (y(d.cycle) ?? 0) + barH + 2)
       .attr('width', (d) => x(d.delivered))
       .attr('height', barH)
-      .attr('fill', '#161513');
+      .attr('fill', '#161513')
+      .style('cursor', 'pointer')
+      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
+      .on('mouseleave', hideTip);
+
+    // transparent hit row covering the full row height for easier hover
+    g.selectAll('rect.hit')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', 'hit')
+      .attr('x', 0)
+      .attr('y', (d) => y(d.cycle) ?? 0)
+      .attr('width', innerW)
+      .attr('height', y.bandwidth())
+      .attr('fill', 'transparent')
+      .style('cursor', 'pointer')
+      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
+      .on('mouseleave', hideTip);
 
     // gap labels
     g.selectAll('text.gap')
@@ -152,6 +185,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Promised vs delivered, by fiscal cycle"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>

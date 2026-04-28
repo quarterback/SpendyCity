@@ -888,6 +888,53 @@ table.data tr:hover td { background: var(--paper-2); }
     opacity: 1;
   }
 }
+
+/* Chart hover tooltip — a small dark chip that follows the cursor over a
+   chart. Each chart component attaches mouse handlers to its value-bearing
+   shapes (bars, line points, an invisible area overlay) and updates a local
+   tip state object. The tip is `pointer-events: none` so it never blocks
+   the underlying shapes from receiving the next mousemove. */
+.chart-tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  white-space: nowrap;
+  z-index: 5;
+  transform: translate(-50%, -100%);
+  margin-top: -10px;
+  opacity: 0;
+  transition: opacity 90ms ease;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+}
+.chart-tip.visible { opacity: 1; }
+/* Decorative SVG text inside charts must not eat pointer events — otherwise
+   it covers the transparent hit overlays and creates dead zones. */
+svg .annotation-label,
+svg .label,
+svg .axis text { pointer-events: none; }
+.chart-tip strong {
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chart-tip .sub {
+  display: block;
+  color: var(--paper-2);
+  font-size: 0.62rem;
+  margin-top: 0.15rem;
+  opacity: 0.85;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-tip { transition: none; }
+}
 .step-year {
   font-family: var(--mono);
   font-size: 0.78rem;

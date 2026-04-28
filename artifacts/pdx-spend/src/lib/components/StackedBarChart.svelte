@@ -29,6 +29,7 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 28, right: 60, bottom: 36, left: 168 };
 
@@ -38,8 +39,20 @@
     return `$${n}`;
   }
 
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
+  function tipFor(d: FundRow) {
+    const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
+    return `<strong>${d.shortName}</strong> · ${fmt(d.balance)} sitting<span class="sub">${fmt(d.movable)} re-aimed (${pct}%) · ${fmt(d.restricted)} on-mission · ${100 - Math.round(d.drift)}% drift</span>`;
+  }
+
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -208,6 +221,21 @@
         .text((d) => `${100 - Math.round(d.drift)}% drift`);
     }
 
+    // hover hit area: one transparent rect per row covering the full band
+    g.selectAll('rect.hit')
+      .data(sorted)
+      .enter()
+      .append('rect')
+      .attr('class', 'hit')
+      .attr('x', 0)
+      .attr('y', (d) => y(d.shortName) ?? 0)
+      .attr('width', innerW)
+      .attr('height', y.bandwidth())
+      .attr('fill', 'transparent')
+      .style('cursor', 'pointer')
+      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
+      .on('mouseleave', hideTip);
+
     // legend
     const legend = svg.append('g').attr('transform', `translate(${margin.left}, ${height - 12})`);
     if (mode === 'trajectory') {
@@ -242,6 +270,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Cross-fund stacked bar chart"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>

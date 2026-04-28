@@ -15,6 +15,7 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 18, right: 24, bottom: 28, left: 56 };
 
@@ -24,8 +25,16 @@
     return `$${n}`;
   }
 
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
+
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -75,6 +84,46 @@
         .attr('fill', '#2c4a52')
         .text(fmt(lastPoint.reserve));
     }
+
+    // hover layer: transparent rect over the chart area; on mousemove, find
+    // the nearest data point by year and show a tip + a thin guide line.
+    const guide = g.append('line')
+      .attr('class', 'hover-guide')
+      .attr('y1', 0)
+      .attr('y2', innerH)
+      .attr('stroke', '#161513')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '2 3')
+      .attr('opacity', 0);
+    const dot = g.append('circle')
+      .attr('class', 'hover-dot')
+      .attr('r', 3.5)
+      .attr('fill', '#2c4a52')
+      .attr('stroke', '#f7f5f0')
+      .attr('stroke-width', 1.4)
+      .attr('opacity', 0);
+
+    g.append('rect')
+      .attr('class', 'hit')
+      .attr('width', innerW)
+      .attr('height', innerH)
+      .attr('fill', 'transparent')
+      .style('cursor', 'crosshair')
+      .on('mousemove', (event: MouseEvent) => {
+        const [mx] = d3.pointer(event, svgEl);
+        const yr = x.invert(mx - margin.left);
+        const point = series.reduce((best, p) =>
+          Math.abs(p.year - yr) < Math.abs(best.year - yr) ? p : best, series[0]);
+        if (!point) return;
+        guide.attr('x1', x(point.year)).attr('x2', x(point.year)).attr('opacity', 1);
+        dot.attr('cx', x(point.year)).attr('cy', y(point.reserve)).attr('opacity', 1);
+        showTip(event, `<strong>${point.year}</strong> · ${fmt(point.reserve)} sitting<span class="sub">unspent at year-end</span>`);
+      })
+      .on('mouseleave', () => {
+        guide.attr('opacity', 0);
+        dot.attr('opacity', 0);
+        hideTip();
+      });
   }
 
   $effect(() => {
@@ -95,6 +144,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Money sitting unspent in this fund by year"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>

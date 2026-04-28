@@ -18,6 +18,7 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
+  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
 
   const margin = { top: 24, right: 28, bottom: 36, left: 64 };
 
@@ -28,8 +29,16 @@
     return `$${n}`;
   }
 
+  function showTip(event: MouseEvent, html: string) {
+    if (!containerEl) return;
+    const r = containerEl.getBoundingClientRect();
+    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+  }
+  function hideTip() { tip = { ...tip, vis: false }; }
+
   function draw() {
     if (!svgEl) return;
+    hideTip();
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
@@ -181,6 +190,48 @@
       .attr('text-anchor', 'middle')
       .attr('fill', '#54514a')
       .text('Year-end balance · USD');
+
+    // hover layer: bisect by year on mousemove, snap a guide line + dot to
+    // the nearest data point, and show a tooltip with balance + obligated.
+    const guide = g.append('line')
+      .attr('class', 'hover-guide')
+      .attr('y1', 0)
+      .attr('y2', innerH)
+      .attr('stroke', '#161513')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '2 3')
+      .attr('opacity', 0);
+    const dot = g.append('circle')
+      .attr('class', 'hover-dot')
+      .attr('r', 4)
+      .attr('fill', '#161513')
+      .attr('stroke', '#f7f5f0')
+      .attr('stroke-width', 1.4)
+      .attr('opacity', 0);
+
+    g.append('rect')
+      .attr('class', 'hit')
+      .attr('width', innerW)
+      .attr('height', innerH)
+      .attr('fill', 'transparent')
+      .style('cursor', 'crosshair')
+      .on('mousemove', (event: MouseEvent) => {
+        const [mx] = d3.pointer(event, svgEl);
+        const yr = x.invert(mx - margin.left);
+        const point = data.reduce((best, p) =>
+          Math.abs(p.year - yr) < Math.abs(best.year - yr) ? p : best, data[0]);
+        if (!point) return;
+        guide.attr('x1', x(point.year)).attr('x2', x(point.year)).attr('opacity', 1);
+        dot.attr('cx', x(point.year)).attr('cy', y(point.balance)).attr('opacity', 1);
+        const ev = eventsByYear.get(point.year);
+        const evLine = ev ? `<span class="sub">${ev.label}</span>` : '';
+        showTip(event, `<strong>${point.year}</strong> · ${fmt(point.balance)} balance<span class="sub">${fmt(point.obligated)} obligated</span>${evLine}`);
+      })
+      .on('mouseleave', () => {
+        guide.attr('opacity', 0);
+        dot.attr('opacity', 0);
+        hideTip();
+      });
   }
 
   $effect(() => {
@@ -204,6 +255,11 @@
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%">
+<div bind:this={containerEl} style="width:100%; position:relative;">
   <svg bind:this={svgEl} role="img" aria-label="Annotated cash position over time"></svg>
+  <div
+    class="chart-tip"
+    class:visible={tip.vis}
+    style="left:{tip.x}px; top:{tip.y}px"
+  >{@html tip.html}</div>
 </div>
