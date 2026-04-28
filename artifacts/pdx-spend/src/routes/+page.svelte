@@ -126,7 +126,7 @@
       <h2 class="section-title">Latest agent memos across the seven funds</h2>
       <p class="section-deck">
         Each card pulls from the most recent succeeded weekly memo for that
-        fund. The full memo, byline, and PDF live on the fund page.
+        fund. The full memo, byline, and run history live on the fund page.
       </p>
       <div class="changed-grid">
         {#each latestWeekly as item}

@@ -118,6 +118,7 @@ export interface LatestWeeklyAcrossFunds {
   fundSlug: string;
   output: AgentOutput;
   excerptHtml: string;
+  headline: string | null;
 }
 
 function firstParagraphHtml(markdown: string): string {
@@ -162,7 +163,7 @@ export async function loadLatestWeeklyAcrossFunds(
   fundSlugs: string[]
 ): Promise<LatestWeeklyAcrossFunds[]> {
   const results = await Promise.all(
-    fundSlugs.map(async (slug) => {
+    fundSlugs.map(async (slug): Promise<LatestWeeklyAcrossFunds | null> => {
       const memo = await loadMemo(slug, 'weekly-memo');
       if (!memo || !memo.output) return null;
       return {
@@ -170,11 +171,11 @@ export async function loadLatestWeeklyAcrossFunds(
         output: memo.output,
         excerptHtml: firstParagraphHtml(memo.markdown),
         headline: headlineFrom(memo.markdown)
-      } as LatestWeeklyAcrossFunds & { headline: string | null };
+      };
     })
   );
   return results
-    .filter((r): r is LatestWeeklyAcrossFunds & { headline: string | null } => r !== null)
+    .filter((r): r is LatestWeeklyAcrossFunds => r !== null)
     .sort((a, b) => {
       const da = a.output.publishedAt ?? a.output.createdAt;
       const db_ = b.output.publishedAt ?? b.output.createdAt;
