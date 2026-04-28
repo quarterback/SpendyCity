@@ -65,7 +65,7 @@ function _page($$renderer, $$props) {
     if (latestWeekly().length > 0) {
       $$renderer2.push("<!--[0-->");
       $$renderer2.push(`<section class="container changed-this-week svelte-1uha8ag"><p class="kicker">WHAT CHANGED THIS WEEK</p> <h2 class="section-title">Latest agent memos across the seven funds</h2> <p class="section-deck">Each card pulls from the most recent succeeded weekly memo for that
-        fund. The full memo, byline, and PDF live on the fund page.</p> <div class="changed-grid svelte-1uha8ag"><!--[-->`);
+        fund. The full memo, byline, and run history live on the fund page.</p> <div class="changed-grid svelte-1uha8ag"><!--[-->`);
       const each_array = ensure_array_like(latestWeekly());
       for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
         let item = each_array[$$index];

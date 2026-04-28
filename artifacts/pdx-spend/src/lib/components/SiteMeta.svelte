@@ -14,7 +14,11 @@
     type?: 'website' | 'article';
   }
 
-  const DEFAULT_OG_IMAGE = '/og-default.svg';
+  // PNG is the only OG image format that all of Twitter, Bluesky,
+  // Facebook, LinkedIn, Slack, and iMessage will reliably rasterize.
+  // The SVG is kept in /static as the source of truth and re-rendered
+  // by scripts/build-og-image.ts.
+  const DEFAULT_OG_IMAGE = '/og-default.png';
 
   const {
     title,
@@ -45,11 +49,14 @@
   <meta property="og:description" content={description} />
   <meta property="og:url" content={fullUrl} />
   <meta property="og:image" content={fullImage} />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={fullImage} />
+  <meta name="twitter:image:alt" content={title} />
 </svelte:head>

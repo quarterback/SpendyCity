@@ -170,6 +170,7 @@ declare module '$env/static/private' {
 	export const REPL_SLUG: string;
 	export const OLDPWD: string;
 	export const NODE_ENV: string;
+	export const VITE_SITE_URL: string;
 }
 
 /**
@@ -388,6 +389,7 @@ declare module '$env/dynamic/private' {
 		REPL_SLUG: string;
 		OLDPWD: string;
 		NODE_ENV: string;
+		VITE_SITE_URL: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}

@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --host 0.0.0.0",
-    "build": "vite build",
+    "build:og": "node scripts/build-og-image.mjs",
+    "build": "pnpm run build:og && vite build",
     "start": "node dist/server/index.js",
     "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@sveltejs/adapter-node": "^5.5.4",
     "@sveltejs/kit": "^2.20.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.4",
