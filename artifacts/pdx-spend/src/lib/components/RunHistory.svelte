@@ -8,7 +8,6 @@
     publishedAt: Date | null;
     createdAt: Date;
     attemptCount: number;
-    pdfUrl: string | null;
   }
   interface Props {
     runs: Entry[];
@@ -51,7 +50,6 @@
             <th>Model</th>
             <th>Prompt</th>
             <th>Attempts</th>
-            <th>Artifact</th>
           </tr>
         </thead>
         <tbody>
@@ -63,13 +61,6 @@
               <td><code>{r.modelVersion}</code></td>
               <td><code>{r.promptVersion}</code></td>
               <td>{r.attemptCount}</td>
-              <td>
-                {#if r.pdfUrl}
-                  <a href={r.pdfUrl} download>PDF</a>
-                {:else}
-                  —
-                {/if}
-              </td>
             </tr>
           {/each}
         </tbody>

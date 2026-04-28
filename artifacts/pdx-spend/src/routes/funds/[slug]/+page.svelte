@@ -206,7 +206,6 @@
       deck="A structured-finance read of the corpus on file for this fund. The memo is cited inline against the documents the agent had access to at run time."
       html={weeklyMemo.html}
       output={weeklyMemo.output}
-      pdfUrl={weeklyMemo.pdfUrl}
     />
   {:else}
     <section class="container">
@@ -227,7 +226,6 @@
       deck="A monthly cash-flow read against the same corpus, focused on inflows, outflows, and the residual that flows into next period."
       html={monthlyCashFlow.html}
       output={monthlyCashFlow.output}
-      pdfUrl={monthlyCashFlow.pdfUrl}
     />
   {/if}
 

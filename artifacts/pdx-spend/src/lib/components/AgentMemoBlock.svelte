@@ -12,9 +12,8 @@
     deck?: string;
     html: string;
     output: Output | null;
-    pdfUrl: string | null;
   }
-  let { kicker, title, deck, html, output, pdfUrl }: Props = $props();
+  let { kicker, title, deck, html, output }: Props = $props();
 
   const dt = $derived(output?.publishedAt ?? output?.createdAt ?? null);
   const dateLabel = $derived(
@@ -43,9 +42,6 @@
         <span>model {output.modelVersion}</span> ·
         <span>prompt {output.promptVersion}</span>
         {#if output.attemptCount > 1} · <span>{output.attemptCount} attempts</span>{/if}
-        {#if pdfUrl}
-          · <a class="pdf-link" href={pdfUrl} download>Download PDF</a>
-        {/if}
       </p>
     {/if}
   </div>
@@ -75,10 +71,6 @@
   .run-meta {
     margin: 4px 0 0;
     font-variant-numeric: tabular-nums;
-  }
-  .pdf-link {
-    color: var(--accent, #c0501e);
-    text-decoration: underline;
   }
   .memo-prose :global(h2) {
     font-family: var(--font-serif, Georgia, serif);

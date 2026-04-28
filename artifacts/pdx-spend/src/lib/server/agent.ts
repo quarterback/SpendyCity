@@ -16,7 +16,6 @@ export interface AgentMemo {
   markdown: string;
   html: string;
   output: AgentOutput | null;
-  pdfUrl: string | null;
 }
 
 export interface RunHistoryEntry {
@@ -28,7 +27,6 @@ export interface RunHistoryEntry {
   publishedAt: Date | null;
   createdAt: Date;
   attemptCount: number;
-  pdfUrl: string | null;
 }
 
 const FILE_BY_TYPE: Record<WorkProductType, string> = {
@@ -54,19 +52,6 @@ function renderMarkdown(md: string): string {
   marked.setOptions({ gfm: true, breaks: false });
   const html = marked.parse(md, { async: false }) as string;
   return DOMPurify.sanitize(html);
-}
-
-function pdfUrl(out: AgentOutput | null): string | null {
-  if (!out?.pdfObjectPath) return null;
-  const raw = out.pdfObjectPath;
-  // Newer rows persist the public URL as "/api/agent/pdfs/<file>".
-  // Older rows (pre object-storage) stored the bare object key
-  // "/agent-pdfs/<file>"; rewrite those onto the api-server route.
-  if (raw.startsWith('/api/')) return raw;
-  if (raw.startsWith('/agent-pdfs/')) {
-    return `/api/agent/pdfs/${raw.slice('/agent-pdfs/'.length)}`;
-  }
-  return raw;
 }
 
 async function latestSucceeded(
@@ -105,8 +90,7 @@ export async function loadMemo(
     workProductType: type,
     markdown,
     html: renderMarkdown(markdown),
-    output,
-    pdfUrl: pdfUrl(output)
+    output
   };
 }
 
@@ -125,8 +109,7 @@ export async function loadRunHistory(fundSlug: string, limit = 8): Promise<RunHi
     promptVersion: r.promptVersion,
     publishedAt: r.publishedAt,
     createdAt: r.createdAt,
-    attemptCount: r.attemptCount,
-    pdfUrl: pdfUrl(r)
+    attemptCount: r.attemptCount
   }));
 }
 
@@ -134,7 +117,6 @@ export interface LatestWeeklyAcrossFunds {
   fundSlug: string;
   output: AgentOutput;
   excerptHtml: string;
-  pdfUrl: string | null;
 }
 
 function firstParagraphHtml(markdown: string): string {
@@ -186,8 +168,7 @@ export async function loadLatestWeeklyAcrossFunds(
         fundSlug: slug,
         output: memo.output,
         excerptHtml: firstParagraphHtml(memo.markdown),
-        headline: headlineFrom(memo.markdown),
-        pdfUrl: memo.pdfUrl
+        headline: headlineFrom(memo.markdown)
       } as LatestWeeklyAcrossFunds & { headline: string | null };
     })
   );
