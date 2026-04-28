@@ -58,11 +58,11 @@
   <section class="hero container">
     <p class="kicker">PDX SPEND</p>
     <h1 class="hero-title">
-      Seven Portland-area voter funds. What they could pay for, and what&rsquo;s blocking it.
+      What Portland&rsquo;s seven voter funds could pay for.
     </h1>
     <p class="headline-figure">{formatUSD(TOTAL_MODELED_BALANCE)}</p>
-    <p class="headline-figure-sub">
-      sits across the seven funds today. About {movablePct}% of it has been re-aimed away from what voters approved.
+    <p class="headline-figure-sub hero-sentence">
+      Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)} today, and one named rule blocks each from spending its share.
     </p>
 
     {#if headlineBlockerNews}

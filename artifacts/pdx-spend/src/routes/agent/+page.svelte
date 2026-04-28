@@ -79,7 +79,7 @@
 <article>
   <header class="container fund-header">
     <p class="kicker">AGENT DEMO · WRITE A MEMO</p>
-    <h1 class="article-title">Write a memo for any fund, in any voice</h1>
+    <h1 class="article-title">Write a memo for any fund.</h1>
     <p class="article-deck">
       Pick a fund and pick a lens. The agent reads what we have on the fund and writes a short memo. Use it as a starting draft for your own letter or testimony.
     </p>

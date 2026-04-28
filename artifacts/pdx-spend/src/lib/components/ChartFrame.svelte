@@ -108,8 +108,6 @@
 </figure>
 
 <style>
-  /* Wrap the chart so it can scroll horizontally inside the figure
-     instead of forcing the whole page to scroll on small screens. */
   .chart-body {
     width: 100%;
     overflow-x: auto;

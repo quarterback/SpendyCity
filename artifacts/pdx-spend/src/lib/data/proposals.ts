@@ -67,7 +67,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
       }
     ],
     ifUnblocked:
-      'Cap overhead at 5% and put a floor on the teacher line, and a music or art teacher returns to every K–5 school in PPS, Centennial, David Douglas, Parkrose, and Reynolds within two years.',
+      'Cap overhead at 5% and put a floor on the teacher line. Within two years a music or art teacher returns to every K–5 school in PPS, Centennial, David Douglas, Parkrose, and Reynolds.',
     blockerNews:
       'The City Auditor\'s 2024 follow-up found compliance still under 75% and overhead unchanged. Council has not taken action on either finding.'
   },
@@ -75,7 +75,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
   // ──────────────────────────────────────────────────────────────────────────
   pcef: {
     voterIntentPlain:
-      'You voted in 2018 to make big retailers pay 1% of their Portland sales into a fund for clean-energy projects, green jobs training, and weatherization, designed to benefit communities of color and low-income residents first.',
+      'You voted in 2018 to make big retailers pay 1% of their Portland sales into a clean-energy, green-jobs, and weatherization fund. The fund was built to benefit communities of color and low-income residents first.',
     couldFund: [
       cf('Home weatherization retrofits for low-income households', 12_000, 32_000, 'BPS published retrofit cost, 2024'),
       cf('BIPOC clean-energy career training (NABCEP Tier-1) over 5 years', 800, 48_000, 'NABCEP tuition + stipend + placement'),
@@ -116,7 +116,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
       }
     ],
     ifUnblocked:
-      'Restore the original mandate and PCEF puts 800 Portlanders into clean-energy careers and weatherizes roughly one in eight low-income homes in the city within five years.',
+      'Restore the original mandate. Within five years PCEF puts 800 Portlanders into clean-energy careers and weatherizes roughly one in eight low-income homes in the city.',
     blockerNews:
       'In April 2026, PCEF dollars were proposed to fund LED lighting, HVAC upgrades, and concourse renovations at the privately-operated Moda Center under "eligible green infrastructure" language. The arena\'s operating cost goes down. The original BIPOC workforce mandate goes unfunded.'
   },
@@ -199,7 +199,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
   // ──────────────────────────────────────────────────────────────────────────
   'affordable-housing-dev': {
     voterIntentPlain:
-      'In 2018, voters across three counties approved a $652.8M bond to build or preserve 3,900 affordable homes for working families, seniors, veterans, and people with disabilities.',
+      'In 2018, voters across three counties approved a $652.8M bond. The promise: build or preserve 3,900 affordable homes for working families, seniors, veterans, and people with disabilities.',
     couldFund: [
       cf('Newly-built affordable units at corrected unit cost', 1_060, 410_000, 'Metro bond program 2024 unit cost'),
       cf('Preservation of existing affordable units', 1_100, 165_000, 'Metro preservation program per-unit'),
@@ -236,7 +236,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
   // ──────────────────────────────────────────────────────────────────────────
   'preschool-for-all': {
     voterIntentPlain:
-      'In 2020, Multnomah County voters approved a tax on high incomes to give every 3- and 4-year-old in the county a tuition-free spot at a high-quality preschool, paid teachers a living wage, and built up provider capacity.',
+      'In 2020, Multnomah County voters approved a high-income tax with three jobs. Give every 3- and 4-year-old a tuition-free preschool spot. Pay teachers a living wage. Build provider capacity.',
     couldFund: [
       cf('Tuition-free preschool seats over 5 years (full ramp)', 11_200, 14_000, 'County provider rate, modeled blended'),
       cf('Workforce wage uplift to a $28/hr floor for early educators', 1_400, 38_000, '$28/hr × 1,950 hr × 4 yr — wage delta only'),
@@ -273,7 +273,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
   // ──────────────────────────────────────────────────────────────────────────
   'supportive-housing': {
     voterIntentPlain:
-      'In 2020, voters in Multnomah, Washington, and Clackamas counties approved taxes dedicated to ending chronic homelessness through long-term rent help, behavioral-health services, outreach, and permanent supportive housing.',
+      'In 2020, tri-county voters approved taxes dedicated to ending chronic homelessness. Four eligible uses: long-term rent help, behavioral-health services, outreach, and permanent supportive housing.',
     couldFund: [
       cf('Long-term rent-assistance vouchers for 3 years', 12_000, 50_400, '$1,400/mo × 36 months'),
       cf('Newly-built supportive-housing units (capital + 5-yr operating)', 1_300, 480_000, 'JOHS supportive housing unit cost'),
@@ -313,7 +313,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
       }
     ],
     ifUnblocked:
-      'Sign multi-year provider contracts and reattach the four ballot uses as the only eligible uses, and 12,000 households get rent help while 1,800 supportive-housing beds come online within four years.',
+      'Sign multi-year provider contracts and reattach the four ballot uses as the only eligible uses. Within four years, 12,000 households get rent help and 1,800 supportive-housing beds come online.',
     blockerNews:
       'The 2025 Metro Auditor follow-up flagged new categories of "supportive housing services" being added without explicit voter authorization. Counties continue to add categories.'
   }

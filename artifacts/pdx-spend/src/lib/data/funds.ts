@@ -164,7 +164,7 @@ export const FUNDS: Fund[] = [
     steward: 'Regional Arts & Culture Council; PPS, Centennial, David Douglas, Parkrose, Reynolds',
     restrictionClass: 'voter-restricted',
     voterIntent:
-      'Restore K–5 arts and music teachers in Portland-area public schools and fund arts access grants for nonprofits, paid for by a $35 per-adult tax on income above $1,000.',
+      'Restore K–5 arts and music teachers in Portland-area public schools and fund arts access grants for nonprofits. The bill is a $35 per-adult tax on income above $1,000.',
     oneLineStatus:
       'Collections lag, administrative overhead is structurally high, and the Council periodically authorizes carve-outs to "support arts ecosystem" outside the schools-and-grants frame.',
     modeledBalance: last(artsTaxCash).balance,
@@ -173,7 +173,7 @@ export const FUNDS: Fund[] = [
     cumulativeCollected: artsTaxCash.reduce((s, c) => s + c.inflow, 0),
     collectionsCadence: 'Annual filing, $35/adult flat',
     scandal:
-      'A flat tax billed as a teacher-funding measure spends roughly one in eight dollars on the cost of collecting itself, and Council periodically expands what counts as "arts."',
+      'A flat tax billed as teacher funding spends roughly one in eight dollars on collection itself. Council periodically expands what counts as "arts."',
     cashSeries: artsTaxCash,
     reserveSeries: buildReserveSeries(artsTaxCash),
     auditEvents: [
@@ -238,7 +238,7 @@ export const FUNDS: Fund[] = [
     steward: 'PCEF Bureau, City of Portland',
     restrictionClass: 'voter-restricted',
     voterIntent:
-      'A 1% surcharge on retail sales of large corporations operating in Portland, dedicated to clean-energy projects, workforce training, and green infrastructure benefitting communities of color and low-income residents.',
+      'A 1% surcharge on retail sales by large corporations operating in Portland. Dedicated to clean-energy projects, workforce training, and green infrastructure for communities of color and low-income residents.',
     oneLineStatus:
       'Collections vastly outran original projections; the Council subsequently authorized broader uses including general transportation, parks, and sewer maintenance — items not contemplated in the ballot text.',
     modeledBalance: last(pcefCash).balance,

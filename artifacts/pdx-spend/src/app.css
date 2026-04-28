@@ -20,12 +20,10 @@
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Named breakpoints (documentary tokens — native CSS @media uses
-     literal pixel values; these mirror the boundaries used in @media
-     queries throughout the file: phone <640, tablet 640–1023, desktop ≥1024). */
-  --bp-phone: 640px;
-  --bp-tablet: 1024px;
-  --bp-desktop: 1024px;
+  /* Breakpoints: phone ≤639, tablet 640–1023, desktop ≥1024. */
+  --bp-phone-max: 639px;
+  --bp-tablet-max: 1023px;
+  --bp-desktop-min: 1024px;
 }
 
 * {
@@ -914,8 +912,6 @@ table.data tr:hover td { background: var(--paper-2); }
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
 }
 .chart-tip.visible { opacity: 1; }
-/* Decorative SVG text inside charts must not eat pointer events — otherwise
-   it covers the transparent hit overlays and creates dead zones. */
 svg .annotation-label,
 svg .label,
 svg .axis text { pointer-events: none; }
