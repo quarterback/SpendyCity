@@ -23,7 +23,11 @@
       {menuOpen ? 'Close' : 'Menu'}
     </button>
 
-    <nav id="primary-nav" class="nav" class:open={menuOpen} aria-label="Primary">
+    <nav
+      id="primary-nav"
+      class="nav {menuOpen ? 'open' : ''}"
+      aria-label="Primary"
+    >
       <a href="{base}/dashboard/" onclick={close}>Dashboard</a>
       <a href="{base}/agent/" onclick={close}>Agent</a>
       <a href="{base}/methodology/" onclick={close}>Methodology</a>
@@ -37,13 +41,13 @@
   .menu-btn {
     display: none;
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     background: transparent;
     color: var(--ink);
     border: 1px solid var(--ink);
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 0.9rem;
     cursor: pointer;
     border-radius: 2px;
     min-height: 44px;
@@ -51,14 +55,15 @@
   }
   .menu-btn:hover { background: var(--ink); color: var(--paper); }
 
-  @media (max-width: 1023px) {
+  /* Phone: disclosure menu */
+  @media (max-width: 639px) {
     .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
     :global(.masthead-inner) {
       flex-wrap: wrap;
       gap: 1rem;
     }
     :global(.masthead .nav) {
-      display: none;
+      display: none !important;
       flex-basis: 100%;
       flex-direction: column;
       gap: 0;
@@ -66,7 +71,7 @@
       padding-top: 0.5rem;
     }
     :global(.masthead .nav.open) {
-      display: flex;
+      display: flex !important;
     }
     :global(.masthead .nav.open a) {
       padding: 0.85rem 0;
@@ -74,6 +79,15 @@
       min-height: 44px;
       display: flex;
       align-items: center;
+    }
+  }
+
+  /* Tablet: keep horizontal but allow wrap if needed */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    :global(.masthead .nav) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1rem;
     }
   }
 </style>
