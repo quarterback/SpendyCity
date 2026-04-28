@@ -6,6 +6,8 @@
   import DriftTimeline from '$lib/components/DriftTimeline.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
   import Scrolly from '$lib/components/Scrolly.svelte';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
+  import ShareBlock from '$lib/components/ShareBlock.svelte';
   import { formatUSD, formatPct } from '$lib/utils/format';
   import type { PageProps } from './$types';
 
@@ -36,10 +38,12 @@
   );
 </script>
 
-<svelte:head>
-  <title>{fund.name} — PDX Spend</title>
-  <meta name="description" content={fund.oneLineStatus} />
-</svelte:head>
+<SiteMeta
+  title={`${fund.name} — PDX Spend`}
+  description={fund.oneLineStatus}
+  path={`/funds/${fund.slug}/`}
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">
@@ -205,6 +209,14 @@
         <li>{c}</li>
       {/each}
     </ul>
+  </section>
+
+  <section class="container">
+    <ShareBlock
+      headline={`${fund.name} — ${fund.scandal}`}
+      summary={fund.oneLineStatus}
+      url={`https://pdx-spend.example/funds/${fund.slug}/`}
+    />
   </section>
 
   <section class="container fund-nav">

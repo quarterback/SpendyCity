@@ -9,8 +9,14 @@
 	"/agent": [
 		"src/routes/+layout.ts"
 	],
+	"/api/regenerate-memo": [
+		"src/routes/api/regenerate-memo/+server.ts"
+	],
 	"/dashboard": [
 		"src/routes/+layout.ts"
+	],
+	"/feed.xml": [
+		"src/routes/feed.xml/+server.ts"
 	],
 	"/feed": [
 		"src/routes/+layout.ts"

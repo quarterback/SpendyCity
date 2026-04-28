@@ -1,6 +1,7 @@
 <script lang="ts">
   import { base } from '$app/paths';
   import { FUNDS } from '$lib/data/funds';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
 
   let selectedSlug = $state(FUNDS[0].slug);
   let lens = $state('financial-officer');
@@ -84,9 +85,12 @@
   }
 </script>
 
-<svelte:head>
-  <title>Agent demo — PDX Spend</title>
-</svelte:head>
+<SiteMeta
+  title="Agent demo — Generate a structured financial memo — PDX Spend"
+  description="Pick a fund and a lens. The agent re-runs a structured public-finance memo against the modeled record."
+  path="/agent/"
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">

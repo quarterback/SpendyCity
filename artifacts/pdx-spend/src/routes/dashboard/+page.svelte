@@ -2,6 +2,8 @@
   import { base } from '$app/paths';
   import StackedBarChart from '$lib/components/StackedBarChart.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
+  import ShareBlock from '$lib/components/ShareBlock.svelte';
   import { FUNDS, TOTAL_MODELED_BALANCE, TOTAL_MOVABLE } from '$lib/data/funds';
   import { formatUSD } from '$lib/utils/format';
 
@@ -31,9 +33,12 @@
   }
 </script>
 
-<svelte:head>
-  <title>Cross-fund dashboard — PDX Spend</title>
-</svelte:head>
+<SiteMeta
+  title="Cross-fund dashboard — PDX Spend"
+  description="All seven voter-restricted Portland and Multnomah County funds in one frame. Switch between dollars, share-restricted, and drift trajectory."
+  path="/dashboard/"
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">
@@ -116,5 +121,13 @@
       <pre class="snippet">{embedSnippet}</pre>
       <button class="copy-btn" onclick={copyEmbed}>{copied ? 'Copied' : 'Copy snippet'}</button>
     </aside>
+  </section>
+
+  <section class="container">
+    <ShareBlock
+      headline="Cross-fund dashboard: seven Portland-area restricted funds, in one frame."
+      summary="Switch between dollars, share-restricted, and drift trajectory. Embeddable. Modeled figures."
+      url="https://pdx-spend.example/dashboard/"
+    />
   </section>
 </article>

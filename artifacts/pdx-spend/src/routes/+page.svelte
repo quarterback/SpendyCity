@@ -3,6 +3,8 @@
   import HeroChart from '$lib/components/HeroChart.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
   import SparkBalance from '$lib/components/SparkBalance.svelte';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
+  import ShareBlock from '$lib/components/ShareBlock.svelte';
   import {
     FUNDS,
     TOTAL_MODELED_BALANCE,
@@ -23,10 +25,12 @@
   const csvRows = heroRows.map((r) => [r.shortName, Math.round(r.balance), Math.round(r.restricted), Math.round(r.movable)]);
 </script>
 
-<svelte:head>
-  <title>PDX Spend — Seven funds, modeled in plain view</title>
-  <meta name="description" content="An editorial accounting of seven voter-restricted funds in Portland and Multnomah County: where the money came from, what it was promised for, and what it now does." />
-</svelte:head>
+<SiteMeta
+  title="PDX Spend — Seven funds, modeled in plain view"
+  description="An editorial accounting of seven voter-restricted funds in Portland and Multnomah County: where the money came from, what it was promised for, and what it now does."
+  path="/"
+  type="website"
+/>
 
 <article>
   <section class="hero container">
@@ -138,5 +142,13 @@
         This site is published as journalism, not advocacy. There are no calls to action. The figures are modeled and labeled as such. The authorial position is that voters who pass restricted-fund measures are entitled to a clear public accounting of what those funds become. This is one such accounting.
       </p>
     </aside>
+  </section>
+
+  <section class="container">
+    <ShareBlock
+      headline="Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances."
+      summary="An editorial accounting of where the money came from, what it was promised for, and what it now does. Modeled figures, labeled as such."
+      url="https://pdx-spend.example/"
+    />
   </section>
 </article>

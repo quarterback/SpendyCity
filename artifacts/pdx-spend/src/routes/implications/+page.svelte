@@ -1,8 +1,15 @@
 <script lang="ts">
   import { base } from '$app/paths';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
+  import ShareBlock from '$lib/components/ShareBlock.svelte';
 </script>
 
-<svelte:head><title>Implications — PDX Spend</title></svelte:head>
+<SiteMeta
+  title="Implications — What the seven funds suggest — PDX Spend"
+  description="Across instruments and stewards, the structural pattern is consistent enough to name."
+  path="/implications/"
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">
@@ -51,6 +58,14 @@
         State Capacity AI
       </p>
     </aside>
+  </section>
+
+  <section class="container">
+    <ShareBlock
+      headline="The pattern across seven Portland-area restricted funds is consistent enough to name."
+      summary="An editorial accounting of how restricted public funds drift after they pass the ballot."
+      url="https://pdx-spend.example/implications/"
+    />
   </section>
 
   <section class="container fund-nav">

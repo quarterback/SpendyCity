@@ -1,8 +1,14 @@
 <script lang="ts">
   import { base } from '$app/paths';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
 </script>
 
-<svelte:head><title>About — PDX Spend</title></svelte:head>
+<SiteMeta
+  title="About — PDX Spend"
+  description="Authorship, license, citation, and contact for PDX Spend."
+  path="/about/"
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">

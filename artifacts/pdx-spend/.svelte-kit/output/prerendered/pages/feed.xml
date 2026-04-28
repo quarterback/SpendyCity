@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PDX Spend</title>
+    <link>https://pdx-spend.example</link>
+    <description>Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Apr 2026 01:51:29 GMT</lastBuildDate>
+    <atom:link href="https://pdx-spend.example/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PDX Spend, Issue 01</title>
+      <link>https://pdx-spend.example/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/</guid>
+      <description>Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Cross-fund dashboard</title>
+      <link>https://pdx-spend.example/dashboard/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/dashboard/</guid>
+      <description>Three views of all seven funds: dollars, share-restricted, and drift trajectory.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Generate a structured financial memo</title>
+      <link>https://pdx-spend.example/agent/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/agent/</guid>
+      <description>Pick a fund and a lens; the agent re-runs the memo against the modeled record.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Methodology</title>
+      <link>https://pdx-spend.example/methodology/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/methodology/</guid>
+      <description>How this site was built: what is modeled, why, and how audited figures will be swapped in.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Implications</title>
+      <link>https://pdx-spend.example/implications/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/implications/</guid>
+      <description>What the seven funds, taken together, suggest about the structural pattern.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Arts Education and Access Fund</title>
+      <link>https://pdx-spend.example/funds/arts-tax/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/arts-tax/</guid>
+      <description>A flat tax billed as a teacher-funding measure spends roughly one in eight dollars on the cost of collecting itself, and Council periodically expands what counts as &quot;arts.&quot;</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Portland Clean Energy Community Benefits Fund</title>
+      <link>https://pdx-spend.example/funds/pcef/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/pcef/</guid>
+      <description>A surcharge passed for clean energy and BIPOC workforce now backfills street paving and parks budgets after Council expanded &quot;eligible uses&quot; by simple majority.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Housing Investment Fund (TIF Set-Aside)</title>
+      <link>https://pdx-spend.example/funds/housing-investment/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/housing-investment/</guid>
+      <description>A 30% set-aside policy has been re-engineered through reclassification: projects counted as &quot;affordable&quot; include workforce-grade and market-rate-with-amenities developments.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Rental Services / Tenant Protections Fund</title>
+      <link>https://pdx-spend.example/funds/rental-services/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/rental-services/</guid>
+      <description>A landlord-paid fund for tenant services consistently spends less than half its inflow on tenant services, with the remainder absorbed into housing-bureau overhead.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Metro Affordable Housing Bond</title>
+      <link>https://pdx-spend.example/funds/affordable-housing-dev/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/affordable-housing-dev/</guid>
+      <description>A 3,900-home bond is on track to deliver fewer homes per dollar than promised; jurisdictions have re-classified &quot;preservation&quot; of existing units to keep count metrics intact.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Preschool For All</title>
+      <link>https://pdx-spend.example/funds/preschool-for-all/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/preschool-for-all/</guid>
+      <description>A tuition-free preschool tax has built a half-billion-dollar surplus while serving a fraction of the eligible 3- and 4-year-olds the measure was designed to cover.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+    <item>
+      <title>Supportive Housing Services Measure</title>
+      <link>https://pdx-spend.example/funds/supportive-housing/</link>
+      <guid isPermaLink="true">https://pdx-spend.example/funds/supportive-housing/</guid>
+      <description>A homelessness measure has accumulated a multi-hundred-million dollar reserve while service contracts go unfilled and rent assistance waitlists grow.</description>
+      <pubDate>Tue, 28 Apr 2026 01:51:29 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

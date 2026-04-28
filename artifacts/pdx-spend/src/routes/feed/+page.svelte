@@ -1,9 +1,15 @@
 <script lang="ts">
   import { base } from '$app/paths';
   import { FUNDS } from '$lib/data/funds';
+  import SiteMeta from '$lib/components/SiteMeta.svelte';
 </script>
 
-<svelte:head><title>Feed — PDX Spend</title></svelte:head>
+<SiteMeta
+  title="Feed — PDX Spend"
+  description="Issue index for PDX Spend: every fund page, the dashboard, the agent demo, methodology, and implications. Subscribe via /feed.xml."
+  path="/feed/"
+  type="article"
+/>
 
 <article>
   <header class="container fund-header">
@@ -11,6 +17,10 @@
     <h1 class="article-title">PDX Spend, Issue 01</h1>
     <p class="article-deck">
       Seven fund pages, one dashboard, one agent demo, one methodology note, one implications essay. Listed in order of publication.
+    </p>
+    <p class="rss-link">
+      Subscribe via RSS:
+      <a href="{base}/feed.xml">{base || ''}/feed.xml</a>
     </p>
   </header>
 

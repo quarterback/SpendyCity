@@ -11,20 +11,27 @@ version = "1.0.0"
 
 [[services]]
 name = "web"
-paths = [ "/" ]
+paths = [ "/", "/api/regenerate-memo", "/feed.xml" ]
 localPort = 21647
 
 [services.development]
 run = "pnpm --filter @workspace/pdx-spend run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/pdx-spend", "run", "build" ]
-publicDir = "artifacts/pdx-spend/dist/public"
-serve = "static"
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/404.html"
+[services.production.build]
+args = ["pnpm", "--filter", "@workspace/pdx-spend", "run", "build"]
+
+[services.production.build.env]
+NODE_ENV = "production"
+
+[services.production.run]
+args = ["node", "artifacts/pdx-spend/dist/server/index.js"]
+
+[services.production.run.env]
+PORT = "21647"
+NODE_ENV = "production"
+BASE_PATH = "/"
 
 [services.env]
 PORT = "21647"

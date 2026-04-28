@@ -40,7 +40,10 @@
 declare module '$env/static/private' {
 	export const npm_command: string;
 	export const npm_config_minimum_release_age: string;
+	export const POETRY_PIP_NO_ISOLATE: string;
 	export const COLORTERM: string;
+	export const POETRY_PIP_NO_PREFIX: string;
+	export const POETRY_PIP_USE_PIP_CACHE: string;
 	export const REPL_OWNER: string;
 	export const DATABASE_URL: string;
 	export const REPLIT_GITSAFE_NEW_REPLS_ENABLED: string;
@@ -48,6 +51,7 @@ declare module '$env/static/private' {
 	export const npm_config_npm_globalconfig: string;
 	export const HOSTNAME: string;
 	export const __EGL_VENDOR_LIBRARY_FILENAMES: string;
+	export const POETRY_INSTALLER_MODERN_INSTALLATION: string;
 	export const NODE: string;
 	export const REPLIT_DOMAINS: string;
 	export const PGPORT: string;
@@ -73,6 +77,9 @@ declare module '$env/static/private' {
 	export const npm_config_catalog: string;
 	export const REPL_ID: string;
 	export const npm_config_recursive: string;
+	export const PIP_CONFIG_FILE: string;
+	export const REPLIT_PYTHON_LD_LIBRARY_PATH: string;
+	export const REPLIT_PYTHONPATH: string;
 	export const HOME: string;
 	export const LANG: string;
 	export const CONNECTORS_HOSTNAME: string;
@@ -85,6 +92,7 @@ declare module '$env/static/private' {
 	export const GIT_ASKPASS: string;
 	export const PGUSER: string;
 	export const REPLIT_HEIMDALL_ADDR: string;
+	export const POETRY_CACHE_DIR: string;
 	export const pnpm_config_verify_deps_before_run: string;
 	export const REPLIT_GITSAFE_EXISTING_REPLS_ENABLED: string;
 	export const REPLIT_CONTAINER: string;
@@ -92,7 +100,10 @@ declare module '$env/static/private' {
 	export const XDG_CACHE_HOME: string;
 	export const npm_lifecycle_script: string;
 	export const REPLIT_RTLD_LOADER: string;
+	export const POETRY_PIP_FROM_PATH: string;
+	export const POETRY_VIRTUALENVS_CREATE: string;
 	export const REPLIT_DEV_DOMAIN: string;
+	export const PYTHONPATH: string;
 	export const npm_config_overrides: string;
 	export const TERM: string;
 	export const npm_package_name: string;
@@ -103,6 +114,7 @@ declare module '$env/static/private' {
 	export const USER: string;
 	export const npm_config_frozen_lockfile: string;
 	export const SESSION_SECRET: string;
+	export const POETRY_CONFIG_DIR: string;
 	export const REPL_HOME: string;
 	export const TZDIR: string;
 	export const REPLIT_PID1_VERSION: string;
@@ -111,6 +123,7 @@ declare module '$env/static/private' {
 	export const SHLVL: string;
 	export const REPLIT_NIX_CHANNEL: string;
 	export const GIT_EDITOR: string;
+	export const UV_PYTHON_PREFERENCE: string;
 	export const PGDATABASE: string;
 	export const PROMPT_DIRTRIM: string;
 	export const LIBGL_DRIVERS_PATH: string;
@@ -130,10 +143,15 @@ declare module '$env/static/private' {
 	export const REPL_IDENTITY_KEY: string;
 	export const REPLIT_HELIUM_ENABLED: string;
 	export const AI_INTEGRATIONS_ANTHROPIC_BASE_URL: string;
+	export const POETRY_DOWNLOAD_WITH_CURL: string;
 	export const PATH: string;
 	export const npm_config_node_gyp: string;
 	export const DOCKER_CONFIG: string;
+	export const PYTHONUSERBASE: string;
 	export const npm_config_registry: string;
+	export const UV_PYTHON_DOWNLOADS: string;
+	export const POETRY_USE_USER_SITE: string;
+	export const UV_PROJECT_ENVIRONMENT: string;
 	export const REPL_PUBKEYS: string;
 	export const BASE_PATH: string;
 	export const npm_node_execpath: string;
@@ -227,7 +245,10 @@ declare module '$env/dynamic/private' {
 	export const env: {
 		npm_command: string;
 		npm_config_minimum_release_age: string;
+		POETRY_PIP_NO_ISOLATE: string;
 		COLORTERM: string;
+		POETRY_PIP_NO_PREFIX: string;
+		POETRY_PIP_USE_PIP_CACHE: string;
 		REPL_OWNER: string;
 		DATABASE_URL: string;
 		REPLIT_GITSAFE_NEW_REPLS_ENABLED: string;
@@ -235,6 +256,7 @@ declare module '$env/dynamic/private' {
 		npm_config_npm_globalconfig: string;
 		HOSTNAME: string;
 		__EGL_VENDOR_LIBRARY_FILENAMES: string;
+		POETRY_INSTALLER_MODERN_INSTALLATION: string;
 		NODE: string;
 		REPLIT_DOMAINS: string;
 		PGPORT: string;
@@ -260,6 +282,9 @@ declare module '$env/dynamic/private' {
 		npm_config_catalog: string;
 		REPL_ID: string;
 		npm_config_recursive: string;
+		PIP_CONFIG_FILE: string;
+		REPLIT_PYTHON_LD_LIBRARY_PATH: string;
+		REPLIT_PYTHONPATH: string;
 		HOME: string;
 		LANG: string;
 		CONNECTORS_HOSTNAME: string;
@@ -272,6 +297,7 @@ declare module '$env/dynamic/private' {
 		GIT_ASKPASS: string;
 		PGUSER: string;
 		REPLIT_HEIMDALL_ADDR: string;
+		POETRY_CACHE_DIR: string;
 		pnpm_config_verify_deps_before_run: string;
 		REPLIT_GITSAFE_EXISTING_REPLS_ENABLED: string;
 		REPLIT_CONTAINER: string;
@@ -279,7 +305,10 @@ declare module '$env/dynamic/private' {
 		XDG_CACHE_HOME: string;
 		npm_lifecycle_script: string;
 		REPLIT_RTLD_LOADER: string;
+		POETRY_PIP_FROM_PATH: string;
+		POETRY_VIRTUALENVS_CREATE: string;
 		REPLIT_DEV_DOMAIN: string;
+		PYTHONPATH: string;
 		npm_config_overrides: string;
 		TERM: string;
 		npm_package_name: string;
@@ -290,6 +319,7 @@ declare module '$env/dynamic/private' {
 		USER: string;
 		npm_config_frozen_lockfile: string;
 		SESSION_SECRET: string;
+		POETRY_CONFIG_DIR: string;
 		REPL_HOME: string;
 		TZDIR: string;
 		REPLIT_PID1_VERSION: string;
@@ -298,6 +328,7 @@ declare module '$env/dynamic/private' {
 		SHLVL: string;
 		REPLIT_NIX_CHANNEL: string;
 		GIT_EDITOR: string;
+		UV_PYTHON_PREFERENCE: string;
 		PGDATABASE: string;
 		PROMPT_DIRTRIM: string;
 		LIBGL_DRIVERS_PATH: string;
@@ -317,10 +348,15 @@ declare module '$env/dynamic/private' {
 		REPL_IDENTITY_KEY: string;
 		REPLIT_HELIUM_ENABLED: string;
 		AI_INTEGRATIONS_ANTHROPIC_BASE_URL: string;
+		POETRY_DOWNLOAD_WITH_CURL: string;
 		PATH: string;
 		npm_config_node_gyp: string;
 		DOCKER_CONFIG: string;
+		PYTHONUSERBASE: string;
 		npm_config_registry: string;
+		UV_PYTHON_DOWNLOADS: string;
+		POETRY_USE_USER_SITE: string;
+		UV_PROJECT_ENVIRONMENT: string;
 		REPL_PUBKEYS: string;
 		BASE_PATH: string;
 		npm_node_execpath: string;

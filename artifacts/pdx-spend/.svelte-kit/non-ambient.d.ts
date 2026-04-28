@@ -29,7 +29,7 @@ declare module "$app/types" {
 	type MatcherParam<M> = M extends (param : string) => param is (infer U extends string) ? U : string;
 
 	export interface AppTypes {
-		RouteId(): "/" | "/about" | "/agent" | "/dashboard" | "/feed" | "/funds" | "/funds/[slug]" | "/implications" | "/methodology";
+		RouteId(): "/" | "/about" | "/agent" | "/api" | "/api/regenerate-memo" | "/dashboard" | "/feed.xml" | "/feed" | "/funds" | "/funds/[slug]" | "/implications" | "/methodology";
 		RouteParams(): {
 			"/funds/[slug]": { slug: string }
 		};
@@ -37,15 +37,18 @@ declare module "$app/types" {
 			"/": { slug?: string };
 			"/about": Record<string, never>;
 			"/agent": Record<string, never>;
+			"/api": Record<string, never>;
+			"/api/regenerate-memo": Record<string, never>;
 			"/dashboard": Record<string, never>;
+			"/feed.xml": Record<string, never>;
 			"/feed": Record<string, never>;
 			"/funds": { slug?: string };
 			"/funds/[slug]": { slug: string };
 			"/implications": Record<string, never>;
 			"/methodology": Record<string, never>
 		};
-		Pathname(): "/" | "/about/" | "/agent/" | "/dashboard/" | "/feed/" | `/funds/${string}` & {} | `/funds/${string}/` & {} | "/implications/" | "/methodology/";
+		Pathname(): "/" | "/about/" | "/agent/" | "/api/regenerate-memo" | "/dashboard/" | "/feed.xml" | "/feed/" | `/funds/${string}` & {} | `/funds/${string}/` & {} | "/implications/" | "/methodology/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/favicon.svg" | string & {};
+		Asset(): "/favicon.svg" | "/og-default.svg" | string & {};
 	}
 }
