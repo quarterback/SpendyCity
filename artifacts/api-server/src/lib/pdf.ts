@@ -1,7 +1,6 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { logger } from "./logger";
+import { uploadPrivateObject } from "./objectStorage";
 import type { WorkProductType } from "@workspace/db";
 
 const PAGE_W = 612;
@@ -10,9 +9,6 @@ const MARGIN = 54;
 const LINE_HEIGHT = 14;
 const BODY_SIZE = 11;
 const HEADING_SIZE = 14;
-
-const PDF_DIR = process.env.PDX_SPEND_PDF_DIR
-  ?? path.resolve(process.cwd(), "../pdx-spend/static/agent-pdfs");
 
 interface RenderInput {
   fundSlug: string;
@@ -86,13 +82,18 @@ export async function renderMemoToPdf(input: RenderInput): Promise<string> {
   }
 
   const bytes = await doc.save();
-
-  await mkdir(PDF_DIR, { recursive: true });
   const fileName = `${input.fundSlug}-${input.workProductType}-${input.outputId}.pdf`;
-  const filePath = path.join(PDF_DIR, fileName);
-  await writeFile(filePath, bytes);
+  const objectKey = `agent-pdfs/${fileName}`;
 
-  const objectPath = `/agent-pdfs/${fileName}`;
-  logger.info({ objectPath, bytes: bytes.length }, "pdf.rendered");
-  return objectPath;
+  await uploadPrivateObject({
+    objectKey,
+    bytes,
+    contentType: "application/pdf",
+  });
+
+  // Public-facing path used by the SvelteKit site. The API serves these
+  // by streaming the GCS object from PRIVATE_OBJECT_DIR/agent-pdfs/<file>.
+  const publicPath = `/api/agent/pdfs/${fileName}`;
+  logger.info({ publicPath, objectKey, bytes: bytes.length }, "pdf.uploaded");
+  return publicPath;
 }

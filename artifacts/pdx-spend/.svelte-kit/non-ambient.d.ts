@@ -49,6 +49,6 @@ declare module "$app/types" {
 		};
 		Pathname(): "/" | "/about/" | "/agent/" | "/api/regenerate-memo" | "/dashboard/" | "/feed.xml" | "/feed/" | `/funds/${string}` & {} | `/funds/${string}/` & {} | "/implications/" | "/methodology/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/agent-pdfs/pcef-weekly-memo-9ccf7127-6e85-46ec-a219-51cd31688ee2.pdf" | "/favicon.svg" | "/og-default.svg" | string & {};
+		Asset(): "/favicon.svg" | "/og-default.svg" | string & {};
 	}
 }
