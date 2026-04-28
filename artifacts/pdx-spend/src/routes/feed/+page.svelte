@@ -5,18 +5,18 @@
 </script>
 
 <SiteMeta
-  title="Feed — PDX Spend"
-  description="Issue index for PDX Spend: every fund page, the dashboard, the agent demo, methodology, and implications. Subscribe via /feed.xml."
+  title="Issue index — PDX Spend"
+  description="Every page in PDX Spend Issue 01: seven fund pages, the dashboard, the agent demo, methodology, and implications."
   path="/feed/"
   type="article"
 />
 
 <article>
   <header class="container fund-header">
-    <p class="kicker">FEED · ISSUE 01</p>
+    <p class="kicker">ISSUE 01 · INDEX</p>
     <h1 class="article-title">PDX Spend, Issue 01</h1>
     <p class="article-deck">
-      Seven fund pages, one dashboard, one agent demo, one methodology note, one implications essay. Listed in order of publication.
+      Seven funds, one dashboard, one agent demo, one methodology note, one implications essay.
     </p>
     <p class="rss-link">
       Subscribe via RSS:
@@ -28,8 +28,8 @@
     <ul class="feed">
       <li class="feed-item">
         <p class="feed-meta">FRONT · ISSUE 01</p>
-        <h2><a href="{base}/">Seven voter-passed funds, quietly redrawn around their balances</a></h2>
-        <p>The cover essay and at-a-glance hero chart for the issue.</p>
+        <h2><a href="{base}/">Seven Portland-area voter funds, in plain view</a></h2>
+        <p>The hero chart and fund grid for the issue.</p>
       </li>
       {#each FUNDS as f}
         <li class="feed-item">
@@ -40,23 +40,23 @@
       {/each}
       <li class="feed-item">
         <p class="feed-meta">DASHBOARD</p>
-        <h2><a href="{base}/dashboard/">Cross-fund dashboard — three views of all seven</a></h2>
-        <p>Switch between absolute carry, share-restricted, and drift trajectory. Embed-friendly.</p>
+        <h2><a href="{base}/dashboard/">Cross-fund dashboard</a></h2>
+        <p>All seven funds in one frame: dollars, share restricted, and drift trajectory.</p>
       </li>
       <li class="feed-item">
         <p class="feed-meta">AGENT</p>
         <h2><a href="{base}/agent/">Generate a structured financial memo</a></h2>
-        <p>Pick a fund and a lens. The agent re-runs the memo against the modeled record.</p>
+        <p>Pick a fund and a lens. The agent writes a brief in the voice you select.</p>
       </li>
       <li class="feed-item">
         <p class="feed-meta">METHODOLOGY</p>
         <h2><a href="{base}/methodology/">How this site was built</a></h2>
-        <p>What is modeled, why, and how the audited figures will be swapped in.</p>
+        <p>What figures are constructed, what modeling choices were made, and how audited numbers will replace them.</p>
       </li>
       <li class="feed-item">
         <p class="feed-meta">ESSAY</p>
-        <h2><a href="{base}/implications/">What the seven funds, taken together, suggest</a></h2>
-        <p>The structural pattern is consistent enough across instruments and stewards that it is worth naming.</p>
+        <h2><a href="{base}/implications/">What the seven funds suggest</a></h2>
+        <p>The pattern is consistent across instruments and stewards. It is worth naming.</p>
       </li>
       <li class="feed-item">
         <p class="feed-meta">ABOUT</p>

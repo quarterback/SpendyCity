@@ -70,8 +70,8 @@
 </script>
 
 <SiteMeta
-  title="Agent demo — Generate a structured financial memo — PDX Spend"
-  description="Pick a fund and a lens. The agent re-runs a structured public-finance memo against the modeled record."
+  title="Agent demo — PDX Spend"
+  description="Pick a fund and a lens. The agent writes a structured financial memo against the fund record."
   path="/agent/"
   type="article"
 />
@@ -81,24 +81,24 @@
     <p class="kicker">AGENT DEMO · STRUCTURED MEMO</p>
     <h1 class="article-title">Generate a structured financial memo</h1>
     <p class="article-deck">
-      Pick a fund and a lens. The agent reads the fund's modeled record and writes a brief in the voice you select. Each page of this site already ships with a pre-generated memo; this view re-runs it live.
+      Pick a fund and a lens. The agent reads the fund record and writes a brief in the voice you select.
     </p>
   </header>
 
   <section class="container two-col">
     <div class="prose">
-      <h2>How this works</h2>
+      <h2>How it works</h2>
       <p>
-        The agent receives the fund's enabling code, voter intent, modeled balances, audit-event log, drift index, and promise-vs-delivered series. It is asked to produce a single-page structured memo: summary, structural findings, recommendations. No editorial framing.
+        The agent receives the fund's enabling code, voter intent, balances, audit-event log, drift index, and promise-vs-delivered series. It produces a single-page memo: summary, structural findings, recommendations.
       </p>
       <p>
-        The endpoint is rate-limited per IP and the modeled-data caveat is enforced in the system prompt. If the live endpoint is unavailable, the pre-generated memo on each fund's page is the canonical version.
+        The endpoint is rate-limited per IP. If it is unavailable, the pre-generated memo on each fund page is the canonical version.
       </p>
     </div>
     <aside class="margin-note">
       <h4>Lenses</h4>
       <p>
-        The lens parameter changes the voice but not the structure. A "voter" lens explains what they were sold and what arrived. An "auditor" lens cites code and resolution numbers. A "reporter" lens names the structural gap.
+        The lens changes the voice, not the structure. "Auditor" cites code and resolution numbers. "Reporter" names the structural gap. "Voter" names what was promised and what arrived.
       </p>
     </aside>
   </section>
@@ -138,15 +138,15 @@
 
   <section class="container two-col">
     <div class="prose">
-      <h2>Why a memo, not an opinion</h2>
+      <h2>Memo, not opinion</h2>
       <p>
-        Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form of that accounting is not a press release or a feature story; it is a memo. The agent is asked to produce that memo and nothing else.
+        Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form is a memo — summary, findings, recommendations — not a press release or a feature story.
       </p>
     </div>
     <aside class="margin-note">
       <h4>Provenance</h4>
       <p>
-        The model behind this endpoint is Anthropic's Claude (Sonnet generation), accessed through Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code> inside this site. Fund context is assembled server-side from the static fund modules, so the prompt cannot be tampered with from the client.
+        This endpoint runs Anthropic's Claude (Sonnet) via Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code>. Fund context is assembled server-side.
       </p>
       <p style="margin-top: 12px">See <a href="{base}/methodology/">methodology →</a></p>
     </aside>

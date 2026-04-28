@@ -6,7 +6,7 @@ export const prerender = true;
 
 const SITE_TITLE = 'PDX Spend';
 const SITE_DESCRIPTION =
-  'Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.';
+  'Seven voter-passed funds in Portland and Multnomah County hold hundreds of millions in carry. This is what that looks like, drawn.';
 
 function escapeXml(input: string): string {
   return input
@@ -37,27 +37,27 @@ export const GET: RequestHandler = async () => {
       title: 'PDX Spend, Issue 01',
       url: `${SITE_URL}/`,
       description:
-        'Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.'
+        'Seven Portland-area voter funds, their balances, and what those balances now do.'
     },
     {
       title: 'Cross-fund dashboard',
       url: `${SITE_URL}/dashboard/`,
-      description: 'Three views of all seven funds: dollars, share-restricted, and drift trajectory.'
+      description: 'All seven funds in one frame: dollars, share restricted, and drift trajectory.'
     },
     {
-      title: 'Generate a structured financial memo',
+      title: 'Agent demo',
       url: `${SITE_URL}/agent/`,
-      description: 'Pick a fund and a lens; the agent re-runs the memo against the modeled record.'
+      description: 'Pick a fund and a lens. The agent writes a structured financial memo against the fund record.'
     },
     {
       title: 'Methodology',
       url: `${SITE_URL}/methodology/`,
-      description: 'How this site was built: what is modeled, why, and how audited figures will be swapped in.'
+      description: 'How figures are constructed, what modeling choices were made, and how audited numbers will replace them.'
     },
     {
       title: 'Implications',
       url: `${SITE_URL}/implications/`,
-      description: 'What the seven funds, taken together, suggest about the structural pattern.'
+      description: 'The pattern across seven Portland-area restricted funds is consistent enough to name.'
     }
   ]
     .map(

@@ -5,6 +5,7 @@
     title: string;
     sub?: string;
     source?: string;
+    modeled?: boolean;
     csvName?: string;
     csvHeaders?: string[];
     csvRows?: (string | number)[][];
@@ -12,7 +13,7 @@
     children: import('svelte').Snippet<[{ register: (svg: SVGSVGElement) => void }]>;
   }
 
-  let { title, sub, source, csvName, csvHeaders, csvRows, pngName, children }: Props = $props();
+  let { title, sub, source, modeled = false, csvName, csvHeaders, csvRows, pngName, children }: Props = $props();
 
   let svgEl: SVGSVGElement | undefined = $state();
   function register(s: SVGSVGElement) {
@@ -28,7 +29,10 @@
 </script>
 
 <figure class="chart-frame">
-  <p class="chart-title">{title}</p>
+  <div class="chart-header">
+    <p class="chart-title">{title}</p>
+    {#if modeled}<span class="chart-modeled-badge">MODELED</span>{/if}
+  </div>
   {#if sub}<p class="chart-sub">{sub}</p>{/if}
   {@render children({ register })}
   {#if source}<p class="chart-source">Source · {source}</p>{/if}
@@ -39,3 +43,23 @@
     </div>
   {/if}
 </figure>
+
+<style>
+  .chart-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .chart-modeled-badge {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted, #6b6357);
+    border: 1px solid var(--ink-muted, #6b6357);
+    padding: 1px 4px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

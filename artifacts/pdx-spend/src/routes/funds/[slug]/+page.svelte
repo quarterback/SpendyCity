@@ -62,7 +62,7 @@
       <div><dt>Steward</dt><dd>{fund.steward}</dd></div>
       <div><dt>Cadence</dt><dd>{fund.collectionsCadence}</dd></div>
       <div><dt>Restriction class</dt><dd>{fund.restrictionClass}</dd></div>
-      <div><dt>Modeled carry</dt><dd>{formatUSD(fund.modeledBalance)}</dd></div>
+      <div><dt>Carry</dt><dd>{formatUSD(fund.modeledBalance)}</dd></div>
       <div><dt>Restricted share</dt><dd>{formatPct(fund.modeledRestrictedShare)}</dd></div>
       <div><dt>Movable share</dt><dd class="accent">{formatPct(fund.modeledMovableShare)}</dd></div>
     </dl>
@@ -74,13 +74,13 @@
         <strong>Voter intent.</strong> {fund.voterIntent}
       </p>
       <p>
-        What follows is a year-by-year reading of how the cash position of this fund evolved, annotated with the audit findings and council actions that produced its current shape. Scroll to advance the chart.
+        {fund.enablingCode} passed in {fund.enacted}. The chart below traces each year-end balance, annotated with the audit findings and council actions that produced its current shape.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Reading the chart</h4>
+      <h4>{fund.enablingCode}</h4>
       <p>
-        The dark line is the modeled year-end balance. The shaded area underneath is the portion that has been formally <em>obligated</em> — committed to a contract, grant, or program but not yet paid out. The orange dots are audit-trail events; orange labels above the line summarize each one.
+        Collector: {fund.collector}. Steward: {fund.steward}. Cadence: {fund.collectionsCadence}.
       </p>
     </aside>
   </section>
@@ -89,9 +89,10 @@
     <div class="scrolly-grid">
       <div class="scrolly-sticky">
         <ChartFrame
-          title="Modeled cash position with audit annotations"
-          sub="Annotations are auditor findings, council resolutions, and bureau memos. Active step shown with vertical rule."
-          source="Modeled reconstruction (PDX Spend)"
+          title="Cash position with audit annotations"
+          sub="Year-end balance, with auditor findings and council actions marked."
+          source="PDX Spend"
+          modeled={true}
           pngName="{fund.slug}-cash.png"
           csvHeaders={cashCsvHeaders}
           csvRows={cashCsvRows}
@@ -119,13 +120,13 @@
     <div class="prose">
       <h2>Promise versus delivery</h2>
       <p>
-        The chart on the right pairs each plan cycle's stated dollar promise with the dollar amount that was eventually delivered against it. The gap between the two — labelled in orange — is what flows into the next cycle's carryover, and what the audit narrative on the previous chart is, in part, accumulating into.
+        Each bar pair shows a plan cycle's committed dollars against what shipped. The gap flows into carryover.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Why the gap matters</h4>
+      <h4>Carryover and scope</h4>
       <p>
-        A persistent gap between promised and delivered creates a structural surplus. Surplus does not stay neutral: it becomes governable, and ordinances begin to make it movable. This is the mechanical link between under-spending and scope drift.
+        A persistent delivery gap produces a structural surplus. Surplus becomes governable. Ordinances follow.
       </p>
     </aside>
   </section>
@@ -133,8 +134,9 @@
   <section class="container-wide">
     <ChartFrame
       title="Promised vs. delivered, by fiscal cycle"
-      sub="Promised dollars are those committed in the bureau's published plan; delivered dollars are what shipped against the plan. Modeled."
-      source="Modeled reconstruction (PDX Spend)"
+      sub="Committed plan dollars against actual disbursements, by cycle."
+      source="PDX Spend"
+      modeled={true}
       pngName="{fund.slug}-promise.png"
       csvHeaders={promiseCsvHeaders}
       csvRows={promiseCsvRows}
@@ -149,21 +151,22 @@
     <div class="prose">
       <h2>Reserve growth</h2>
       <p>
-        When delivery lags collection, the residual accumulates as an unobligated reserve. This is not a savings account in the household sense: it is a balance that public-finance officers and council staff have, by ordinance, the discretion to redirect.
+        When delivery lags collection, the residual accumulates as an unobligated reserve. Council staff have the ordinance discretion to redirect it.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Reserve, plainly</h4>
+      <h4>Unobligated reserve</h4>
       <p>
-        The reserve is the share of the fund that is neither already spent nor formally obligated. It is the available headroom for any future scope-broadening vote.
+        The share of the fund neither spent nor formally committed to a contract or grant — the available headroom for any future scope-broadening vote.
       </p>
     </aside>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title="Modeled unobligated reserve"
-      source="Modeled reconstruction (PDX Spend)"
+      title="Unobligated reserve over time"
+      source="PDX Spend"
+      modeled={true}
       pngName="{fund.slug}-reserve.png"
     >
       {#snippet children({ register })}
@@ -176,21 +179,22 @@
     <div class="prose">
       <h2>Drift from voter intent</h2>
       <p>
-        The chart on the right is a <em>drift index</em>. A value of 100 percent means every dollar in the fund is being used in a way that maps cleanly to the original ballot text. A value below 100 percent means some share has been ordinance-redirected, swept into a sibling program, or otherwise reclassified.
+        100% means every dollar maps to the original ballot text. Each post-enactment ordinance that moves dollars off the original-intent baseline lowers the index.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>How drift is constructed</h4>
+      <h4>Drift index</h4>
       <p>
-        Drift is modeled by reading each post-enactment ordinance and resolution against the ballot text, scoring how much of the affected balance moved off the original-intent baseline, and compounding that score forward.
+        Scored by reading each post-enactment ordinance against the ballot text. The score compounds forward from the first scope-broadening vote.
       </p>
     </aside>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title="Drift index — voter intent vs. modeled actual disposition"
-      source="Modeled reconstruction (PDX Spend)"
+      title="Drift index — actual disposition vs. voter intent"
+      source="PDX Spend"
+      modeled={true}
       pngName="{fund.slug}-drift.png"
     >
       {#snippet children({ register })}
@@ -203,7 +207,7 @@
     <AgentMemoBlock
       kicker={`WEEKLY MEMO · ${fund.shortName.toUpperCase()}`}
       title="What changed this week"
-      deck="A structured-finance read of the corpus on file for this fund. The memo is cited inline against the documents the agent had access to at run time."
+      deck="A structured-finance read of the corpus on file for this fund, cited inline against documents available at run time."
       html={weeklyMemo.html}
       output={weeklyMemo.output}
     />
@@ -213,8 +217,6 @@
       <h2 class="section-title">No memo on file yet</h2>
       <p class="section-deck">
         The scheduled run for this fund has not produced a published memo yet.
-        Fund pages render the most recent memo once the pipeline has succeeded
-        for the current corpus snapshot.
       </p>
     </section>
   {/if}
@@ -222,8 +224,8 @@
   {#if monthlyCashFlow}
     <AgentMemoBlock
       kicker={`MONTHLY CASH-FLOW · ${fund.shortName.toUpperCase()}`}
-      title="Cash-flow narrative for the month"
-      deck="A monthly cash-flow read against the same corpus, focused on inflows, outflows, and the residual that flows into next period."
+      title="Cash-flow narrative"
+      deck="Inflows, outflows, and the residual that flows into next period."
       html={monthlyCashFlow.html}
       output={monthlyCashFlow.output}
     />
@@ -242,7 +244,7 @@
 
   <section class="container">
     <ShareBlock
-      headline={`${fund.name} — ${fund.scandal}`}
+      headline="{fund.name}: {fund.scandal}"
       summary={fund.oneLineStatus}
       url={siteUrl(`/funds/${fund.slug}/`)}
     />

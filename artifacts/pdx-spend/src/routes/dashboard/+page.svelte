@@ -35,8 +35,8 @@
 </script>
 
 <SiteMeta
-  title="Cross-fund dashboard — PDX Spend"
-  description="All seven voter-restricted Portland and Multnomah County funds in one frame. Switch between dollars, share-restricted, and drift trajectory."
+  title="Dashboard — PDX Spend"
+  description="All seven voter-restricted funds in one frame. Switch between dollars, share restricted, and drift trajectory."
   path="/dashboard/"
   type="article"
 />
@@ -46,7 +46,7 @@
     <p class="kicker">DASHBOARD · ALL SEVEN FUNDS</p>
     <h1 class="article-title">Cross-fund dashboard</h1>
     <p class="article-deck">
-      Three views of the same seven funds — by absolute carry, by share of carry that has been made movable, and by trajectory of drift from the original voter intent.
+      Three views of the same seven funds: absolute carry, share made movable, and drift from voter intent.
     </p>
   </header>
 
@@ -58,7 +58,7 @@
         <button class:active={mode === 'trajectory'} onclick={() => (mode = 'trajectory')}>Drift trajectory</button>
       </div>
       <div class="dash-summary">
-        <span><strong>{formatUSD(TOTAL_MODELED_BALANCE)}</strong> total modeled carry</span>
+        <span><strong>{formatUSD(TOTAL_MODELED_BALANCE)}</strong> total carry</span>
         <span class="accent"><strong>{formatUSD(TOTAL_MOVABLE)}</strong> movable</span>
         <span>{Math.round((TOTAL_MOVABLE / TOTAL_MODELED_BALANCE) * 100)}% of total now movable</span>
       </div>
@@ -67,9 +67,10 @@
 
   <section class="container-wide">
     <ChartFrame
-      title={mode === 'dollars' ? 'Modeled carry by fund' : mode === 'percent' ? 'Share of carry: restricted vs. movable' : 'Drift trajectory: modeled actual disposition vs. voter intent'}
-      sub={mode === 'trajectory' ? 'Bars at 100% would mean fund is operated entirely on original voter intent.' : 'Sorted by absolute modeled carry. Click a fund label or row to open its page.'}
-      source="Modeled reconstruction (PDX Spend)"
+      title={mode === 'dollars' ? 'Carry by fund' : mode === 'percent' ? 'Restricted vs. movable, by fund' : 'Drift trajectory by fund'}
+      sub={mode === 'trajectory' ? '100% means fund operates entirely within original voter intent.' : 'Sorted by absolute carry. Click a fund to open its page.'}
+      source="PDX Spend"
+      modeled={true}
       pngName="dashboard-{mode}.png"
       csvHeaders={csvHeaders}
       csvRows={csvRows}
@@ -87,7 +88,7 @@
         <tr>
           <th>Fund</th>
           <th>Enacted</th>
-          <th>Modeled carry</th>
+          <th>Carry</th>
           <th>Restricted</th>
           <th>Movable</th>
           <th>Drift</th>
@@ -114,7 +115,7 @@
     <div class="prose">
       <h2>Embed this dashboard</h2>
       <p>
-        The dashboard is intended to be embedded in newsroom, civic-org, or analyst posts. Copy the snippet on the right. The chart will render at full width inside the iframe and respect the container's responsive width.
+        Copy the snippet at right. The chart renders at full width inside the iframe and respects the container's responsive width.
       </p>
     </div>
     <aside class="margin-note">
@@ -126,8 +127,8 @@
 
   <section class="container">
     <ShareBlock
-      headline="Cross-fund dashboard: seven Portland-area restricted funds, in one frame."
-      summary="Switch between dollars, share-restricted, and drift trajectory. Embeddable. Modeled figures."
+      headline="Seven Portland-area restricted funds in one frame."
+      summary="Switch between dollars, share restricted, and drift trajectory. Embeddable. PDX Spend."
       url={siteUrl('/dashboard/')}
     />
   </section>
