@@ -53,7 +53,7 @@
       const totalB = rows.reduce((s, r) => s + r.balance, 0);
       const totalM = rows.reduce((s, r) => s + r.movable, 0);
       const pct = totalB > 0 ? Math.round((totalM / totalB) * 100) : 0;
-      return `Share re-aimed, by fund. ${pct}% across the ${rows.length} funds.`;
+      return `Share moved to new uses, by fund. ${pct}% across the ${rows.length} funds.`;
     }
     const avg = Math.round(rows.reduce((s, r) => s + r.drift, 0) / Math.max(rows.length, 1));
     return `Share still on voter intent, by fund. Average ${avg}%.`;
@@ -70,7 +70,7 @@
   }
   function tipFor(d: FundRow) {
     const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
-    return `<strong>${d.shortName}</strong> · ${formatChartUSD(d.balance, 'precise')} sitting<span class="sub">${formatChartUSD(d.movable, 'precise')} re-aimed (${pct}%) · ${formatChartUSD(d.restricted, 'precise')} on-mission · ${100 - Math.round(d.drift)}% drift</span>`;
+    return `<strong>${d.shortName}</strong> · ${formatChartUSD(d.balance, 'precise')} sitting<span class="sub">${formatChartUSD(d.movable, 'precise')} moved (${pct}%) · ${formatChartUSD(d.restricted, 'precise')} on-mission · ${100 - Math.round(d.drift)}% drift</span>`;
   }
 
   const patternUid = `stack-${Math.random().toString(36).slice(2, 7)}`;
@@ -288,7 +288,7 @@
       .on('pointerdown', (event: PointerEvent, d) => {
         selectedSlug = d.shortName;
         const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
-        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% re-aimed`;
+        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% moved`;
         showTip(event.clientX, event.clientY, tipFor(d), true);
       })
       .on('pointerleave', (event: PointerEvent) => {
@@ -299,7 +299,7 @@
         const r = this.getBoundingClientRect();
         selectedSlug = d.shortName;
         const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
-        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% re-aimed`;
+        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% moved`;
         showTip(r.left + r.width / 2, r.top + r.height / 2, tipFor(d), true);
       })
       .on('blur', () => hideTip(true));
@@ -367,7 +367,7 @@
     <p class="chart-selection-chip">
       <span class="chip-year">{selectedRow.shortName}</span>
       <span class="chip-val">{formatChartUSD(selectedRow.balance, 'precise')} sitting</span>
-      <span class="chip-sub">{pct}% re-aimed · {100 - Math.round(selectedRow.drift)}% drift</span>
+      <span class="chip-sub">{pct}% moved · {100 - Math.round(selectedRow.drift)}% drift</span>
       <button class="chip-clear" onclick={clearSelection} aria-label="Clear selection">×</button>
     </p>
   {/if}

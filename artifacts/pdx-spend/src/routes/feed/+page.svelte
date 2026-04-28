@@ -29,7 +29,7 @@
       <li class="feed-item">
         <p class="feed-meta">FRONT</p>
         <h2><a href="{base}/">Seven Portland-area voter funds, in plain view</a></h2>
-        <p>What each fund could pay for, and the named rule that purports to stop it.</p>
+        <p>What each fund could pay for, and the rule controlling each one.</p>
       </li>
       {#each FUNDS as f}
         <li class="feed-item">
@@ -41,7 +41,7 @@
       <li class="feed-item">
         <p class="feed-meta">DASHBOARD</p>
         <h2><a href="{base}/dashboard/">All seven funds, side by side</a></h2>
-        <p>Three angles on the same dollars: balance, share re-aimed, share still on-mission.</p>
+        <p>Three angles on the same dollars: balance, share moved to new uses, share still on-mission.</p>
       </li>
       <li class="feed-item">
         <p class="feed-meta">AGENT</p>
@@ -55,7 +55,7 @@
       </li>
       <li class="feed-item">
         <p class="feed-meta">ESSAY</p>
-        <h2><a href="{base}/implications/">Five levers that would unblock the seven funds</a></h2>
+        <h2><a href="{base}/implications/">Five levers for the seven funds</a></h2>
         <p>Mechanical, not rhetorical. Each lever names who controls it.</p>
       </li>
       <li class="feed-item">

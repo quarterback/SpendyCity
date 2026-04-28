@@ -55,7 +55,7 @@
           <strong>Could-fund items.</strong> Unit counts × published unit costs (city grant scales, BPS retrofit cost, EnergyTrust HVAC cost, NABCEP tuition, federal HOME averages). The point is the order of magnitude — real procurement and ramp time would shape exact numbers.
         </li>
         <li>
-          <strong>Blockers.</strong> Each blocker is a mechanism in the statute or in bureau reporting practice. The defense paraphrases positions actually published in audit responses, council minutes, and bureau reports. The rebuttal is the site&rsquo;s editorial position.
+          <strong>Restricting rules.</strong> Each rule is a mechanism in the statute or in bureau reporting practice. The defense paraphrases positions actually published in audit responses, council minutes, and bureau reports. The rebuttal is the site&rsquo;s editorial response.
         </li>
       </ul>
     </div>
@@ -119,11 +119,11 @@
       <dt>Could fund</dt>
       <dd>What the current balance could pay for, expressed as concrete units (homes weatherized, teachers funded, units built) at published unit costs.</dd>
 
-      <dt>Blocker</dt>
-      <dd>A specific mechanism — in statute, in budget process, or in reporting practice — that prevents the fund from spending against the original mandate.</dd>
+      <dt>Restricting rule</dt>
+      <dd>A specific mechanism — in statute, in budget process, or in reporting practice — that controls how the fund can spend against the original mandate.</dd>
 
       <dt>Lever</dt>
-      <dd>The office, vote, or document change that would remove a blocker. Each blocker on this site names who controls its lever.</dd>
+      <dd>The office, vote, or document change that would loosen a restricting rule. Each rule on this site names who controls its lever.</dd>
 
       <dt>Ballot text</dt>
       <dd>The official wording on the ballot when voters passed the measure. The site treats this as the binding voter mandate.</dd>
@@ -137,7 +137,7 @@
     <div class="prose">
       <h2>Design choices</h2>
       <p>
-        Charts are wide and prose is narrow on purpose. Margin notes carry the auxiliary read on desktop and tuck under the body on phones. Color is restrained — a single accent on the share that has been re-aimed.
+        Charts are wide and prose is narrow on purpose. Margin notes carry the auxiliary read on desktop and tuck under the body on phones. Color is restrained — a single accent on the share moved to new uses.
       </p>
 
       <h2>Provenance</h2>

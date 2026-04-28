@@ -47,8 +47,8 @@
 </script>
 
 <SiteMeta
-  title="PDX Spend — What Portland's voter funds could pay for, and what's blocking them"
-  description="Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. See what each one could pay for tomorrow, and the named rule blocking it."
+  title="PDX Spend — What Portland's voter funds could pay for, and the rule controlling each one"
+  description="Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. See what each one could pay for tomorrow, and the rule controlling each one."
   path="/"
   type="website"
   oembedIds={['pdxspend-hero']}
@@ -194,8 +194,8 @@
 
   <section class="container">
     <ShareBlock
-      headline="Seven Portland voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. Here&rsquo;s what each one could pay for, and what&rsquo;s blocking it."
-      summary="Pick a fund. See what it could buy. See who controls the rule that stops it. PDX Spend."
+      headline="Seven Portland voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. Here&rsquo;s what each one could pay for, and the rule controlling each one."
+      summary="Pick a fund. See what it could buy. Find who holds the lever. PDX Spend."
       url={siteUrl('/')}
     />
   </section>
@@ -284,7 +284,7 @@
     color: var(--ink-2);
     max-width: none;
   }
-  @media (max-width: 720px) {
+  @media (max-width: 639px) {
     .how-list { grid-template-columns: 1fr; gap: 0.8rem; }
   }
 </style>

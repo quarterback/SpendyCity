@@ -10,7 +10,7 @@
 export const chartColors = {
   /** Dollars still aimed where voters approved. Editorial ink. */
   restricted: '#161513',
-  /** Dollars re-aimed since enactment. Burnt-sienna accent. */
+  /** Dollars moved to new uses since enactment. Burnt-sienna accent. */
   movable: '#b23c1a',
   /** Committed but not yet spent. Lighter neutral. */
   obligated: '#c5bfae',

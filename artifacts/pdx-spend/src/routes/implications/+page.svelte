@@ -40,7 +40,7 @@
 
 <SiteMeta
   title="Levers — PDX Spend"
-  description="Five named structural changes that would unblock the seven Portland-area voter funds. Each names who controls the lever."
+  description="Five named structural changes that would loosen the rules across the seven Portland-area voter funds. Each names who controls the lever."
   path="/implications/"
   type="article"
 />
@@ -48,7 +48,7 @@
 <article>
   <header class="container fund-header">
     <p class="kicker">LEVERS · ISSUE 01</p>
-    <h1 class="article-title">Five levers that unblock the seven funds</h1>
+    <h1 class="article-title">Five levers across the seven funds</h1>
     <p class="article-deck">
       Each lever is mechanical, not rhetorical. Each one names the office that controls it.
     </p>
@@ -57,7 +57,7 @@
   <section class="container two-col">
     <div class="prose">
       <p>
-        The pattern across the seven funds is consistent enough to fix structurally. The five changes below would each remove one of the named blockers across the whole portfolio. None of them require a ballot measure. All of them require a vote.
+        The pattern across the seven funds is consistent enough to fix structurally. The five changes below each loosen one of the named rules across the whole portfolio. None require a ballot measure. All require a vote.
       </p>
     </div>
     <aside class="margin-note">
@@ -86,7 +86,7 @@
 
   <section class="container">
     <ShareBlock
-      headline="Five named levers would unblock seven Portland-area voter funds. None requires a ballot measure."
+      headline="Five named levers across seven Portland-area voter funds. None requires a ballot measure."
       summary="Sunset, carryover cap, deployment plan, no-redefinition-without-voters, third-party outcome verification. PDX Spend."
       url={siteUrl('/implications/')}
     />

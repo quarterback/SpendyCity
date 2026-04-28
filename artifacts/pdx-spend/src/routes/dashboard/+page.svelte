@@ -38,7 +38,7 @@
 
 <SiteMeta
   title="Dashboard — PDX Spend"
-  description="All seven Portland-area voter funds in one frame. Three views: dollars, share re-aimed, and how much each is still on-mission."
+  description="All seven Portland-area voter funds in one frame. Three views: dollars, share moved to new uses, and how much each is still on-mission."
   path="/dashboard/"
   type="article"
   oembedIds={['dashboard']}
@@ -49,7 +49,7 @@
     <p class="kicker">DASHBOARD · ALL SEVEN FUNDS</p>
     <h1 class="article-title">All seven funds, side by side</h1>
     <p class="article-deck">
-      Same dollars, three angles. Switch between absolute balance, share re-aimed, and how much each fund is still on-mission.
+      Same dollars, three angles. Switch between absolute balance, share moved to new uses, and how much each fund is still on-mission.
     </p>
   </header>
 
@@ -57,12 +57,12 @@
     <div class="dash-controls">
       <div class="seg" role="group" aria-label="Choose dashboard view">
         <button type="button" aria-pressed={mode === 'dollars'} class:active={mode === 'dollars'} onclick={() => (mode = 'dollars')}>Dollars</button>
-        <button type="button" aria-pressed={mode === 'percent'} class:active={mode === 'percent'} onclick={() => (mode = 'percent')}>Share re-aimed</button>
+        <button type="button" aria-pressed={mode === 'percent'} class:active={mode === 'percent'} onclick={() => (mode = 'percent')}>Share moved</button>
         <button type="button" aria-pressed={mode === 'trajectory'} class:active={mode === 'trajectory'} onclick={() => (mode = 'trajectory')}>Still on-mission</button>
       </div>
       <div class="dash-summary">
         <span><strong>{formatUSD(TOTAL_MODELED_BALANCE)}</strong> sitting today</span>
-        <span class="accent"><strong>{formatUSD(TOTAL_MOVABLE)}</strong> already re-aimed</span>
+        <span class="accent"><strong>{formatUSD(TOTAL_MOVABLE)}</strong> moved to new uses</span>
         <span>{Math.round((TOTAL_MOVABLE / TOTAL_MODELED_BALANCE) * 100)}% across the seven</span>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
   <section class="container-wide">
     <ChartFrame
-      title={mode === 'dollars' ? 'Balance by fund' : mode === 'percent' ? 'Share re-aimed, by fund' : 'Share still on-mission, by fund'}
+      title={mode === 'dollars' ? 'Balance by fund' : mode === 'percent' ? 'Share moved to new uses, by fund' : 'Share still on-mission, by fund'}
       sub={mode === 'trajectory' ? '100% means a fund is still spending entirely on what voters approved.' : 'Sorted by absolute balance. Click a fund to open it.'}
       source="PDX Spend"
       modeled={true}
@@ -95,7 +95,7 @@
             <th>Passed</th>
             <th>Sitting</th>
             <th>On-mission</th>
-            <th>Re-aimed</th>
+            <th>Moved</th>
             <th>Off-mission</th>
             <th><span class="sr-only">Open fund detail</span></th>
           </tr>
@@ -134,7 +134,7 @@
   <section class="container">
     <ShareBlock
       headline="Seven Portland-area voter funds, side by side. Same dollars, three angles."
-      summary="Dollars, share re-aimed, share still on-mission. Embeddable. PDX Spend."
+      summary="Dollars, share moved, share still on-mission. Embeddable. PDX Spend."
       url={siteUrl('/dashboard/')}
     />
   </section>

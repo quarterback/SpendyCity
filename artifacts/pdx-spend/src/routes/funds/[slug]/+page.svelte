@@ -79,7 +79,7 @@
       <div><dt>Statute</dt><dd>{fund.enablingCode}</dd></div>
       <div><dt>Sitting today</dt><dd>{formatUSD(fund.modeledBalance)}</dd></div>
       <div><dt>Still aimed where you voted</dt><dd>{formatPct(fund.modeledRestrictedShare)}</dd></div>
-      <div><dt>Re-aimed since</dt><dd class="accent">{formatPct(fund.modeledMovableShare)}</dd></div>
+      <div><dt>Moved since</dt><dd class="accent">{formatPct(fund.modeledMovableShare)}</dd></div>
     </dl>
   </header>
 
@@ -113,10 +113,10 @@
 
   {#if fund.blockers && fund.blockers.length > 0}
     <section class="container">
-      <p class="section-eyebrow">What&rsquo;s blocking it</p>
-      <h2 class="section-title">Named obstacles, with the lever and the office</h2>
+      <p class="section-eyebrow">The rules</p>
+      <h2 class="section-title">Each rule, the lever, and the office</h2>
       <p class="section-deck">
-        Each blocker is a mechanism, not a personality. The defense is the line routinely offered for it. The rebuttal is why that line doesn&rsquo;t hold up.
+        Each rule is a mechanism, not a personality. The defense is the line routinely offered for it. The rebuttal is the editorial response.
       </p>
       <div class="blocker-grid">
         {#each fund.blockers as b, i}
@@ -129,7 +129,7 @@
   {#if fund.ifUnblocked}
     <section class="container">
       <div class="if-unblocked">
-        <p class="lbl">If unblocked</p>
+        <p class="lbl">If the rule lifts</p>
         <p>{fund.ifUnblocked}</p>
       </div>
     </section>
@@ -321,7 +321,7 @@
 
   <section class="container">
     <ShareBlock
-      headline="{fund.name}: {formatUSD(fund.modeledBalance)} could pay for what you voted for. Here&rsquo;s what&rsquo;s blocking it."
+      headline="{fund.name}: {formatUSD(fund.modeledBalance)} could pay for what you voted for. Here&rsquo;s the rule controlling it."
       summary={fund.ifUnblocked ?? fund.oneLineStatus}
       url={siteUrl(`/funds/${fund.slug}/`)}
     />

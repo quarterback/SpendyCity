@@ -34,7 +34,7 @@
     const total = rows.reduce((s, r) => s + r.balance, 0);
     const movableTotal = rows.reduce((s, r) => s + r.movable, 0);
     const pct = total > 0 ? Math.round((movableTotal / total) * 100) : 0;
-    return `Year-end balance across ${rows.length} funds totaling ${formatChartUSD(total, 'precise')}, of which ${pct}% has been re-aimed.`;
+    return `Year-end balance across ${rows.length} funds totaling ${formatChartUSD(total, 'precise')}, of which ${pct}% has moved to new uses.`;
   });
 
   function showTip(clientX: number, clientY: number, html: string, sticky = false) {
@@ -88,7 +88,7 @@
       const movablePct = r.balance > 0 ? Math.round((r.movable / r.balance) * 100) : 0;
       const tipHtml =
         `<strong>${r.shortName}</strong> · ${formatChartUSD(r.balance, 'precise')} sitting` +
-        `<span class="sub">${formatChartUSD(r.movable, 'precise')} re-aimed (${movablePct}%) · ${formatChartUSD(r.restricted, 'precise')} still on-mission</span>`;
+        `<span class="sub">${formatChartUSD(r.movable, 'precise')} moved (${movablePct}%) · ${formatChartUSD(r.restricted, 'precise')} still on-mission</span>`;
 
       // restricted base block
       g.append('rect')
@@ -116,7 +116,7 @@
         .attr('fill', 'transparent')
         .attr('tabindex', 0)
         .attr('role', 'button')
-        .attr('aria-label', `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% re-aimed`)
+        .attr('aria-label', `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% moved`)
         .style('cursor', 'pointer')
         .on('pointerenter pointermove', (event: PointerEvent) => {
           const sticky = event.pointerType !== 'mouse';
@@ -124,7 +124,7 @@
         })
         .on('pointerdown', (event: PointerEvent) => {
           selectedSlug = r.shortName;
-          liveMsg = `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% re-aimed`;
+          liveMsg = `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% moved`;
           showTip(event.clientX, event.clientY, tipHtml, true);
         })
         .on('pointerleave', (event: PointerEvent) => {
@@ -134,7 +134,7 @@
         .on('focus', function (this: SVGRectElement) {
           const rect = this.getBoundingClientRect();
           selectedSlug = r.shortName;
-          liveMsg = `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% re-aimed`;
+          liveMsg = `${r.shortName}: ${formatChartUSD(r.balance, 'precise')} sitting, ${movablePct}% moved`;
           showTip(rect.left + rect.width / 2, rect.top + rect.height / 2, tipHtml, true);
         })
         .on('blur', () => hideTip(true));
@@ -222,7 +222,7 @@
     <p class="chart-selection-chip">
       <span class="chip-year">{selectedRow.shortName}</span>
       <span class="chip-val">{formatChartUSD(selectedRow.balance, 'precise')} sitting</span>
-      <span class="chip-sub">{formatChartUSD(selectedRow.movable, 'precise')} re-aimed ({pct}%)</span>
+      <span class="chip-sub">{formatChartUSD(selectedRow.movable, 'precise')} moved ({pct}%)</span>
       <button class="chip-clear" onclick={clearSelection} aria-label="Clear selection">×</button>
     </p>
   {/if}

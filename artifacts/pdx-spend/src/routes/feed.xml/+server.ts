@@ -6,7 +6,7 @@ export const prerender = true;
 
 const SITE_TITLE = 'PDX Spend';
 const SITE_DESCRIPTION =
-  'Seven Portland-area voter funds. What each one could pay for, and the named rule blocking it.';
+  'Seven Portland-area voter funds. What each one could pay for, and the rule controlling each one.';
 
 function escapeXml(input: string): string {
   return input
@@ -37,13 +37,13 @@ export const GET: RequestHandler = async () => {
       title: 'PDX Spend — Seven Portland-area voter funds, in plain view',
       url: `${SITE_URL}/`,
       description:
-        'What each of the seven funds could pay for, and the named rule that purports to stop it.'
+        'What each of the seven funds could pay for, and the rule controlling each one.'
     },
     {
       title: 'All seven funds, side by side',
       url: `${SITE_URL}/dashboard/`,
       description:
-        'Three angles on the same dollars: balance, share re-aimed, share still on-mission.'
+        'Three angles on the same dollars: balance, share moved to new uses, share still on-mission.'
     },
     {
       title: 'Write a memo for any fund',
@@ -56,7 +56,7 @@ export const GET: RequestHandler = async () => {
       description: 'What the figures mean, where they come from, and a glossary of every term.'
     },
     {
-      title: 'Five levers that would unblock the seven funds',
+      title: 'Five levers for the seven funds',
       url: `${SITE_URL}/implications/`,
       description: 'Mechanical, not rhetorical. Each lever names who controls it.'
     }

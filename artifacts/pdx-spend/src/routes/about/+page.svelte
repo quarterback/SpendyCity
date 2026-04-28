@@ -15,7 +15,7 @@
     <p class="kicker">ABOUT</p>
     <h1 class="article-title">PDX Spend</h1>
     <p class="article-deck">
-      A tool for showing what seven Portland-area voter funds could pay for, and the named rule that purports to stop them.
+      A tool for showing what seven Portland-area voter funds could pay for, and the rule controlling each one.
     </p>
   </header>
 
@@ -23,7 +23,7 @@
     <div class="prose">
       <h2>What this is</h2>
       <p>
-        PDX Spend is a single-issue tool. It documents seven public funds in one region. For each one it shows three things: what the fund could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
+        PDX Spend is a single-issue tool. It documents seven public funds in one region. For each one it shows three things: what the fund could pay for at its current balance, the rule controlling how the money moves, and who holds that lever.
       </p>
       <p>
         It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. The agent endpoint can rewrite each fund&rsquo;s memo on demand.
@@ -39,7 +39,7 @@
 
       <h2>How to use it</h2>
       <p>
-        Pick a fund. Read what it could pay for. Read who controls the blocker. Send the page to that office. Every chart has download buttons for PNG and CSV.
+        Pick a fund. See what it could pay for. Find who holds the lever. Send them the page. Every chart has download buttons for PNG and CSV.
       </p>
 
       <h2>Status of the figures</h2>
@@ -55,7 +55,7 @@
       </p>
       <h4 style="margin-top: 22px">Cite this</h4>
       <p>
-        Bronson, R. (2026). <em>PDX Spend: Seven Portland-area voter funds, what they could pay for, and what&rsquo;s blocking it.</em> Public Capacity Lab / State Capacity AI.
+        Bronson, R. (2026). <em>PDX Spend: Seven Portland-area voter funds, what they could pay for, and the rule controlling each one.</em> Public Capacity Lab / State Capacity AI.
       </p>
       <h4 style="margin-top: 22px">License</h4>
       <p>
