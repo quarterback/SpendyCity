@@ -10,14 +10,16 @@ app.use(
   pinoHttp({
     logger,
     serializers: {
-      req(req) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      req(req: any) {
         return {
           id: req.id,
           method: req.method,
-          url: req.url?.split("?")[0],
+          url: (req.url as string | undefined)?.split("?")[0],
         };
       },
-      res(res) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      res(res: any) {
         return {
           statusCode: res.statusCode,
         };
