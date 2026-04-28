@@ -1,6 +1,8 @@
 <script lang="ts">
   import * as d3 from 'd3';
   import { onMount } from 'svelte';
+  import { formatChartUSD } from '$lib/charts/format';
+  import { chartColors, chartPatternDefs, CHART_COMPACT_BREAKPOINT } from '$lib/charts/colors';
 
   export type Mode = 'dollars' | 'percent' | 'trajectory';
 
@@ -29,39 +31,73 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
-  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
+  let tip = $state({ vis: false, x: 0, y: 0, html: '', sticky: false });
+  let selectedSlug = $state<string | null>(null);
+  let liveMsg = $state('');
+  const selectedRow = $derived(rows.find((r) => r.shortName === selectedSlug) ?? null);
+  function clearSelection() { selectedSlug = null; hideTip(true); }
 
-  const margin = { top: 28, right: 60, bottom: 36, left: 168 };
+  const isCompact = $derived(renderedW < CHART_COMPACT_BREAKPOINT);
+  const margin = $derived(
+    isCompact
+      ? { top: 22, right: 16, bottom: 56, left: 96 }
+      : { top: 28, right: 60, bottom: 36, left: 168 }
+  );
 
-  function fmt(n: number) {
-    if (Math.abs(n) >= 1e9) return `$${(n / 1e9).toFixed(2)}B`;
-    if (Math.abs(n) >= 1e6) return `$${(n / 1e6).toFixed(0)}M`;
-    return `$${n}`;
-  }
+  const a11yLabel = $derived.by(() => {
+    if (mode === 'dollars') {
+      const total = rows.reduce((s, r) => s + r.balance, 0);
+      return `Balance by fund. ${rows.length} funds, totaling ${formatChartUSD(total, 'precise')}.`;
+    }
+    if (mode === 'percent') {
+      const totalB = rows.reduce((s, r) => s + r.balance, 0);
+      const totalM = rows.reduce((s, r) => s + r.movable, 0);
+      const pct = totalB > 0 ? Math.round((totalM / totalB) * 100) : 0;
+      return `Share re-aimed, by fund. ${pct}% across the ${rows.length} funds.`;
+    }
+    const avg = Math.round(rows.reduce((s, r) => s + r.drift, 0) / Math.max(rows.length, 1));
+    return `Share still on voter intent, by fund. Average ${avg}%.`;
+  });
 
-  function showTip(event: MouseEvent, html: string) {
+  function showTip(clientX: number, clientY: number, html: string, sticky = false) {
     if (!containerEl) return;
     const r = containerEl.getBoundingClientRect();
-    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+    tip = { vis: true, x: clientX - r.left, y: clientY - r.top, html, sticky };
   }
-  function hideTip() { tip = { ...tip, vis: false }; }
+  function hideTip(force = false) {
+    if (tip.sticky && !force) return;
+    tip = { ...tip, vis: false, sticky: false };
+  }
   function tipFor(d: FundRow) {
     const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
-    return `<strong>${d.shortName}</strong> · ${fmt(d.balance)} sitting<span class="sub">${fmt(d.movable)} re-aimed (${pct}%) · ${fmt(d.restricted)} on-mission · ${100 - Math.round(d.drift)}% drift</span>`;
+    return `<strong>${d.shortName}</strong> · ${formatChartUSD(d.balance, 'precise')} sitting<span class="sub">${formatChartUSD(d.movable, 'precise')} re-aimed (${pct}%) · ${formatChartUSD(d.restricted, 'precise')} on-mission · ${100 - Math.round(d.drift)}% drift</span>`;
   }
+
+  const patternUid = `stack-${Math.random().toString(36).slice(2, 7)}`;
 
   function draw() {
     if (!svgEl) return;
-    hideTip();
+    hideTip(true);
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
     const w = renderedW;
-    const innerW = w - margin.left - margin.right;
-    const innerH = height - margin.top - margin.bottom;
+    const m = margin;
+    const innerW = w - m.left - m.right;
+    const innerH = height - m.top - m.bottom;
 
-    svg.attr('viewBox', `0 0 ${w} ${height}`).attr('width', w).attr('height', height);
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    svg
+      .attr('viewBox', `0 0 ${w} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('role', 'img')
+      .attr('aria-label', a11yLabel);
+
+    const pats = chartPatternDefs(patternUid);
+    svg.append('defs').html(pats.markup);
+
+    const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
 
     const sorted = [...rows].sort((a, b) => b.balance - a.balance);
     const y = d3.scaleBand().domain(sorted.map((r) => r.shortName)).range([0, innerH]).padding(0.22);
@@ -72,16 +108,15 @@
 
       g.append('g')
         .attr('class', 'grid')
-        .call(d3.axisBottom(x).ticks(4).tickSize(innerH).tickFormat(() => '') as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickSize(innerH).tickFormat(() => '') as never);
 
       g.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${innerH})`)
-        .call(d3.axisBottom(x).ticks(4).tickFormat((d) => fmt(+d)) as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickFormat((d) => formatChartUSD(+d, 'compact')) as never);
 
       g.append('g').attr('class', 'axis').call(d3.axisLeft(y) as never);
 
-      // restricted
       g.selectAll('rect.r')
         .data(sorted)
         .enter()
@@ -91,9 +126,8 @@
         .attr('x', 0)
         .attr('width', (d) => x(d.restricted))
         .attr('height', y.bandwidth())
-        .attr('fill', '#161513');
+        .attr('fill', chartColors.restricted);
 
-      // movable
       g.selectAll('rect.m')
         .data(sorted)
         .enter()
@@ -103,30 +137,31 @@
         .attr('x', (d) => x(d.restricted))
         .attr('width', (d) => x(d.movable))
         .attr('height', y.bandwidth())
-        .attr('fill', '#b23c1a');
+        .attr('fill', `url(#${pats.movableId})`);
 
-      // total label
-      g.selectAll('text.t')
-        .data(sorted)
-        .enter()
-        .append('text')
-        .attr('class', 'annotation-label')
-        .attr('x', (d) => x(d.balance) + 6)
-        .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
-        .attr('dy', '0.32em')
-        .attr('fill', '#161513')
-        .text((d) => fmt(d.balance));
+      if (!isCompact) {
+        g.selectAll('text.t')
+          .data(sorted)
+          .enter()
+          .append('text')
+          .attr('class', 'annotation-label')
+          .attr('x', (d) => x(d.balance) + 6)
+          .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
+          .attr('dy', '0.32em')
+          .attr('fill', chartColors.balance)
+          .text((d) => formatChartUSD(d.balance, 'precise'));
+      }
     } else if (mode === 'percent') {
       const x = d3.scaleLinear().domain([0, 1]).range([0, innerW]);
 
       g.append('g')
         .attr('class', 'grid')
-        .call(d3.axisBottom(x).ticks(5).tickSize(innerH).tickFormat(() => '') as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 5).tickSize(innerH).tickFormat(() => '') as never);
 
       g.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${innerH})`)
-        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')) as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 5).tickFormat(d3.format('.0%')) as never);
 
       g.append('g').attr('class', 'axis').call(d3.axisLeft(y) as never);
 
@@ -139,7 +174,7 @@
         .attr('x', 0)
         .attr('width', (d) => x(d.restricted / d.balance))
         .attr('height', y.bandwidth())
-        .attr('fill', '#161513');
+        .attr('fill', chartColors.restricted);
 
       g.selectAll('rect.m')
         .data(sorted)
@@ -150,40 +185,40 @@
         .attr('x', (d) => x(d.restricted / d.balance))
         .attr('width', (d) => x(d.movable / d.balance))
         .attr('height', y.bandwidth())
-        .attr('fill', '#b23c1a');
+        .attr('fill', `url(#${pats.movableId})`);
 
-      g.selectAll('text.t')
-        .data(sorted)
-        .enter()
-        .append('text')
-        .attr('class', 'annotation-label')
-        .attr('x', innerW + 6)
-        .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
-        .attr('dy', '0.32em')
-        .attr('fill', '#b23c1a')
-        .text((d) => `${Math.round((d.movable / d.balance) * 100)}% movable`);
+      if (!isCompact) {
+        g.selectAll('text.t')
+          .data(sorted)
+          .enter()
+          .append('text')
+          .attr('class', 'annotation-label')
+          .attr('x', innerW + 6)
+          .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
+          .attr('dy', '0.32em')
+          .attr('fill', chartColors.movable)
+          .text((d) => `${Math.round((d.movable / d.balance) * 100)}% movable`);
+      }
     } else {
-      // trajectory: drift % vs years since enactment
       const x = d3.scaleLinear().domain([0, 100]).range([0, innerW]);
 
       g.append('g')
         .attr('class', 'grid')
-        .call(d3.axisBottom(x).ticks(4).tickSize(innerH).tickFormat(() => '') as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickSize(innerH).tickFormat(() => '') as never);
 
       g.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${innerH})`)
-        .call(d3.axisBottom(x).ticks(4).tickFormat((d) => `${d}%`) as never);
+        .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickFormat((d) => `${d}%`) as never);
 
       g.append('g').attr('class', 'axis').call(d3.axisLeft(y) as never);
 
-      // intent reference
       g.append('line')
         .attr('x1', x(100))
         .attr('x2', x(100))
         .attr('y1', 0)
         .attr('y2', innerH)
-        .attr('stroke', '#54514a')
+        .attr('stroke', chartColors.intent)
         .attr('stroke-dasharray', '3 3');
 
       g.selectAll('rect.d')
@@ -195,7 +230,7 @@
         .attr('x', 0)
         .attr('width', (d) => x(d.drift))
         .attr('height', y.bandwidth())
-        .attr('fill', '#2c4a52');
+        .attr('fill', chartColors.reserve);
 
       g.selectAll('rect.gap')
         .data(sorted)
@@ -206,22 +241,23 @@
         .attr('x', (d) => x(d.drift))
         .attr('width', (d) => x(100 - d.drift))
         .attr('height', y.bandwidth())
-        .attr('fill', '#b23c1a')
-        .attr('opacity', 0.18);
+        .attr('fill', `url(#${pats.driftId})`);
 
-      g.selectAll('text.t')
-        .data(sorted)
-        .enter()
-        .append('text')
-        .attr('class', 'annotation-label')
-        .attr('x', innerW + 6)
-        .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
-        .attr('dy', '0.32em')
-        .attr('fill', '#b23c1a')
-        .text((d) => `${100 - Math.round(d.drift)}% drift`);
+      if (!isCompact) {
+        g.selectAll('text.t')
+          .data(sorted)
+          .enter()
+          .append('text')
+          .attr('class', 'annotation-label')
+          .attr('x', innerW + 6)
+          .attr('y', (d) => (y(d.shortName) ?? 0) + y.bandwidth() / 2)
+          .attr('dy', '0.32em')
+          .attr('fill', chartColors.movable)
+          .text((d) => `${100 - Math.round(d.drift)}% drift`);
+      }
     }
 
-    // hover hit area: one transparent rect per row covering the full band
+    // hover/tap hit area: one rect per row covering the full band, also focusable
     g.selectAll('rect.hit')
       .data(sorted)
       .enter()
@@ -232,22 +268,64 @@
       .attr('width', innerW)
       .attr('height', y.bandwidth())
       .attr('fill', 'transparent')
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', (d) => {
+        if (mode === 'percent') {
+          const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
+          return `${d.shortName}: ${pct}% movable`;
+        }
+        if (mode === 'trajectory') {
+          return `${d.shortName}: ${Math.round(d.drift)}% on intent, ${100 - Math.round(d.drift)}% drift`;
+        }
+        return `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting`;
+      })
       .style('cursor', 'pointer')
-      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
-      .on('mouseleave', hideTip);
+      .on('pointerenter pointermove', (event: PointerEvent, d) => {
+        const sticky = event.pointerType !== 'mouse';
+        showTip(event.clientX, event.clientY, tipFor(d), sticky);
+      })
+      .on('pointerdown', (event: PointerEvent, d) => {
+        selectedSlug = d.shortName;
+        const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
+        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% re-aimed`;
+        showTip(event.clientX, event.clientY, tipFor(d), true);
+      })
+      .on('pointerleave', (event: PointerEvent) => {
+        if (event.pointerType !== 'mouse') return;
+        hideTip();
+      })
+      .on('focus', function (this: SVGRectElement, _e, d) {
+        const r = this.getBoundingClientRect();
+        selectedSlug = d.shortName;
+        const pct = d.balance > 0 ? Math.round((d.movable / d.balance) * 100) : 0;
+        liveMsg = `${d.shortName}: ${formatChartUSD(d.balance, 'precise')} sitting, ${pct}% re-aimed`;
+        showTip(r.left + r.width / 2, r.top + r.height / 2, tipFor(d), true);
+      })
+      .on('blur', () => hideTip(true));
 
-    // legend
-    const legend = svg.append('g').attr('transform', `translate(${margin.left}, ${height - 12})`);
+    // legend (always below)
+    const legend = svg.append('g').attr('transform', `translate(${m.left}, ${height - (isCompact ? 24 : 12)})`);
     if (mode === 'trajectory') {
-      legend.append('rect').attr('width', 12).attr('height', 8).attr('y', -10).attr('fill', '#2c4a52');
-      legend.append('text').attr('class', 'label').attr('x', 16).attr('y', -3).text('On voter intent');
-      legend.append('rect').attr('x', 130).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', '#b23c1a').attr('opacity', 0.18);
-      legend.append('text').attr('class', 'label').attr('x', 146).attr('y', -3).text('Drift from voter intent');
+      legend.append('rect').attr('width', 12).attr('height', 8).attr('y', -10).attr('fill', chartColors.reserve);
+      legend.append('text').attr('class', 'label').attr('x', 16).attr('y', -3).attr('fill', chartColors.axis).text('On voter intent');
+      if (isCompact) {
+        legend.append('rect').attr('x', 0).attr('y', 6).attr('width', 12).attr('height', 8).attr('fill', `url(#${pats.driftId})`);
+        legend.append('text').attr('class', 'label').attr('x', 16).attr('y', 13).attr('fill', chartColors.axis).text('Drift');
+      } else {
+        legend.append('rect').attr('x', 130).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', `url(#${pats.driftId})`);
+        legend.append('text').attr('class', 'label').attr('x', 146).attr('y', -3).attr('fill', chartColors.axis).text('Drift from voter intent');
+      }
     } else {
-      legend.append('rect').attr('width', 12).attr('height', 8).attr('y', -10).attr('fill', '#161513');
-      legend.append('text').attr('class', 'label').attr('x', 16).attr('y', -3).text('Restricted to voter intent');
-      legend.append('rect').attr('x', 200).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', '#b23c1a');
-      legend.append('text').attr('class', 'label').attr('x', 216).attr('y', -3).text('Movable / reclassified');
+      legend.append('rect').attr('width', 12).attr('height', 8).attr('y', -10).attr('fill', chartColors.restricted);
+      legend.append('text').attr('class', 'label').attr('x', 16).attr('y', -3).attr('fill', chartColors.axis).text('On-mission');
+      if (isCompact) {
+        legend.append('rect').attr('x', 0).attr('y', 6).attr('width', 12).attr('height', 8).attr('fill', `url(#${pats.movableId})`);
+        legend.append('text').attr('class', 'label').attr('x', 16).attr('y', 13).attr('fill', chartColors.axis).text('Re-aimed');
+      } else {
+        legend.append('rect').attr('x', 200).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', `url(#${pats.movableId})`);
+        legend.append('text').attr('class', 'label').attr('x', 216).attr('y', -3).attr('fill', chartColors.axis).text('Re-aimed');
+      }
     }
   }
 
@@ -258,23 +336,39 @@
     draw();
   });
 
+  function onContainerPointerDown(event: PointerEvent) {
+    if (event.target instanceof SVGElement && (event.target as SVGElement).classList.contains('hit')) return;
+    if (tip.sticky) hideTip(true);
+  }
+
   onMount(() => {
     if (svgEl && register) register(svgEl);
     if (!containerEl) return;
     const ro = new ResizeObserver((e) => {
       const w = e[0]?.contentRect.width ?? width;
-      renderedW = Math.max(420, Math.floor(w));
+      renderedW = Math.max(320, Math.floor(w));
     });
     ro.observe(containerEl);
     return () => ro.disconnect();
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%; position:relative;">
-  <svg bind:this={svgEl} role="img" aria-label="Cross-fund stacked bar chart"></svg>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div bind:this={containerEl} style="width:100%; position:relative;" onpointerdown={onContainerPointerDown}>
+  <svg bind:this={svgEl}></svg>
   <div
     class="chart-tip"
     class:visible={tip.vis}
     style="left:{tip.x}px; top:{tip.y}px"
   >{@html tip.html}</div>
+  <p class="sr-only" aria-live="polite">{liveMsg}</p>
+  {#if selectedRow}
+    {@const pct = selectedRow.balance > 0 ? Math.round((selectedRow.movable / selectedRow.balance) * 100) : 0}
+    <p class="chart-selection-chip">
+      <span class="chip-year">{selectedRow.shortName}</span>
+      <span class="chip-val">{formatChartUSD(selectedRow.balance, 'precise')} sitting</span>
+      <span class="chip-sub">{pct}% re-aimed · {100 - Math.round(selectedRow.drift)}% drift</span>
+      <button class="chip-clear" onclick={clearSelection} aria-label="Clear selection">×</button>
+    </p>
+  {/if}
 </div>

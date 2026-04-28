@@ -14,6 +14,14 @@
   --warn: #c2741b;           /* rust */
   --over: #2c4a52;           /* deep teal */
   --grid: #e6e1d3;
+
+  /* Chart-specific tokens (shared with src/lib/charts/colors.ts).
+     Keep these in sync if either side changes. */
+  --chart-grid: #d9d4c7;
+  --chart-axis-text: #54514a;
+  --chart-axis-line: #8a857a;
+  --chart-focus: #b23c1a;
+
   --measure-prose: 36rem;
   --measure-wide: 64rem;
   --side-rail: 14rem;
@@ -885,18 +893,127 @@ table.data tr:hover td { background: var(--paper-2); }
   border-radius: 2px;
   letter-spacing: 0.02em;
   line-height: 1.4;
-  white-space: nowrap;
   z-index: 5;
   transform: translate(-50%, -100%);
   margin-top: -10px;
   opacity: 0;
   transition: opacity 90ms ease;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+  max-width: min(260px, 80vw);
+  white-space: normal;
 }
-.chart-tip.visible { opacity: 1; }
+.chart-tip.visible { opacity: 1; pointer-events: none; }
 svg .annotation-label,
 svg .label,
 svg .axis text { pointer-events: none; }
+svg:focus { outline: none; }
+svg:focus-visible {
+  outline: 2px solid var(--chart-focus, #b23c1a);
+  outline-offset: 2px;
+}
+svg .hit:focus { outline: none; }
+svg .hit:focus-visible {
+  outline: 2px solid var(--chart-focus, #b23c1a);
+  outline-offset: 1px;
+}
+
+.chart-selection-chip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--chart-focus, #b23c1a);
+  background: var(--paper-2, #f4efe6);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+  line-height: 1.4;
+  border-radius: 0 2px 2px 0;
+}
+.chart-selection-chip .chip-year {
+  font-weight: 600;
+  color: var(--chart-focus, #b23c1a);
+  letter-spacing: 0.04em;
+}
+.chart-selection-chip .chip-val {
+  color: var(--ink);
+  font-feature-settings: "tnum" 1;
+}
+.chart-selection-chip .chip-sub {
+  color: var(--ink-3);
+  font-size: 0.66rem;
+}
+.chart-selection-chip .chip-clear {
+  margin-left: auto;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0 8px;
+  background: transparent;
+  border: 1px solid var(--ink-4);
+  color: var(--ink-3);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.chart-selection-chip .chip-clear:hover { color: var(--ink); border-color: var(--ink); }
+.chart-selection-chip .chip-clear:focus-visible {
+  outline: 2px solid var(--chart-focus, #b23c1a);
+  outline-offset: 2px;
+}
+
+.chart-annotation-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--serif, Georgia, serif);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+.chart-annotation-list li {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 6px 10px;
+  align-items: baseline;
+}
+.chart-annotation-list .ann-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--chart-focus, #b23c1a);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+.chart-annotation-list .ann-year {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+}
+.chart-annotation-list .ann-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink);
+  grid-column: 3;
+}
+.chart-annotation-list .ann-body {
+  grid-column: 3;
+  font-size: 0.84rem;
+  color: var(--ink-2);
+}
 .chart-tip strong {
   color: var(--accent);
   font-weight: 500;
