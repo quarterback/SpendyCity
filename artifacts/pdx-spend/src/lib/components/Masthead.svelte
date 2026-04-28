@@ -51,7 +51,7 @@
   }
   .menu-btn:hover { background: var(--ink); color: var(--paper); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 1023px) {
     .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
     :global(.masthead-inner) {
       flex-wrap: wrap;

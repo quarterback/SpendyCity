@@ -14,11 +14,6 @@ function HeroChart($$renderer, $$props) {
     $$renderer2.push(`<div style="width:100%"><svg role="img" aria-label="Modeled carry across all seven restricted funds"></svg></div>`);
   });
 }
-function SparkBalance($$renderer, $$props) {
-  $$renderer.component(($$renderer2) => {
-    $$renderer2.push(`<svg role="img" aria-label="Balance trend"></svg>`);
-  });
-}
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let { data } = $$props;
@@ -104,9 +99,23 @@ function _page($$renderer, $$props) {
     const each_array_1 = ensure_array_like(FUNDS);
     for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
       let fund = each_array_1[$$index_1];
-      $$renderer2.push(`<a class="fund-card"${attr("href", `${stringify(base)}/funds/${stringify(fund.slug)}/`)}><p class="fund-meta">${escape_html(fund.enacted)} · ${escape_html(fund.ballotMeasure ?? fund.enablingCode)}</p> <h3 class="fund-name">${escape_html(fund.name)}</h3> <p class="fund-deck">${escape_html(fund.oneLineStatus)}</p> <div class="fund-spark">`);
-      SparkBalance($$renderer2, { data: fund.cashSeries });
-      $$renderer2.push(`<!----></div> <div class="fund-stats"><span>${escape_html(formatUSD(fund.modeledBalance))} sitting</span> <span class="accent">${escape_html(Math.round(fund.modeledMovableShare * 100))}% re-aimed</span></div></a>`);
+      const topCould = fund.couldFund?.[0];
+      const topBlocker = fund.blockers?.[0];
+      $$renderer2.push(`<a class="fund-card"${attr("href", `${stringify(base)}/funds/${stringify(fund.slug)}/`)}><p class="fund-meta">${escape_html(fund.enacted)} · ${escape_html(fund.ballotMeasure ?? fund.enablingCode)}</p> <h3 class="fund-name">${escape_html(fund.name)}</h3> <p class="fund-balance">${escape_html(formatUSD(fund.modeledBalance))} <span class="lbl">sitting</span></p> `);
+      if (topCould) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<p class="fund-line"><span class="lbl">Could pay for</span> ${escape_html(topCould.item)}</p>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--> `);
+      if (topBlocker) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<p class="fund-line blocker"><span class="lbl">Blocked by</span> ${escape_html(topBlocker.name)}</p>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--> <p class="fund-stats"><span class="accent">${escape_html(Math.round(fund.modeledMovableShare * 100))}% re-aimed</span></p></a>`);
     }
     $$renderer2.push(`<!--]--></div></section> <section class="container">`);
     ShareBlock($$renderer2, {

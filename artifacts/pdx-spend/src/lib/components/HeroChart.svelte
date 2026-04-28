@@ -100,7 +100,7 @@
       .attr('font-size', 10.5)
       .attr('letter-spacing', '0.07em')
       .attr('fill', '#54514a')
-      .text(`SEVEN FUNDS · MODELED CARRY ${fmt(total)} · ${Math.round((movableTotal / total) * 100)}% NOW MOVABLE`);
+      .text(`ALL SEVEN FUNDS · ${fmt(total)} TODAY · ${Math.round((movableTotal / total) * 100)}% RE-AIMED`);
   }
 
   $effect(() => {
@@ -114,7 +114,7 @@
     if (!containerEl) return;
     const ro = new ResizeObserver((e) => {
       const w = e[0]?.contentRect.width ?? width;
-      renderedW = Math.max(560, Math.floor(w));
+      renderedW = Math.max(360, Math.floor(w));
     });
     ro.observe(containerEl);
     return () => ro.disconnect();
@@ -122,5 +122,5 @@
 </script>
 
 <div bind:this={containerEl} style="width:100%">
-  <svg bind:this={svgEl} role="img" aria-label="Modeled carry across all seven restricted funds"></svg>
+  <svg bind:this={svgEl} role="img" aria-label="Money sitting in each of the seven funds today"></svg>
 </div>

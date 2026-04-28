@@ -805,11 +805,10 @@ table.data tr:hover td { background: var(--paper-2); }
   padding-top: 1.2rem;
   border-top: 1px solid var(--rule);
 }
+/* Spec: keep the four-field metadata row as 2×2 on phone so each field
+   stays readable; never collapse to a single tall column. */
 @media (max-width: 1023px) {
   .fund-meta-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 639px) {
-  .fund-meta-grid { grid-template-columns: 1fr; }
 }
 .fund-meta-grid > div { margin: 0; }
 .fund-meta-grid dt {
@@ -834,16 +833,18 @@ table.data tr:hover td { background: var(--paper-2); }
   padding-top: 0.5rem;
   padding-bottom: 3rem;
 }
+/* Scroll-driven section.
+   Base rules describe the desktop layout (sticky chart on the left,
+   faded steps that brighten as they scroll into view on the right).
+   The mobile override below collapses the layout to a single column,
+   turns off the sticky behavior, and removes the opacity fade so the
+   step text doesn't read as overlapping the chart. The override must
+   come AFTER the base rules so source order wins on small screens. */
 .scrolly-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
-}
-@media (max-width: 1023px) {
-  .scrolly-grid { grid-template-columns: 1fr; gap: 1.4rem; }
-  .scrolly-sticky { position: relative; top: 0; }
-  .scrolly .step { min-height: auto; padding: 1.6rem 0; opacity: 1; }
 }
 .scrolly-sticky {
   position: sticky;
@@ -859,6 +860,34 @@ table.data tr:hover td { background: var(--paper-2); }
 }
 .scrolly .step:first-child { border-top: 0; }
 .scrolly .step.active { opacity: 1; }
+
+/* Mobile / tablet: single column, no sticky chart, no fade. */
+@media (max-width: 1023px) {
+  .scrolly-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .scrolly-sticky {
+    position: relative;
+    top: 0;
+  }
+  .scrolly .step {
+    min-height: auto;
+    padding: 1.6rem 0;
+    opacity: 1;
+    transition: none;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+/* Honor the system "reduce motion" setting: drop the fade and the
+   scroll-driven opacity so all steps read as static prose. */
+@media (prefers-reduced-motion: reduce) {
+  .scrolly .step {
+    transition: none;
+    opacity: 1;
+  }
+}
 .step-year {
   font-family: var(--mono);
   font-size: 0.78rem;

@@ -107,7 +107,7 @@
     margin: 0.9rem 0 0;
     max-width: none;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 639px) {
     .row { grid-template-columns: 1fr; gap: 0.3rem; }
     .row-right { text-align: left; }
   }

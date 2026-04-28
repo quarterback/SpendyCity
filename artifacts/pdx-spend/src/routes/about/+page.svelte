@@ -23,7 +23,7 @@
     <div class="prose">
       <h2>What this is</h2>
       <p>
-        PDX Spend is a single-issue tool. It documents seven public funds in one region and shows, for each one, three things: what it could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
+        PDX Spend is a single-issue tool. It documents seven public funds in one region. For each one it shows three things: what the fund could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
       </p>
       <p>
         It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. The agent endpoint can rewrite each fund&rsquo;s memo on demand.

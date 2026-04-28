@@ -34,7 +34,9 @@
     {#if modeled}<span class="chart-modeled-badge">MODELED</span>{/if}
   </div>
   {#if sub}<p class="chart-sub">{sub}</p>{/if}
-  {@render children({ register })}
+  <div class="chart-body">
+    {@render children({ register })}
+  </div>
   {#if source}<p class="chart-source">Source · {source}</p>{/if}
   {#if (csvHeaders && csvRows) || svgEl}
     <div class="chart-tools">
@@ -45,6 +47,13 @@
 </figure>
 
 <style>
+  /* Wrap the chart so it can scroll horizontally inside the figure
+     instead of forcing the whole page to scroll on small screens. */
+  .chart-body {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .chart-header {
     display: flex;
     align-items: baseline;

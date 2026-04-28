@@ -88,7 +88,7 @@
     if (!containerEl) return;
     const ro = new ResizeObserver((e) => {
       const w = e[0]?.contentRect.width ?? width;
-      renderedW = Math.max(320, Math.floor(w));
+      renderedW = Math.max(280, Math.floor(w));
     });
     ro.observe(containerEl);
     return () => ro.disconnect();
@@ -96,5 +96,5 @@
 </script>
 
 <div bind:this={containerEl} style="width:100%">
-  <svg bind:this={svgEl} role="img" aria-label="Unobligated reserve by year"></svg>
+  <svg bind:this={svgEl} role="img" aria-label="Money sitting unspent in this fund by year"></svg>
 </div>

@@ -26,7 +26,7 @@
         Every dollar amount on the site is <em>modeled</em> until audited records replace it. That means: the shape and order of magnitude come from real audits, ordinances, and bureau reports, but the exact year-end numbers were reconstructed.
       </p>
       <p>
-        Every chart on the site currently carries a <code>MODELED</code> badge. Methodology defines the term once, and the badge handles the disclosure on the page; charts will lose the badge fund-by-fund as audited series replace the modeled ones.
+        Every chart on the site currently carries a <code>MODELED</code> badge. The methodology page defines the term once, and the badge handles the disclosure on the page. Each chart loses its badge as soon as audited figures replace the modeled ones.
       </p>
       <p>
         The agent pipeline running behind this site builds an audited monthly figure set as documents become available. Replacing a modeled series with an audited one is a one-file edit per fund.
@@ -85,6 +85,15 @@
 
       <dt>Statute-restricted (enabling-act-restricted) fund</dt>
       <dd>Money collected under a state law or city ordinance for a specific purpose. The ordinance is the rule, and a council vote can change it.</dd>
+
+      <dt>Ordinance</dt>
+      <dd>A rule passed by a city council that has the force of law inside that city. Council can amend or repeal an ordinance with a later vote, which is how a fund&rsquo;s eligible uses get widened.</dd>
+
+      <dt>Voter intent (voter mandate)</dt>
+      <dd>What the ballot text actually said the fund was for, when voters passed it. The site treats the ballot text as the binding mandate, and reads later changes against it.</dd>
+
+      <dt>Redirected</dt>
+      <dd>A dollar that was approved at the ballot for one purpose, then later spent on a different purpose. The redirection happens through a council vote, a budget rewrite, or a broadened eligible-uses list.</dd>
 
       <dt>Sitting today / balance</dt>
       <dd>The amount of money in the fund right now that hasn&rsquo;t been spent yet.</dd>
