@@ -3,8 +3,12 @@
    * Per-page Open Graph + Twitter card metadata. The 1200x630 OG image is a
    * single brand placeholder shipped under /static/og-default.svg; per-page
    * overrides are accepted via the `image` prop.
+   *
+   * oembedIds: chart IDs for which to emit <link rel="alternate" type="application/json+oembed">
+   * discovery tags, so platforms like Notion, Substack, and Ghost can auto-unfurl.
    */
   import { SITE_URL } from '$lib/config';
+  import { CHART_REGISTRY, chartOembedUrl } from '$lib/charts/registry';
 
   interface Props {
     title: string;
@@ -12,12 +16,9 @@
     path?: string;
     image?: string;
     type?: 'website' | 'article';
+    oembedIds?: string[];
   }
 
-  // PNG is the only OG image format that all of Twitter, Bluesky,
-  // Facebook, LinkedIn, Slack, and iMessage will reliably rasterize.
-  // The SVG is kept in /static as the source of truth and re-rendered
-  // by scripts/build-og-image.ts.
   const DEFAULT_OG_IMAGE = '/og-default.png';
 
   const {
@@ -25,7 +26,8 @@
     description,
     path = '/',
     image = DEFAULT_OG_IMAGE,
-    type = 'article'
+    type = 'article',
+    oembedIds = []
   }: Props = $props();
 
   function toAbsoluteUrl(p: string): string {
@@ -36,6 +38,16 @@
 
   const fullUrl = $derived(toAbsoluteUrl(path));
   const fullImage = $derived(toAbsoluteUrl(image));
+
+  const oembedLinks = $derived(
+    oembedIds
+      .map((id) => {
+        const meta = CHART_REGISTRY.get(id);
+        if (!meta) return null;
+        return { href: chartOembedUrl(id), title: meta.title };
+      })
+      .filter(Boolean) as { href: string; title: string }[]
+  );
 </script>
 
 <svelte:head>
@@ -59,4 +71,8 @@
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={fullImage} />
   <meta name="twitter:image:alt" content={title} />
+
+  {#each oembedLinks as link}
+    <link rel="alternate" type="application/json+oembed" href={link.href} title={link.title} />
+  {/each}
 </svelte:head>

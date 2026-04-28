@@ -3,6 +3,8 @@
    * Pre-formatted social copy with a copy-to-clipboard button. Renders the
    * sharing affordance specified in the project brief: short post copy a
    * reader can lift verbatim to Bluesky / Mastodon / X / LinkedIn.
+   * Attribution "— PDX Spend, [URL]" is appended so credit is preserved
+   * even when the OG card does not render.
    */
 
   interface Props {
@@ -17,7 +19,7 @@
 
 ${summary}
 
-${url}`);
+— PDX Spend, ${url}`);
 
   let copied = $state(false);
   let timeout: ReturnType<typeof setTimeout> | undefined;

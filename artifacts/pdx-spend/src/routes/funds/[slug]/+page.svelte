@@ -53,6 +53,7 @@
   description={fund.oneLineStatus}
   path={`/funds/${fund.slug}/`}
   type="article"
+  oembedIds={[`${fund.slug}-cash`, `${fund.slug}-promise`, `${fund.slug}-reserve`, `${fund.slug}-drift`]}
 />
 
 <article>
@@ -147,6 +148,7 @@
           sub="Year-end balance. Marks indicate audits and council actions."
           source="PDX Spend"
           modeled={true}
+          chartId="{fund.slug}-cash"
           pngName="{fund.slug}-cash.png"
           csvHeaders={cashCsvHeaders}
           csvRows={cashCsvRows}
@@ -191,6 +193,7 @@
       sub="Planned dollars next to dollars that actually shipped."
       source="PDX Spend"
       modeled={true}
+      chartId="{fund.slug}-promise"
       pngName="{fund.slug}-promise.png"
       csvHeaders={promiseCsvHeaders}
       csvRows={promiseCsvRows}
@@ -221,6 +224,7 @@
       title="Money sitting unspent, year by year"
       source="PDX Spend"
       modeled={true}
+      chartId="{fund.slug}-reserve"
       pngName="{fund.slug}-reserve.png"
     >
       {#snippet children({ register })}
@@ -249,6 +253,7 @@
       title="Share still aimed where you voted"
       source="PDX Spend"
       modeled={true}
+      chartId="{fund.slug}-drift"
       pngName="{fund.slug}-drift.png"
     >
       {#snippet children({ register })}

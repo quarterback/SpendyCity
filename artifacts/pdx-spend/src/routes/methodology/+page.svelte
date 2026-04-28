@@ -147,7 +147,10 @@
 
       <h2>Download and reuse</h2>
       <p>
-        Each chart has buttons for the rendered PNG and the underlying CSV. The dashboard has a copy-to-clipboard embed snippet. Code under MIT, prose under CC BY 4.0.
+        Each chart has download buttons for the rendered PNG and the underlying CSV. Use the "Share / Embed" button on any chart to get an iframe snippet and a direct embed link. Every embed carries a non-removable credit line linking back to the source page on PDX Spend.
+      </p>
+      <p>
+        See the <a href="{base}/embed/">embeddable charts index</a> for a full list of what's embeddable and the attribution policy. Code under MIT, prose under CC BY 4.0.
       </p>
     </div>
     <aside class="margin-note">
@@ -157,7 +160,8 @@
         <a href="{base}/dashboard/">Dashboard</a><br />
         <a href="{base}/agent/">Agent demo</a><br />
         <a href="{base}/implications/">Levers</a><br />
-        <a href="{base}/about/">About</a>
+        <a href="{base}/about/">About</a><br />
+        <a href="{base}/embed/">Embeddable charts</a>
       </p>
     </aside>
   </section>

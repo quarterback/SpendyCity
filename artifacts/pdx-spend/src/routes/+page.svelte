@@ -51,6 +51,7 @@
   description="Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. See what each one could pay for tomorrow, and the named rule blocking it."
   path="/"
   type="website"
+  oembedIds={['pdxspend-hero']}
 />
 
 <article>
@@ -82,6 +83,7 @@
       sub="Each bar is one fund. The orange share is the part already re-aimed."
       source="PDX Spend"
       modeled={true}
+      chartId="pdxspend-hero"
       pngName="pdxspend-hero.png"
       csvHeaders={csvHeaders}
       csvRows={csvRows}

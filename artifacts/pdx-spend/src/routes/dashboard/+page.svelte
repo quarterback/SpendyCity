@@ -7,6 +7,7 @@
   import { siteUrl } from '$lib/config';
   import { FUNDS, TOTAL_MODELED_BALANCE, TOTAL_MOVABLE } from '$lib/data/funds';
   import { formatUSD } from '$lib/utils/format';
+  import { chartIframeSnippet, CHART_REGISTRY } from '$lib/charts/registry';
 
   let mode = $state<'dollars' | 'percent' | 'trajectory'>('dollars');
 
@@ -24,7 +25,8 @@
   const csvHeaders = ['Fund', 'Balance', 'Restricted', 'Movable', 'Drift_Pct'];
   const csvRows = rows.map((r) => [r.shortName, Math.round(r.balance), Math.round(r.restricted), Math.round(r.movable), Math.round(r.drift)]);
 
-  const embedSnippet = `<iframe src="${siteUrl('/dashboard/')}" width="100%" height="640" style="border:1px solid #161513"></iframe>`;
+  const dashMeta = CHART_REGISTRY.get('dashboard')!;
+  const embedSnippet = chartIframeSnippet('dashboard', dashMeta);
   let copied = $state(false);
   function copyEmbed() {
     navigator.clipboard.writeText(embedSnippet).then(() => {
@@ -39,6 +41,7 @@
   description="All seven Portland-area voter funds in one frame. Three views: dollars, share re-aimed, and how much each is still on-mission."
   path="/dashboard/"
   type="article"
+  oembedIds={['dashboard']}
 />
 
 <article>
@@ -71,6 +74,7 @@
       sub={mode === 'trajectory' ? '100% means a fund is still spending entirely on what voters approved.' : 'Sorted by absolute balance. Click a fund to open it.'}
       source="PDX Spend"
       modeled={true}
+      chartId="dashboard"
       pngName="dashboard-{mode}.png"
       csvHeaders={csvHeaders}
       csvRows={csvRows}
