@@ -29,7 +29,7 @@
         Every chart on the site currently carries a <code>MODELED</code> badge. The methodology page defines the term once, and the badge handles the disclosure on the page. Each chart loses its badge as soon as audited figures replace the modeled ones.
       </p>
       <p>
-        The agent pipeline running behind this site builds an audited monthly figure set as documents become available. Replacing a modeled series with an audited one is a one-file edit per fund.
+        Audited figures land as the underlying documents become available. Replacing a modeled series with an audited one is a one-file edit per fund, and the chart loses its badge on the next deploy.
       </p>
 
       <h2>Why model</h2>

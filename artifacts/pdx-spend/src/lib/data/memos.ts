@@ -1,9 +1,9 @@
 /**
- * Pre-generated agent memos for each fund.
+ * Pre-generated memos for each fund.
  * Source files live as plain markdown in src/content/funds/<slug>.md so they
- * can be edited by non-engineers and version-controlled cleanly. They render
- * on /agent before the user clicks "regenerate" — and as a fallback when the
- * live endpoint is unavailable.
+ * can be edited by non-engineers and version-controlled cleanly. They are
+ * bundled at build time and rendered into the static fund pages — the site
+ * has no live regeneration endpoint.
  *
  * Voice: dry, technical, public-finance-officer. No editorializing.
  */

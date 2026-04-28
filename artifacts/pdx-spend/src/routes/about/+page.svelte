@@ -26,12 +26,12 @@
         PDX Spend is a single-issue tool. It documents seven public funds in one region. For each one it shows three things: what the fund could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
       </p>
       <p>
-        It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. The agent endpoint can rewrite each fund&rsquo;s memo on demand.
+        It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. Each fund&rsquo;s memo ships with the page, prerendered alongside the interactive charts.
       </p>
 
       <h2>Who built it</h2>
       <p>
-        Reporting and design by <strong>Ron Bronson</strong>, working under <strong>Public Capacity Lab</strong> and <strong>State Capacity AI</strong>. The agent endpoint runs Anthropic&rsquo;s Claude (Sonnet) via Replit&rsquo;s AI integration proxy.
+        Reporting and design by <strong>Ron Bronson</strong>, working under <strong>Public Capacity Lab</strong> and <strong>State Capacity AI</strong>.
       </p>
       <p>
         Editorial reference: <em>The Pudding</em> (chart-led longform), the <em>Financial Times</em> visual desk (chart language, restraint), <em>Reveal</em> and <em>ProPublica</em> (structural framing of public-money stories), <a href="https://plainlanguage.gov" rel="noopener">plainlanguage.gov</a> (writing standards).
@@ -44,7 +44,7 @@
 
       <h2>Status of the figures</h2>
       <p>
-        Every figure on this site is modeled until audited records replace it. The agent pipeline behind the site is building the audited set as documents become available. See the <a href="{base}/methodology/">methodology</a>.
+        Every figure on this site is modeled until audited records replace it. As audited documents become available, the modeled series get swapped out and the chart loses its <code>MODELED</code> badge. See the <a href="{base}/methodology/">methodology</a>.
       </p>
     </div>
     <aside class="margin-note">
