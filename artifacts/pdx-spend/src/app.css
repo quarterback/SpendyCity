@@ -455,9 +455,6 @@ svg .annotation-label {
   flex-wrap: wrap;
 }
 
-/* (Legacy `.scrolly` block deleted — the slug page uses `.scrolly-grid`
-   with `class:active`; rules live further down in this file.) */
-
 /* Dashboard toggle */
 .toggle-row {
   display: flex;
@@ -803,8 +800,6 @@ table.data tr:hover td { background: var(--paper-2); }
   padding-top: 1.2rem;
   border-top: 1px solid var(--rule);
 }
-/* Spec: keep the four-field metadata row as 2×2 on phone so each field
-   stays readable; never collapse to a single tall column. */
 @media (max-width: 1023px) {
   .fund-meta-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -831,13 +826,6 @@ table.data tr:hover td { background: var(--paper-2); }
   padding-top: 0.5rem;
   padding-bottom: 3rem;
 }
-/* Scroll-driven section.
-   Base rules describe the desktop layout (sticky chart on the left,
-   faded steps that brighten as they scroll into view on the right).
-   The mobile override below collapses the layout to a single column,
-   turns off the sticky behavior, and removes the opacity fade so the
-   step text doesn't read as overlapping the chart. The override must
-   come AFTER the base rules so source order wins on small screens. */
 .scrolly-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
@@ -859,7 +847,6 @@ table.data tr:hover td { background: var(--paper-2); }
 .scrolly .step:first-child { border-top: 0; }
 .scrolly .step.active { opacity: 1; }
 
-/* Mobile / tablet: single column, no sticky chart, no fade. */
 @media (max-width: 1023px) {
   .scrolly-grid {
     grid-template-columns: 1fr;
@@ -878,8 +865,6 @@ table.data tr:hover td { background: var(--paper-2); }
   }
 }
 
-/* Honor the system "reduce motion" setting: drop the fade and the
-   scroll-driven opacity so all steps read as static prose. */
 @media (prefers-reduced-motion: reduce) {
   .scrolly .step {
     transition: none;
@@ -887,11 +872,6 @@ table.data tr:hover td { background: var(--paper-2); }
   }
 }
 
-/* Chart hover tooltip — a small dark chip that follows the cursor over a
-   chart. Each chart component attaches mouse handlers to its value-bearing
-   shapes (bars, line points, an invisible area overlay) and updates a local
-   tip state object. The tip is `pointer-events: none` so it never blocks
-   the underlying shapes from receiving the next mousemove. */
 .chart-tip {
   position: absolute;
   pointer-events: none;
@@ -1380,16 +1360,15 @@ svg .axis text { pointer-events: none; }
   max-width: 38ch;
 }
 
-/* Homepage fund cards: payload + 1/2/3 column grid at named breakpoints
-   (phone <640: 1 col; tablet 640–1023: 2 col; desktop ≥1024: 3 col). */
+/* Homepage fund cards */
 .fund-grid {
-  grid-template-columns: 1fr;                               /* phone default */
+  grid-template-columns: 1fr;
 }
 @media (min-width: 640px) {
-  .fund-grid { grid-template-columns: 1fr 1fr; }            /* tablet */
+  .fund-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 1024px) {
-  .fund-grid { grid-template-columns: 1fr 1fr 1fr; }        /* desktop */
+  .fund-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
 
 .fund-card { min-height: 0; }
