@@ -1,4 +1,4 @@
-import { e as escape_html, s as stringify, a as attr, c as ensure_array_like, f as derived, d as attr_class } from "../../../../chunks/root.js";
+import { e as escape_html, a as attr, d as derived, c as ensure_array_like, f as attr_class, s as stringify } from "../../../../chunks/root.js";
 import { b as base } from "../../../../chunks/server.js";
 import "../../../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
@@ -6,6 +6,7 @@ import "d3";
 import { f as formatUSD, a as formatPct, C as ChartFrame } from "../../../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../../../chunks/ShareBlock.js";
+import { h as html } from "../../../../chunks/html.js";
 import { s as siteUrl } from "../../../../chunks/config.js";
 function AnnotatedLineChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -35,10 +36,98 @@ function Scrolly($$renderer, $$props) {
     $$renderer2.push(`<!----></div>`);
   });
 }
+function AgentMemoBlock($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let { kicker, title, deck, html: html$1, output, pdfUrl } = $$props;
+    const dt = derived(() => output?.publishedAt ?? output?.createdAt ?? null);
+    const dateLabel = derived(() => dt() ? new Date(dt()).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : null);
+    $$renderer2.push(`<section class="container memo-block svelte-g8lblw"><p class="kicker">${escape_html(kicker)}</p> <h2 class="section-title">${escape_html(title)}</h2> `);
+    if (deck) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<p class="section-deck">${escape_html(deck)}</p>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <div class="memo-meta svelte-g8lblw"><p class="byline svelte-g8lblw">Ron Bronson · Public Capacity Lab · State Capacity AI</p> `);
+    if (output) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<p class="run-meta svelte-g8lblw">`);
+      if (dateLabel()) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<span>${escape_html(dateLabel())}</span> ·`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--> <span>model ${escape_html(output.modelVersion)}</span> · <span>prompt ${escape_html(output.promptVersion)}</span> `);
+      if (output.attemptCount > 1) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`· <span>${escape_html(output.attemptCount)} attempts</span>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--> `);
+      if (pdfUrl) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`· <a class="pdf-link svelte-g8lblw"${attr("href", pdfUrl)} download="">Download PDF</a>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--></p>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></div> <div class="memo-prose svelte-g8lblw">${html(html$1)}</div></section>`);
+  });
+}
+function RunHistory($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let { runs } = $$props;
+    function fmt(d) {
+      if (!d) return "—";
+      return new Date(d).toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+    function product(t) {
+      if (t === "weekly-memo") return "Weekly memo";
+      if (t === "monthly-cash-flow") return "Monthly cash-flow";
+      return t;
+    }
+    if (runs.length > 0) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<section class="container run-history svelte-1e53qd5"><p class="kicker">RUN HISTORY · LAST ${escape_html(runs.length)}</p> <h2 class="section-title">Prior agent runs</h2> <p class="section-deck">Each row is one invocation of the structured-finance prompt. Failed runs
+      are kept on the record so the cadence is auditable.</p> <div class="table-wrap svelte-1e53qd5"><table class="svelte-1e53qd5"><thead><tr><th class="svelte-1e53qd5">When</th><th class="svelte-1e53qd5">Work product</th><th class="svelte-1e53qd5">Status</th><th class="svelte-1e53qd5">Model</th><th class="svelte-1e53qd5">Prompt</th><th class="svelte-1e53qd5">Attempts</th><th class="svelte-1e53qd5">Artifact</th></tr></thead><tbody><!--[-->`);
+      const each_array = ensure_array_like(runs);
+      for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+        let r = each_array[$$index];
+        $$renderer2.push(`<tr><td class="svelte-1e53qd5">${escape_html(fmt(r.publishedAt ?? r.createdAt))}</td><td class="svelte-1e53qd5">${escape_html(product(r.workProductType))}</td><td class="svelte-1e53qd5"><span${attr_class(`status status-${stringify(r.status)}`, "svelte-1e53qd5")}>${escape_html(r.status)}</span></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.modelVersion)}</code></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.promptVersion)}</code></td><td class="svelte-1e53qd5">${escape_html(r.attemptCount)}</td><td class="svelte-1e53qd5">`);
+        if (r.pdfUrl) {
+          $$renderer2.push("<!--[0-->");
+          $$renderer2.push(`<a${attr("href", r.pdfUrl)} download="">PDF</a>`);
+        } else {
+          $$renderer2.push("<!--[-1-->");
+          $$renderer2.push(`—`);
+        }
+        $$renderer2.push(`<!--]--></td></tr>`);
+      }
+      $$renderer2.push(`<!--]--></tbody></table></div></section>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]-->`);
+  });
+}
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let { data } = $$props;
     const fund = derived(() => data.fund);
+    const weeklyMemo = derived(() => data.weeklyMemo);
+    const monthlyCashFlow = derived(() => data.monthlyCashFlow);
+    const runs = derived(() => data.runs);
     let activeStep = 0;
     const steps = derived(() => fund().auditEvents.map((e) => ({ year: e.year, label: e.label, body: e.body, source: e.source })));
     const activeYear = derived(() => steps()[activeStep]?.year ?? null);
@@ -140,7 +229,40 @@ function _page($$renderer, $$props) {
         children
       });
     }
-    $$renderer2.push(`<!----></section> <section class="container"><p class="kicker">AGENT MEMO · ${escape_html(fund().shortName.toUpperCase())}</p> <h2 class="section-title">What an honest financial memo would say</h2> <p class="section-deck">Below is a pre-generated structured memo on this fund — the kind a public-finance officer would write if asked to inventory it without political framing. The memo lives in the same file as the rest of the fund record. To re-run it against the live agent, use the <a${attr("href", `${stringify(base)}/agent/`)}>agent demo</a>.</p> <pre class="memo">${escape_html(fund().memo)}</pre></section> <section class="container"><h2 class="section-title">Citations</h2> <ul class="citations"><!--[-->`);
+    $$renderer2.push(`<!----></section> `);
+    if (weeklyMemo()) {
+      $$renderer2.push("<!--[0-->");
+      AgentMemoBlock($$renderer2, {
+        kicker: `WEEKLY MEMO · ${fund().shortName.toUpperCase()}`,
+        title: "What changed this week",
+        deck: "A structured-finance read of the corpus on file for this fund. The memo is cited inline against the documents the agent had access to at run time.",
+        html: weeklyMemo().html,
+        output: weeklyMemo().output,
+        pdfUrl: weeklyMemo().pdfUrl
+      });
+    } else {
+      $$renderer2.push("<!--[-1-->");
+      $$renderer2.push(`<section class="container"><p class="kicker">WEEKLY MEMO · ${escape_html(fund().shortName.toUpperCase())}</p> <h2 class="section-title">No memo on file yet</h2> <p class="section-deck">The scheduled run for this fund has not produced a published memo yet.
+        Fund pages render the most recent memo once the pipeline has succeeded
+        for the current corpus snapshot.</p></section>`);
+    }
+    $$renderer2.push(`<!--]--> `);
+    if (monthlyCashFlow()) {
+      $$renderer2.push("<!--[0-->");
+      AgentMemoBlock($$renderer2, {
+        kicker: `MONTHLY CASH-FLOW · ${fund().shortName.toUpperCase()}`,
+        title: "Cash-flow narrative for the month",
+        deck: "A monthly cash-flow read against the same corpus, focused on inflows, outflows, and the residual that flows into next period.",
+        html: monthlyCashFlow().html,
+        output: monthlyCashFlow().output,
+        pdfUrl: monthlyCashFlow().pdfUrl
+      });
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> `);
+    RunHistory($$renderer2, { runs: runs() });
+    $$renderer2.push(`<!----> <section class="container"><h2 class="section-title">Citations</h2> <ul class="citations"><!--[-->`);
     const each_array_1 = ensure_array_like(fund().citations);
     for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
       let c = each_array_1[$$index_1];

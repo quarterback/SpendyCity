@@ -16,12 +16,12 @@ export const nodes = [
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [2],
+		"/": [~2],
 		"/about": [3],
 		"/agent": [4],
 		"/dashboard": [5],
 		"/feed": [6],
-		"/funds/[slug]": [7],
+		"/funds/[slug]": [~7],
 		"/implications": [8],
 		"/methodology": [9]
 	};

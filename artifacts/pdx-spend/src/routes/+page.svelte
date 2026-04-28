@@ -8,12 +8,26 @@
   import { siteUrl } from '$lib/config';
   import {
     FUNDS,
+    FUND_BY_SLUG,
     TOTAL_MODELED_BALANCE,
     TOTAL_RESTRICTED,
     TOTAL_MOVABLE,
     TOTAL_CUMULATIVE_COLLECTED
   } from '$lib/data/funds';
   import { formatUSD } from '$lib/utils/format';
+  import type { PageProps } from './$types';
+
+  let { data }: PageProps = $props();
+  const latestWeekly = $derived(data.latestWeekly);
+
+  function fmtDate(d: Date | null | undefined): string {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
 
   const heroRows = FUNDS.map((f) => ({
     shortName: f.shortName,
@@ -106,6 +120,37 @@
     </div>
   </section>
 
+  {#if latestWeekly.length > 0}
+    <section class="container changed-this-week">
+      <p class="kicker">WHAT CHANGED THIS WEEK</p>
+      <h2 class="section-title">Latest agent memos across the seven funds</h2>
+      <p class="section-deck">
+        Each card pulls from the most recent succeeded weekly memo for that
+        fund. The full memo, byline, and PDF live on the fund page.
+      </p>
+      <div class="changed-grid">
+        {#each latestWeekly as item}
+          {@const fund = FUND_BY_SLUG[item.fundSlug]}
+          {#if fund}
+            <a class="changed-card" href="{base}/funds/{item.fundSlug}/">
+              <p class="changed-meta">
+                {fund.shortName} ·
+                {fmtDate(item.output.publishedAt ?? item.output.createdAt)}
+              </p>
+              {#if 'headline' in item && item.headline}
+                <h3 class="changed-headline">{item.headline}</h3>
+              {:else}
+                <h3 class="changed-headline">{fund.name}</h3>
+              {/if}
+              <div class="changed-excerpt">{@html item.excerptHtml}</div>
+              <p class="changed-cta">Read the memo →</p>
+            </a>
+          {/if}
+        {/each}
+      </div>
+    </section>
+  {/if}
+
   <section class="container">
     <p class="kicker">ISSUE INDEX · BEGIN HERE</p>
     <h2 class="section-title">The seven funds</h2>
@@ -153,3 +198,61 @@
     />
   </section>
 </article>
+
+<style>
+  .changed-this-week {
+    margin-top: 32px;
+  }
+  .changed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .changed-card {
+    display: block;
+    padding: 18px 20px 16px;
+    border: 1px solid var(--rule, #d4cfc4);
+    background: var(--paper, #fbf8f1);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .changed-card:hover {
+    border-color: var(--accent, #c0501e);
+    transform: translateY(-1px);
+  }
+  .changed-meta {
+    margin: 0 0 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted, #6b6357);
+  }
+  .changed-headline {
+    margin: 0 0 8px;
+    font-family: var(--font-serif, Georgia, serif);
+    font-size: 19px;
+    line-height: 1.25;
+  }
+  .changed-excerpt {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink, #1a1714);
+    max-height: 9em;
+    overflow: hidden;
+  }
+  .changed-excerpt :global(p) {
+    margin: 0 0 8px;
+  }
+  .changed-excerpt :global(ul),
+  .changed-excerpt :global(ol) {
+    margin: 0 0 8px 18px;
+  }
+  .changed-cta {
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--accent, #c0501e);
+    font-weight: 600;
+  }
+</style>

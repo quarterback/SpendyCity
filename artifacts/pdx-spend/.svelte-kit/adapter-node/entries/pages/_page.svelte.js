@@ -1,4 +1,4 @@
-import { e as escape_html, c as ensure_array_like, a as attr, s as stringify } from "../../chunks/root.js";
+import { e as escape_html, c as ensure_array_like, a as attr, s as stringify, d as derived } from "../../chunks/root.js";
 import { b as base } from "../../chunks/server.js";
 import "../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
@@ -7,7 +7,8 @@ import { C as ChartFrame, f as formatUSD } from "../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../chunks/ShareBlock.js";
 import { s as siteUrl } from "../../chunks/config.js";
-import { a as FUNDS, T as TOTAL_CUMULATIVE_COLLECTED, b as TOTAL_MODELED_BALANCE, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
+import { a as FUNDS, F as FUND_BY_SLUG, T as TOTAL_CUMULATIVE_COLLECTED, b as TOTAL_MODELED_BALANCE, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
+import { h as html } from "../../chunks/html.js";
 function HeroChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     $$renderer2.push(`<div style="width:100%"><svg role="img" aria-label="Modeled carry across all seven restricted funds"></svg></div>`);
@@ -20,6 +21,12 @@ function SparkBalance($$renderer, $$props) {
 }
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
+    let { data } = $$props;
+    const latestWeekly = derived(() => data.latestWeekly);
+    function fmtDate(d) {
+      if (!d) return "";
+      return new Date(d).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    }
     const heroRows = FUNDS.map((f) => ({
       shortName: f.shortName,
       balance: f.modeledBalance,
@@ -54,10 +61,40 @@ function _page($$renderer, $$props) {
         children
       });
     }
-    $$renderer2.push(`<!----></section> <section class="container two-col"><div class="prose"><h2>What you are looking at</h2> <p>Public funding measures in Portland and Multnomah County share a recurring shape: a measure passes with a clear, narrow charge; collections come in faster than the standing-up of the program; balances accumulate; and within four to seven years, ordinances and resolutions begin to broaden what those dollars are allowed to do.</p> <p>The seven funds on this page span fifteen years of measures, three jurisdictions of stewardship, and almost every kind of revenue instrument the city uses — flat per-adult tax, gross-receipts surcharge, real-estate excise, dedicated property levy, county-wide marginal income tax. They behave the same way.</p> <h2>What is modeled</h2> <p>Cash positions, audit annotations, and disposition curves on this site are <em>modeled</em>. They are constructed to illustrate the structural pattern that is documented across audits, council actions, and reporting on these funds. They are not a live ledger and should not be cited as such. The corpus team is working on a published-figures version; this site will swap to it when it ships.</p></div> <aside class="margin-note"><h4>Read the issue</h4> <p>Each fund has its own page with a chart-driven scrollytelling read. The dashboard shows them side-by-side. The agent demo runs a structured-finance prompt against the modeled record.</p> <p style="margin-top: 14px"><strong>Stewards across:</strong> City of Portland Revenue Division, Multnomah County, Metro, Portland Housing Bureau, Bureau of Planning and Sustainability, Office of Management and Finance.</p></aside></section> <section class="container"><p class="kicker">SUMMARY · SEVEN FUNDS</p> <div class="big-stats"><div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_CUMULATIVE_COLLECTED))}</p> <p class="lbl">Modeled cumulative collected, all funds</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_MODELED_BALANCE))}</p> <p class="lbl">Modeled current carry across the seven</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_RESTRICTED))}</p> <p class="lbl">Still tied to original voter intent</p></div> <div class="big-stat"><p class="num accent">${escape_html(formatUSD(TOTAL_MOVABLE))}</p> <p class="lbl">Reclassified, swept, or made movable</p></div></div></section> <section class="container"><p class="kicker">ISSUE INDEX · BEGIN HERE</p> <h2 class="section-title">The seven funds</h2> <div class="fund-grid"><!--[-->`);
-    const each_array = ensure_array_like(FUNDS);
-    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
-      let fund = each_array[$$index];
+    $$renderer2.push(`<!----></section> <section class="container two-col"><div class="prose"><h2>What you are looking at</h2> <p>Public funding measures in Portland and Multnomah County share a recurring shape: a measure passes with a clear, narrow charge; collections come in faster than the standing-up of the program; balances accumulate; and within four to seven years, ordinances and resolutions begin to broaden what those dollars are allowed to do.</p> <p>The seven funds on this page span fifteen years of measures, three jurisdictions of stewardship, and almost every kind of revenue instrument the city uses — flat per-adult tax, gross-receipts surcharge, real-estate excise, dedicated property levy, county-wide marginal income tax. They behave the same way.</p> <h2>What is modeled</h2> <p>Cash positions, audit annotations, and disposition curves on this site are <em>modeled</em>. They are constructed to illustrate the structural pattern that is documented across audits, council actions, and reporting on these funds. They are not a live ledger and should not be cited as such. The corpus team is working on a published-figures version; this site will swap to it when it ships.</p></div> <aside class="margin-note"><h4>Read the issue</h4> <p>Each fund has its own page with a chart-driven scrollytelling read. The dashboard shows them side-by-side. The agent demo runs a structured-finance prompt against the modeled record.</p> <p style="margin-top: 14px"><strong>Stewards across:</strong> City of Portland Revenue Division, Multnomah County, Metro, Portland Housing Bureau, Bureau of Planning and Sustainability, Office of Management and Finance.</p></aside></section> <section class="container"><p class="kicker">SUMMARY · SEVEN FUNDS</p> <div class="big-stats"><div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_CUMULATIVE_COLLECTED))}</p> <p class="lbl">Modeled cumulative collected, all funds</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_MODELED_BALANCE))}</p> <p class="lbl">Modeled current carry across the seven</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_RESTRICTED))}</p> <p class="lbl">Still tied to original voter intent</p></div> <div class="big-stat"><p class="num accent">${escape_html(formatUSD(TOTAL_MOVABLE))}</p> <p class="lbl">Reclassified, swept, or made movable</p></div></div></section> `);
+    if (latestWeekly().length > 0) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<section class="container changed-this-week svelte-1uha8ag"><p class="kicker">WHAT CHANGED THIS WEEK</p> <h2 class="section-title">Latest agent memos across the seven funds</h2> <p class="section-deck">Each card pulls from the most recent succeeded weekly memo for that
+        fund. The full memo, byline, and PDF live on the fund page.</p> <div class="changed-grid svelte-1uha8ag"><!--[-->`);
+      const each_array = ensure_array_like(latestWeekly());
+      for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+        let item = each_array[$$index];
+        const fund = FUND_BY_SLUG[item.fundSlug];
+        if (fund) {
+          $$renderer2.push("<!--[0-->");
+          $$renderer2.push(`<a class="changed-card svelte-1uha8ag"${attr("href", `${stringify(base)}/funds/${stringify(item.fundSlug)}/`)}><p class="changed-meta svelte-1uha8ag">${escape_html(fund.shortName)} ·
+                ${escape_html(fmtDate(item.output.publishedAt ?? item.output.createdAt))}</p> `);
+          if ("headline" in item && item.headline) {
+            $$renderer2.push("<!--[0-->");
+            $$renderer2.push(`<h3 class="changed-headline svelte-1uha8ag">${escape_html(item.headline)}</h3>`);
+          } else {
+            $$renderer2.push("<!--[-1-->");
+            $$renderer2.push(`<h3 class="changed-headline svelte-1uha8ag">${escape_html(fund.name)}</h3>`);
+          }
+          $$renderer2.push(`<!--]--> <div class="changed-excerpt svelte-1uha8ag">${html(item.excerptHtml)}</div> <p class="changed-cta svelte-1uha8ag">Read the memo →</p></a>`);
+        } else {
+          $$renderer2.push("<!--[-1-->");
+        }
+        $$renderer2.push(`<!--]-->`);
+      }
+      $$renderer2.push(`<!--]--></div></section>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <section class="container"><p class="kicker">ISSUE INDEX · BEGIN HERE</p> <h2 class="section-title">The seven funds</h2> <div class="fund-grid"><!--[-->`);
+    const each_array_1 = ensure_array_like(FUNDS);
+    for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+      let fund = each_array_1[$$index_1];
       $$renderer2.push(`<a class="fund-card"${attr("href", `${stringify(base)}/funds/${stringify(fund.slug)}/`)}><p class="fund-meta">${escape_html(fund.enacted)} · ${escape_html(fund.ballotMeasure ?? fund.enablingCode)}</p> <h3 class="fund-name">${escape_html(fund.name)}</h3> <p class="fund-deck">${escape_html(fund.oneLineStatus)}</p> <div class="fund-spark">`);
       SparkBalance($$renderer2, { data: fund.cashSeries });
       $$renderer2.push(`<!----></div> <div class="fund-stats"><span>${escape_html(formatUSD(fund.modeledBalance))} carry</span> <span class="accent">${escape_html(Math.round(fund.modeledMovableShare * 100))}% movable</span></div></a>`);

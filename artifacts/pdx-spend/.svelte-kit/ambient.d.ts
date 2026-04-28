@@ -169,6 +169,7 @@ declare module '$env/static/private' {
 	export const GIT_TERMINAL_PROMPT: string;
 	export const npm_node_execpath: string;
 	export const REPL_SLUG: string;
+	export const NODE_ENV: string;
 }
 
 /**
@@ -386,6 +387,7 @@ declare module '$env/dynamic/private' {
 		GIT_TERMINAL_PROMPT: string;
 		npm_node_execpath: string;
 		REPL_SLUG: string;
+		NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}

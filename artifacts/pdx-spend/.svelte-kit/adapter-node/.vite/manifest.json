@@ -72,6 +72,10 @@
       "_config.js"
     ]
   },
+  "_agent.js": {
+    "file": "chunks/agent.js",
+    "name": "agent"
+  },
   "_config.js": {
     "file": "chunks/config.js",
     "name": "config"
@@ -90,6 +94,10 @@
   "_funds.js": {
     "file": "chunks/funds.js",
     "name": "funds"
+  },
+  "_html.js": {
+    "file": "chunks/html.js",
+    "name": "html"
   },
   "_internal.js": {
     "file": "chunks/internal.js",
@@ -151,6 +159,16 @@
     "src": "src/routes/+layout.ts",
     "isEntry": true
   },
+  "src/routes/+page.server.ts": {
+    "file": "entries/pages/_page.server.ts.js",
+    "name": "entries/pages/_page.server.ts",
+    "src": "src/routes/+page.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_funds.js",
+      "_agent.js"
+    ]
+  },
   "src/routes/+page.svelte": {
     "file": "entries/pages/_page.svelte.js",
     "name": "entries/pages/_page.svelte",
@@ -164,7 +182,11 @@
       "_SiteMeta.js",
       "_ShareBlock.js",
       "_config.js",
-      "_funds.js"
+      "_funds.js",
+      "_html.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CNxmdBfs.css"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -240,6 +262,16 @@
       "_SiteMeta.js"
     ]
   },
+  "src/routes/funds/[slug]/+page.server.ts": {
+    "file": "entries/pages/funds/_slug_/_page.server.ts.js",
+    "name": "entries/pages/funds/_slug_/_page.server.ts",
+    "src": "src/routes/funds/[slug]/+page.server.ts",
+    "isEntry": true,
+    "imports": [
+      "_funds.js",
+      "_agent.js"
+    ]
+  },
   "src/routes/funds/[slug]/+page.svelte": {
     "file": "entries/pages/funds/_slug_/_page.svelte.js",
     "name": "entries/pages/funds/_slug_/_page.svelte",
@@ -252,16 +284,11 @@
       "_ChartFrame.js",
       "_SiteMeta.js",
       "_ShareBlock.js",
+      "_html.js",
       "_config.js"
-    ]
-  },
-  "src/routes/funds/[slug]/+page.ts": {
-    "file": "entries/pages/funds/_slug_/_page.ts.js",
-    "name": "entries/pages/funds/_slug_/_page.ts",
-    "src": "src/routes/funds/[slug]/+page.ts",
-    "isEntry": true,
-    "imports": [
-      "_funds.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BF9qE5a6.css"
     ]
   },
   "src/routes/implications/+page.svelte": {

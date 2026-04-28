@@ -8,12 +8,17 @@
   import Scrolly from '$lib/components/Scrolly.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
+  import AgentMemoBlock from '$lib/components/AgentMemoBlock.svelte';
+  import RunHistory from '$lib/components/RunHistory.svelte';
   import { siteUrl } from '$lib/config';
   import { formatUSD, formatPct } from '$lib/utils/format';
   import type { PageProps } from './$types';
 
   let { data }: PageProps = $props();
   const fund = $derived(data.fund);
+  const weeklyMemo = $derived(data.weeklyMemo);
+  const monthlyCashFlow = $derived(data.monthlyCashFlow);
+  const runs = $derived(data.runs);
 
   let activeStep = $state(0);
 
@@ -194,14 +199,39 @@
     </ChartFrame>
   </section>
 
-  <section class="container">
-    <p class="kicker">AGENT MEMO · {fund.shortName.toUpperCase()}</p>
-    <h2 class="section-title">What an honest financial memo would say</h2>
-    <p class="section-deck">
-      Below is a pre-generated structured memo on this fund — the kind a public-finance officer would write if asked to inventory it without political framing. The memo lives in the same file as the rest of the fund record. To re-run it against the live agent, use the <a href="{base}/agent/">agent demo</a>.
-    </p>
-    <pre class="memo">{fund.memo}</pre>
-  </section>
+  {#if weeklyMemo}
+    <AgentMemoBlock
+      kicker={`WEEKLY MEMO · ${fund.shortName.toUpperCase()}`}
+      title="What changed this week"
+      deck="A structured-finance read of the corpus on file for this fund. The memo is cited inline against the documents the agent had access to at run time."
+      html={weeklyMemo.html}
+      output={weeklyMemo.output}
+      pdfUrl={weeklyMemo.pdfUrl}
+    />
+  {:else}
+    <section class="container">
+      <p class="kicker">WEEKLY MEMO · {fund.shortName.toUpperCase()}</p>
+      <h2 class="section-title">No memo on file yet</h2>
+      <p class="section-deck">
+        The scheduled run for this fund has not produced a published memo yet.
+        Fund pages render the most recent memo once the pipeline has succeeded
+        for the current corpus snapshot.
+      </p>
+    </section>
+  {/if}
+
+  {#if monthlyCashFlow}
+    <AgentMemoBlock
+      kicker={`MONTHLY CASH-FLOW · ${fund.shortName.toUpperCase()}`}
+      title="Cash-flow narrative for the month"
+      deck="A monthly cash-flow read against the same corpus, focused on inflows, outflows, and the residual that flows into next period."
+      html={monthlyCashFlow.html}
+      output={monthlyCashFlow.output}
+      pdfUrl={monthlyCashFlow.pdfUrl}
+    />
+  {/if}
+
+  <RunHistory runs={runs} />
 
   <section class="container">
     <h2 class="section-title">Citations</h2>

@@ -1,5 +1,6 @@
 {
 	"/": [
+		"src/routes/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.ts"
 	],
@@ -22,7 +23,7 @@
 		"src/routes/+layout.ts"
 	],
 	"/funds/[slug]": [
-		"src/routes/funds/[slug]/+page.ts",
+		"src/routes/funds/[slug]/+page.server.ts",
 		"src/routes/+layout.ts"
 	],
 	"/implications": [
