@@ -1,0 +1,16 @@
+{
+  "fundSlug": "supportive-housing",
+  "fundName": "Metro Supportive Housing Services Tax",
+  "documents": [
+    {
+      "docType": "ordinance",
+      "title": "Metro Supportive Housing Services — Tax Code",
+      "sourceUrl": "https://www.oregonmetro.gov/public-projects/supportive-housing-services"
+    },
+    {
+      "docType": "financial-report",
+      "title": "Multnomah County SHS Annual Report",
+      "sourceUrl": "https://www.multco.us/joint-office-homeless-services/supportive-housing-services-shs"
+    }
+  ]
+}

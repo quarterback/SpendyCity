@@ -1,0 +1,16 @@
+{
+  "fundSlug": "affordable-housing-dev",
+  "fundName": "Metro Affordable Housing Bond / Portland Housing Bond",
+  "documents": [
+    {
+      "docType": "financial-report",
+      "title": "Metro Affordable Housing Bond — annual progress reports",
+      "sourceUrl": "https://www.oregonmetro.gov/public-projects/affordable-homes-greater-portland"
+    },
+    {
+      "docType": "financial-report",
+      "title": "Portland Housing Bond — Bureau page",
+      "sourceUrl": "https://www.portland.gov/phb/housing-bond"
+    }
+  ]
+}

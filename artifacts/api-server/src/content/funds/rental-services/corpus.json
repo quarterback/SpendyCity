@@ -1,0 +1,16 @@
+{
+  "fundSlug": "rental-services",
+  "fundName": "Residential Rental Registration / Rental Services Office",
+  "documents": [
+    {
+      "docType": "ordinance",
+      "title": "Portland City Code Chapter 7.02 — Business License Law (Rental Registration)",
+      "sourceUrl": "https://www.portland.gov/code/7/02"
+    },
+    {
+      "docType": "financial-report",
+      "title": "Rental Services Office — Programs and Reports",
+      "sourceUrl": "https://www.portland.gov/phb/rental-services"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "fundSlug": "pcef",
+  "fundName": "Portland Clean Energy Community Benefits Fund",
+  "documents": [
+    {
+      "docType": "ordinance",
+      "title": "Portland City Code Chapter 7.07 — Clean Energy Surcharge",
+      "sourceUrl": "https://www.portland.gov/code/7/07"
+    },
+    {
+      "docType": "financial-report",
+      "title": "PCEF Climate Investment Plan",
+      "sourceUrl": "https://www.portland.gov/bps/cleanenergy/cip"
+    },
+    {
+      "docType": "financial-report",
+      "title": "PCEF program homepage and grant data",
+      "sourceUrl": "https://www.portland.gov/bps/cleanenergy"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "fundSlug": "housing-investment",
+  "fundName": "Portland Housing Investment Fund",
+  "documents": [
+    {
+      "docType": "financial-report",
+      "title": "Portland Housing Bureau — Budget and Reports",
+      "sourceUrl": "https://www.portland.gov/phb/financial-reports"
+    },
+    {
+      "docType": "ordinance",
+      "title": "Portland Housing Bureau — Policy and Planning",
+      "sourceUrl": "https://www.portland.gov/phb/policy"
+    }
+  ]
+}

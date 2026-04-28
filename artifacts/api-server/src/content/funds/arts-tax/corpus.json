@@ -1,0 +1,21 @@
+{
+  "fundSlug": "arts-tax",
+  "fundName": "Arts Education and Access Income Tax",
+  "documents": [
+    {
+      "docType": "ordinance",
+      "title": "Portland City Code Chapter 5.73 — Arts Education and Access Income Tax",
+      "sourceUrl": "https://www.portland.gov/code/5/73"
+    },
+    {
+      "docType": "financial-report",
+      "title": "Arts Tax — Annual Report (PDF, City of Portland)",
+      "sourceUrl": "https://www.portland.gov/revenue/arts-tax"
+    },
+    {
+      "docType": "financial-report",
+      "title": "Arts Tax program overview and disbursement summary",
+      "sourceUrl": "https://www.portland.gov/revenue/arts-tax/overview"
+    }
+  ]
+}
