@@ -62,7 +62,7 @@
     </h1>
     <p class="headline-figure">{formatUSD(TOTAL_MODELED_BALANCE)}</p>
     <p class="headline-figure-sub hero-sentence">
-      Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)} today, and one named rule blocks each from spending its share.
+      Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)} today. One rule per fund controls how the money moves.
     </p>
 
     {#if headlineBlockerNews}
@@ -73,14 +73,14 @@
     {/if}
 
     <p class="hero-deck">
-      Pick a fund. See what it could pay for at its current balance. See who controls the rule that stops it. Send the page to that person.
+      Pick a fund. See what it funds. Find who controls the rule. Send them the page.
     </p>
   </section>
 
   <section class="hero-figure container-wide">
     <ChartFrame
       title="Year-end balance, all seven funds"
-      sub="Each bar is one fund. The orange share is the part already re-aimed."
+      sub="Each bar is one fund. Orange shows money moved to new uses since voters approved it."
       source="PDX Spend"
       modeled={true}
       chartId="pdxspend-hero"
@@ -95,7 +95,7 @@
   </section>
 
   <section class="container">
-    <p class="section-eyebrow">The seven, totaled</p>
+    <h2 class="section-eyebrow">The seven, totaled</h2>
     <div class="big-stats">
       <div class="big-stat">
         <p class="num">{formatUSD(TOTAL_CUMULATIVE_COLLECTED)}</p>
@@ -111,13 +111,13 @@
       </div>
       <div class="big-stat">
         <p class="num accent">{formatUSD(TOTAL_MOVABLE)}</p>
-        <p class="lbl">Re-aimed since you voted</p>
+        <p class="lbl">Moved to new uses since you voted</p>
       </div>
     </div>
   </section>
 
   <section class="container how-to">
-    <p class="section-eyebrow">How to use this site</p>
+    <h2 class="section-eyebrow">How to use this site</h2>
     <ol class="how-list">
       <li>
         <span class="step-n">1</span>
@@ -125,11 +125,11 @@
       </li>
       <li>
         <span class="step-n">2</span>
-        <p><strong>Read what it could pay for.</strong> Concrete units, grounded in published unit costs.</p>
+        <p><strong>See the units it buys.</strong> Counts grounded in published unit costs.</p>
       </li>
       <li>
         <span class="step-n">3</span>
-        <p><strong>Read who controls the blocker.</strong> Every blocker names a defense and a rebuttal. Send the page to the office that holds the lever.</p>
+        <p><strong>See who holds the lever.</strong> Each rule names the office, its defense, and the rebuttal. Send the page to that office.</p>
       </li>
     </ol>
   </section>
@@ -180,12 +180,12 @@
           {/if}
           {#if topBlocker}
             <p class="fund-line blocker">
-              <span class="lbl">Blocked by</span>
+              <span class="lbl">Controlled by</span>
               {topBlocker.name}
             </p>
           {/if}
           <p class="fund-stats">
-            <span class="accent">{Math.round(fund.modeledMovableShare * 100)}% re-aimed</span>
+            <span class="accent">{Math.round(fund.modeledMovableShare * 100)}% moved to new uses</span>
           </p>
         </a>
       {/each}
