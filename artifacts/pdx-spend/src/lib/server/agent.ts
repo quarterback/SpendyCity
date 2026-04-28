@@ -1,13 +1,24 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { and, desc, eq } from 'drizzle-orm';
 import { db, agentOutputsTable, type AgentOutput } from '@workspace/db';
 import { marked } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = path.resolve(__dirname, '../../content/funds');
+// Bundle markdown content at build time. Reading via fs+__dirname does
+// not survive the SvelteKit/Vite bundle: the compiled chunk lives under
+// .svelte-kit/output/server/chunks, nowhere near src/content. import.meta.glob
+// is Vite's build-safe primitive — it inlines the matched files into the
+// server bundle so the prerender step has them on disk-or-not regardless.
+const WEEKLY_MEMO_FILES = import.meta.glob('/src/content/funds/*/latest-memo.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true
+}) as Record<string, string>;
+
+const CASH_FLOW_FILES = import.meta.glob('/src/content/funds/*/latest-cash-flow.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true
+}) as Record<string, string>;
 
 export type WorkProductType = 'weekly-memo' | 'monthly-cash-flow';
 
@@ -29,19 +40,11 @@ export interface RunHistoryEntry {
   attemptCount: number;
 }
 
-const FILE_BY_TYPE: Record<WorkProductType, string> = {
-  'weekly-memo': 'latest-memo.md',
-  'monthly-cash-flow': 'latest-cash-flow.md'
-};
-
-async function readMarkdown(fundSlug: string, type: WorkProductType): Promise<string | null> {
-  const file = path.join(CONTENT_DIR, fundSlug, FILE_BY_TYPE[type]);
-  try {
-    return await readFile(file, 'utf8');
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null;
-    throw err;
-  }
+function readMarkdown(fundSlug: string, type: WorkProductType): string | null {
+  const map = type === 'weekly-memo' ? WEEKLY_MEMO_FILES : CASH_FLOW_FILES;
+  const file = type === 'weekly-memo' ? 'latest-memo.md' : 'latest-cash-flow.md';
+  const key = `/src/content/funds/${fundSlug}/${file}`;
+  return map[key] ?? null;
 }
 
 function renderMarkdown(md: string): string {
@@ -81,11 +84,9 @@ export async function loadMemo(
   fundSlug: string,
   type: WorkProductType
 ): Promise<AgentMemo | null> {
-  const [markdown, output] = await Promise.all([
-    readMarkdown(fundSlug, type),
-    latestSucceeded(fundSlug, type)
-  ]);
+  const markdown = readMarkdown(fundSlug, type);
   if (!markdown) return null;
+  const output = await latestSucceeded(fundSlug, type);
   return {
     workProductType: type,
     markdown,

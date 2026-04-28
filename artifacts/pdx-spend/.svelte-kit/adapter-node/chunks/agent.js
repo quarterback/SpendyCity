@@ -1,6 +1,3 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { isTable, getTableColumns, getViewSelectedFields, is, Column, SQL, isView, eq, desc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import require$$0$3 from "events";
@@ -44,6 +41,36 @@ function getAugmentedNamespace(n) {
   });
   return a;
 }
+const __vite_glob_0_0 = `## Headline
+
+PCEF launches $20 million e-bike rebate program targeting low-income households
+
+## What changed
+
+- The City of Portland announced the Portland Rides E-Bike Rebate Program, described as a $20 million investment intended to provide over 6,000 standard, cargo, and adaptive e-bikes through December 2029 [Doc 2].
+- The program is directed at low-income households, consistent with PCEF's statutory mandate to prioritize "low-income communities and communities of color," defined in the ordinance as "priority populations" [Doc 1].
+- PCEF published baseline research on regenerative urban agriculture conducted in partnership with Portland State University, aimed at understanding how urban farming intersects with climate change, food access, and community well-being [Doc 2].
+- The PCEF Committee has scheduled monthly public meetings through at least July 2026, with sessions on April 29, May 13, June 10, and July 8 [Doc 2].
+- No news documents from the past 90 days were supplied beyond what appears on the program homepage; the corpus supporting this memo is thin.
+
+## Numbers worth holding
+
+| Figure | Value | Source |
+|---|---|---|
+| E-bike rebate program total investment | $20 million | [Doc 2] |
+| E-bikes to be distributed through December 2029 | Over 6,000 | [Doc 2] |
+| Clean energy surcharge rate on qualifying retail gross revenue | 1 percent | [Doc 1] |
+| National gross revenue threshold triggering surcharge | $1 billion | [Doc 1] |
+| Portland gross revenue threshold triggering surcharge | $500,000 | [Doc 1] |
+| Climate Investment Plan term | 5 years | [Doc 1] |
+
+## What to watch next
+
+The e-bike program is the most concrete spending announcement visible in the supplied corpus, but the underlying disbursement mechanics, income verification procedures, and contractor arrangements are not documented in the materials provided. The regenerative urban agriculture research release may signal a future grant solicitation in that category. Readers should monitor upcoming PCEF Committee meetings, particularly the May 13 session, for any committee action on the Climate Investment Plan's next funding cycle. The corpus is thin; additional source documents would be needed to assess fund balance, administrative cost ratios, or grant pipeline status.
+
+---
+Ron Bronson / Public Capacity Lab / State Capacity AI`;
+const __vite_glob_0_1 = "## Headline\n\nPortland Rental Services Office holds position with thin public documentation this week\n\n## What changed\n\n- The Rental Services Office (RSO) operates under the Portland Housing Bureau and runs a helpline providing technical assistance and information on landlord-tenant law; staff cannot provide legal advice [Doc 2].\n- The RSO administers several programs including Mandatory Renter Relocation Assistance, Application and Screening rules, Security Deposit rules, and the Residential Rental Registration Program [Doc 2].\n- Free landlord training sessions on Portland landlord-tenant law are scheduled through 2025 and 2026, offered virtually [Doc 2].\n- A public webinar on cost-based rental and limited-profit housing, using Vienna as a case study, is scheduled for May 7, 2026 [Doc 2].\n- The RSO's Rental Registration program connects to Chapter 7.02 of the Portland City Code, the Business License Law, which governs registration requirements; the law is characterized explicitly as revenue-generating, not regulatory [Doc 1].\n\n## Numbers worth holding\n\n| Figure | Value | Source |\n|---|---|---|\n| Contact number for RSO helpline | 503-823-4000 | [Doc 2] |\n| Relay Service number | 711 | [Doc 2] |\n| Business License Law chapter | Chapter 7.02, Portland City Code | [Doc 1] |\n\n*Note: No fee amounts, registration counts, revenue figures, or budget totals appear in the supplied documents. Those figures are omitted per sourcing constraints.*\n\n## What to watch next\n\nThe corpus here is thin. Neither document supplies fee schedules, annual registration counts, revenue collected, compliance rates, or RSO staffing and budget figures. A Landlord/Tenant Policy Analysis pre-proposal meeting was listed for January 6, 2026, but no outcome document was provided [Doc 2]. Observers should request the RSO's current fee schedule under Schedule R, any annual report from the Portland Housing Bureau, and minutes from the January 2026 pre-proposal meeting to establish a baseline for tracking this fund's fiscal performance.\n\n---\nRon Bronson / Public Capacity Lab / State Capacity AI";
 var lib$1 = { exports: {} };
 var defaults$3 = { exports: {} };
 var pgTypes = {};
@@ -3270,7 +3297,7 @@ function requireHelper() {
   if (hasRequiredHelper) return helper.exports;
   hasRequiredHelper = 1;
   (function(module) {
-    var path2 = require$$0$6, Stream = require$$0$5.Stream, split = requireSplit2(), util2 = require$$1$1, defaultPort = 5432, isWin = process.platform === "win32", warnStream = process.stderr;
+    var path = require$$0$6, Stream = require$$0$5.Stream, split = requireSplit2(), util2 = require$$1$1, defaultPort = 5432, isWin = process.platform === "win32", warnStream = process.stderr;
     var S_IRWXG = 56, S_IRWXO = 7, S_IFMT = 61440, S_IFREG = 32768;
     function isRegFile(mode) {
       return (mode & S_IFMT) == S_IFREG;
@@ -3300,7 +3327,7 @@ function requireHelper() {
     };
     module.exports.getFileName = function(rawEnv) {
       var env = rawEnv || process.env;
-      var file2 = env.PGPASSFILE || (isWin ? path2.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path2.join(env.HOME || "./", ".pgpass"));
+      var file2 = env.PGPASSFILE || (isWin ? path.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path.join(env.HOME || "./", ".pgpass"));
       return file2;
     };
     module.exports.usePgPass = function(stats, fname) {
@@ -5108,10 +5135,10 @@ function assignProp(target, prop, value) {
     configurable: true
   });
 }
-function getElementAtPath(obj, path2) {
-  if (!path2)
+function getElementAtPath(obj, path) {
+  if (!path)
     return obj;
-  return path2.reduce((acc, key) => acc?.[key], obj);
+  return path.reduce((acc, key) => acc?.[key], obj);
 }
 function promiseAllObject(promisesObj) {
   const keys = Object.keys(promisesObj);
@@ -5431,11 +5458,11 @@ function aborted(x, startIndex = 0) {
   }
   return false;
 }
-function prefixIssues(path2, issues) {
+function prefixIssues(path, issues) {
   return issues.map((iss) => {
     var _a;
     (_a = iss).path ?? (_a.path = []);
-    iss.path.unshift(path2);
+    iss.path.unshift(path);
     return iss;
   });
 }
@@ -5622,7 +5649,7 @@ function treeifyError(error2, _mapper) {
     return issue2.message;
   };
   const result2 = { errors: [] };
-  const processError = (error3, path2 = []) => {
+  const processError = (error3, path = []) => {
     var _a, _b;
     for (const issue2 of error3.issues) {
       if (issue2.code === "invalid_union" && issue2.errors.length) {
@@ -5632,7 +5659,7 @@ function treeifyError(error2, _mapper) {
       } else if (issue2.code === "invalid_element") {
         processError({ issues: issue2.issues }, issue2.path);
       } else {
-        const fullpath = [...path2, ...issue2.path];
+        const fullpath = [...path, ...issue2.path];
         if (fullpath.length === 0) {
           result2.errors.push(mapper(issue2));
           continue;
@@ -5662,9 +5689,9 @@ function treeifyError(error2, _mapper) {
   processError(error2);
   return result2;
 }
-function toDotPath(path2) {
+function toDotPath(path) {
   const segs = [];
-  for (const seg of path2) {
+  for (const seg of path) {
     if (typeof seg === "number")
       segs.push(`[${seg}]`);
     else if (typeof seg === "symbol")
@@ -16328,34 +16355,21 @@ if (!process.env.DATABASE_URL) {
 }
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool, { schema });
-const __dirname$1 = path.dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = path.resolve(__dirname$1, "../../content/funds");
-const FILE_BY_TYPE = {
-  "weekly-memo": "latest-memo.md",
-  "monthly-cash-flow": "latest-cash-flow.md"
-};
-async function readMarkdown(fundSlug, type) {
-  const file2 = path.join(CONTENT_DIR, fundSlug, FILE_BY_TYPE[type]);
-  try {
-    return await readFile(file2, "utf8");
-  } catch (err) {
-    if (err.code === "ENOENT") return null;
-    throw err;
-  }
+const WEEKLY_MEMO_FILES = /* @__PURE__ */ Object.assign({
+  "/src/content/funds/pcef/latest-memo.md": __vite_glob_0_0,
+  "/src/content/funds/rental-services/latest-memo.md": __vite_glob_0_1
+});
+const CASH_FLOW_FILES = /* @__PURE__ */ Object.assign({});
+function readMarkdown(fundSlug, type) {
+  const map2 = type === "weekly-memo" ? WEEKLY_MEMO_FILES : CASH_FLOW_FILES;
+  const file2 = type === "weekly-memo" ? "latest-memo.md" : "latest-cash-flow.md";
+  const key = `/src/content/funds/${fundSlug}/${file2}`;
+  return map2[key] ?? null;
 }
 function renderMarkdown(md) {
   marked.setOptions({ gfm: true, breaks: false });
   const html = marked.parse(md, { async: false });
   return DOMPurify.sanitize(html);
-}
-function pdfUrl(out) {
-  if (!out?.pdfObjectPath) return null;
-  const raw = out.pdfObjectPath;
-  if (raw.startsWith("/api/")) return raw;
-  if (raw.startsWith("/agent-pdfs/")) {
-    return `/api/agent/pdfs/${raw.slice("/agent-pdfs/".length)}`;
-  }
-  return raw;
 }
 async function latestSucceeded(fundSlug, type) {
   const rows = await db.select().from(agentOutputsTable).where(
@@ -16368,17 +16382,14 @@ async function latestSucceeded(fundSlug, type) {
   return rows[0] ?? null;
 }
 async function loadMemo(fundSlug, type) {
-  const [markdown, output] = await Promise.all([
-    readMarkdown(fundSlug, type),
-    latestSucceeded(fundSlug, type)
-  ]);
+  const markdown = readMarkdown(fundSlug, type);
   if (!markdown) return null;
+  const output = await latestSucceeded(fundSlug, type);
   return {
     workProductType: type,
     markdown,
     html: renderMarkdown(markdown),
-    output,
-    pdfUrl: pdfUrl(output)
+    output
   };
 }
 async function loadRunHistory(fundSlug, limit = 8) {
@@ -16391,8 +16402,7 @@ async function loadRunHistory(fundSlug, limit = 8) {
     promptVersion: r.promptVersion,
     publishedAt: r.publishedAt,
     createdAt: r.createdAt,
-    attemptCount: r.attemptCount,
-    pdfUrl: pdfUrl(r)
+    attemptCount: r.attemptCount
   }));
 }
 function firstParagraphHtml(markdown) {
@@ -16430,8 +16440,7 @@ async function loadLatestWeeklyAcrossFunds(fundSlugs) {
         fundSlug: slug,
         output: memo.output,
         excerptHtml: firstParagraphHtml(memo.markdown),
-        headline: headlineFrom(memo.markdown),
-        pdfUrl: memo.pdfUrl
+        headline: headlineFrom(memo.markdown)
       };
     })
   );

@@ -1,4 +1,4 @@
-import { e as escape_html, a as attr, d as derived, c as ensure_array_like, f as attr_class, s as stringify } from "../../../../chunks/root.js";
+import { e as escape_html, d as derived, c as ensure_array_like, f as attr_class, s as stringify, a as attr } from "../../../../chunks/root.js";
 import { b as base } from "../../../../chunks/server.js";
 import "../../../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
@@ -38,7 +38,7 @@ function Scrolly($$renderer, $$props) {
 }
 function AgentMemoBlock($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
-    let { kicker, title, deck, html: html$1, output, pdfUrl } = $$props;
+    let { kicker, title, deck, html: html$1, output } = $$props;
     const dt = derived(() => output?.publishedAt ?? output?.createdAt ?? null);
     const dateLabel = derived(() => dt() ? new Date(dt()).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : null);
     $$renderer2.push(`<section class="container memo-block svelte-g8lblw"><p class="kicker">${escape_html(kicker)}</p> <h2 class="section-title">${escape_html(title)}</h2> `);
@@ -62,13 +62,6 @@ function AgentMemoBlock($$renderer, $$props) {
       if (output.attemptCount > 1) {
         $$renderer2.push("<!--[0-->");
         $$renderer2.push(`· <span>${escape_html(output.attemptCount)} attempts</span>`);
-      } else {
-        $$renderer2.push("<!--[-1-->");
-      }
-      $$renderer2.push(`<!--]--> `);
-      if (pdfUrl) {
-        $$renderer2.push("<!--[0-->");
-        $$renderer2.push(`· <a class="pdf-link svelte-g8lblw"${attr("href", pdfUrl)} download="">Download PDF</a>`);
       } else {
         $$renderer2.push("<!--[-1-->");
       }
@@ -100,19 +93,11 @@ function RunHistory($$renderer, $$props) {
     if (runs.length > 0) {
       $$renderer2.push("<!--[0-->");
       $$renderer2.push(`<section class="container run-history svelte-1e53qd5"><p class="kicker">RUN HISTORY · LAST ${escape_html(runs.length)}</p> <h2 class="section-title">Prior agent runs</h2> <p class="section-deck">Each row is one invocation of the structured-finance prompt. Failed runs
-      are kept on the record so the cadence is auditable.</p> <div class="table-wrap svelte-1e53qd5"><table class="svelte-1e53qd5"><thead><tr><th class="svelte-1e53qd5">When</th><th class="svelte-1e53qd5">Work product</th><th class="svelte-1e53qd5">Status</th><th class="svelte-1e53qd5">Model</th><th class="svelte-1e53qd5">Prompt</th><th class="svelte-1e53qd5">Attempts</th><th class="svelte-1e53qd5">Artifact</th></tr></thead><tbody><!--[-->`);
+      are kept on the record so the cadence is auditable.</p> <div class="table-wrap svelte-1e53qd5"><table class="svelte-1e53qd5"><thead><tr><th class="svelte-1e53qd5">When</th><th class="svelte-1e53qd5">Work product</th><th class="svelte-1e53qd5">Status</th><th class="svelte-1e53qd5">Model</th><th class="svelte-1e53qd5">Prompt</th><th class="svelte-1e53qd5">Attempts</th></tr></thead><tbody><!--[-->`);
       const each_array = ensure_array_like(runs);
       for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
         let r = each_array[$$index];
-        $$renderer2.push(`<tr><td class="svelte-1e53qd5">${escape_html(fmt(r.publishedAt ?? r.createdAt))}</td><td class="svelte-1e53qd5">${escape_html(product(r.workProductType))}</td><td class="svelte-1e53qd5"><span${attr_class(`status status-${stringify(r.status)}`, "svelte-1e53qd5")}>${escape_html(r.status)}</span></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.modelVersion)}</code></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.promptVersion)}</code></td><td class="svelte-1e53qd5">${escape_html(r.attemptCount)}</td><td class="svelte-1e53qd5">`);
-        if (r.pdfUrl) {
-          $$renderer2.push("<!--[0-->");
-          $$renderer2.push(`<a${attr("href", r.pdfUrl)} download="">PDF</a>`);
-        } else {
-          $$renderer2.push("<!--[-1-->");
-          $$renderer2.push(`—`);
-        }
-        $$renderer2.push(`<!--]--></td></tr>`);
+        $$renderer2.push(`<tr><td class="svelte-1e53qd5">${escape_html(fmt(r.publishedAt ?? r.createdAt))}</td><td class="svelte-1e53qd5">${escape_html(product(r.workProductType))}</td><td class="svelte-1e53qd5"><span${attr_class(`status status-${stringify(r.status)}`, "svelte-1e53qd5")}>${escape_html(r.status)}</span></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.modelVersion)}</code></td><td class="svelte-1e53qd5"><code class="svelte-1e53qd5">${escape_html(r.promptVersion)}</code></td><td class="svelte-1e53qd5">${escape_html(r.attemptCount)}</td></tr>`);
       }
       $$renderer2.push(`<!--]--></tbody></table></div></section>`);
     } else {
@@ -237,8 +222,7 @@ function _page($$renderer, $$props) {
         title: "What changed this week",
         deck: "A structured-finance read of the corpus on file for this fund. The memo is cited inline against the documents the agent had access to at run time.",
         html: weeklyMemo().html,
-        output: weeklyMemo().output,
-        pdfUrl: weeklyMemo().pdfUrl
+        output: weeklyMemo().output
       });
     } else {
       $$renderer2.push("<!--[-1-->");
@@ -254,8 +238,7 @@ function _page($$renderer, $$props) {
         title: "Cash-flow narrative for the month",
         deck: "A monthly cash-flow read against the same corpus, focused on inflows, outflows, and the residual that flows into next period.",
         html: monthlyCashFlow().html,
-        output: monthlyCashFlow().output,
-        pdfUrl: monthlyCashFlow().pdfUrl
+        output: monthlyCashFlow().output
       });
     } else {
       $$renderer2.push("<!--[-1-->");

@@ -81,7 +81,6 @@ declare module '$env/static/private' {
 	export const REPLIT_EXPO_DEV_DOMAIN: string;
 	export const npm_config_catalog: string;
 	export const REPL_ID: string;
-	export const npm_config_recursive: string;
 	export const PIP_CONFIG_FILE: string;
 	export const REPLIT_PYTHON_LD_LIBRARY_PATH: string;
 	export const REPLIT_PYTHONPATH: string;
@@ -169,6 +168,7 @@ declare module '$env/static/private' {
 	export const GIT_TERMINAL_PROMPT: string;
 	export const npm_node_execpath: string;
 	export const REPL_SLUG: string;
+	export const OLDPWD: string;
 	export const NODE_ENV: string;
 }
 
@@ -299,7 +299,6 @@ declare module '$env/dynamic/private' {
 		REPLIT_EXPO_DEV_DOMAIN: string;
 		npm_config_catalog: string;
 		REPL_ID: string;
-		npm_config_recursive: string;
 		PIP_CONFIG_FILE: string;
 		REPLIT_PYTHON_LD_LIBRARY_PATH: string;
 		REPLIT_PYTHONPATH: string;
@@ -387,6 +386,7 @@ declare module '$env/dynamic/private' {
 		GIT_TERMINAL_PROMPT: string;
 		npm_node_execpath: string;
 		REPL_SLUG: string;
+		OLDPWD: string;
 		NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
