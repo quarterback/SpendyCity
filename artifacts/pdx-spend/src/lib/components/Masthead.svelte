@@ -25,7 +25,8 @@
 
     <nav
       id="primary-nav"
-      class="nav {menuOpen ? 'open' : ''}"
+      class="nav"
+      class:open={menuOpen}
       aria-label="Primary"
     >
       <a href="{base}/dashboard/" onclick={close}>Dashboard</a>
