@@ -1,0 +1,1 @@
+import{G as f,i as u,T as _,U as o,q as t,V as g,W as i,z as l,y as d,A as p,X as m}from"./Dl5EMnMe.js";function T(n,r){let s=null,y=t;var a;if(t){s=p;for(var e=m(document.head);e!==null&&(e.nodeType!==g||e.data!==n);)e=i(e);if(e===null)l(!1);else{var E=i(e);e.remove(),d(E)}}t||(a=document.head.appendChild(f()));try{u(()=>r(a),_|o)}finally{y&&(l(!0),d(s))}}export{T as h};

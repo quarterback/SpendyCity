@@ -62,7 +62,7 @@
     <aside class="margin-note">
       <h4>Tech</h4>
       <p>
-        SvelteKit (Node adapter, prerendered pages). D3 for charts. Scrollama for chart-driven scroll. The agent endpoint streams Anthropic&rsquo;s Claude (Sonnet) over Server-Sent Events. Fund records live in TypeScript modules.
+        SvelteKit (static adapter, fully prerendered). D3 for charts. Scrollama for chart-driven scroll. Fund records live in TypeScript modules.
       </p>
       <p style="margin-top: 14px">
         <strong>Type · </strong>Fraunces (display + body), JetBrains Mono (eyebrow, axis, annotation).
@@ -158,7 +158,6 @@
       <p>
         <a href="{base}/">Home</a><br />
         <a href="{base}/dashboard/">Dashboard</a><br />
-        <a href="{base}/agent/">Agent demo</a><br />
         <a href="{base}/implications/">Levers</a><br />
         <a href="{base}/about/">About</a><br />
         <a href="{base}/embed/">Embeddable charts</a>

@@ -1,0 +1,15 @@
+[build]
+  base = "."
+  command = "pnpm --filter @workspace/pdx-spend... run build"
+  publish = "artifacts/pdx-spend/build"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10"
+  NPM_FLAGS = "--prefix=/dev/null"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

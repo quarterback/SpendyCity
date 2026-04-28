@@ -1,7 +1,15 @@
 import { and, desc, eq } from 'drizzle-orm';
-import { db, agentOutputsTable, type AgentOutput } from '@workspace/db';
+import type { AgentOutput } from '@workspace/db';
 import { marked } from 'marked';
 import DOMPurify from 'isomorphic-dompurify';
+
+// Defer the @workspace/db import to call-time so a static build (e.g.
+// Netlify) succeeds when DATABASE_URL is unset — that module throws at
+// module load if the env var is missing.
+async function getDb() {
+  const mod = await import('@workspace/db');
+  return { db: mod.db, agentOutputsTable: mod.agentOutputsTable };
+}
 
 // Bundle markdown content at build time. Reading via fs+__dirname does
 // not survive the SvelteKit/Vite bundle: the compiled chunk lives under
@@ -61,23 +69,24 @@ async function latestSucceeded(
   fundSlug: string,
   type: WorkProductType
 ): Promise<AgentOutput | null> {
-  const rows = await db
-    .select()
-    .from(agentOutputsTable)
-    .where(
-      and(
-        eq(agentOutputsTable.fundSlug, fundSlug),
-        eq(agentOutputsTable.workProductType, type),
-        eq(agentOutputsTable.status, 'succeeded')
+  try {
+    const { db, agentOutputsTable } = await getDb();
+    const rows = await db
+      .select()
+      .from(agentOutputsTable)
+      .where(
+        and(
+          eq(agentOutputsTable.fundSlug, fundSlug),
+          eq(agentOutputsTable.workProductType, type),
+          eq(agentOutputsTable.status, 'succeeded')
+        )
       )
-    )
-    // createdAt is always set; publishedAt is set on success but is the
-    // intended sort key when present. Because we already filter by
-    // status='succeeded' (which always sets publishedAt), this ordering
-    // is unambiguous, with createdAt as a stable tie-breaker.
-    .orderBy(desc(agentOutputsTable.publishedAt), desc(agentOutputsTable.createdAt))
-    .limit(1);
-  return rows[0] ?? null;
+      .orderBy(desc(agentOutputsTable.publishedAt), desc(agentOutputsTable.createdAt))
+      .limit(1);
+    return rows[0] ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function loadMemo(
@@ -96,22 +105,27 @@ export async function loadMemo(
 }
 
 export async function loadRunHistory(fundSlug: string, limit = 8): Promise<RunHistoryEntry[]> {
-  const rows = await db
-    .select()
-    .from(agentOutputsTable)
-    .where(eq(agentOutputsTable.fundSlug, fundSlug))
-    .orderBy(desc(agentOutputsTable.createdAt))
-    .limit(limit);
-  return rows.map((r) => ({
-    id: r.id,
-    workProductType: r.workProductType as WorkProductType,
-    status: r.status,
-    modelVersion: r.modelVersion,
-    promptVersion: r.promptVersion,
-    publishedAt: r.publishedAt,
-    createdAt: r.createdAt,
-    attemptCount: r.attemptCount
-  }));
+  try {
+    const { db, agentOutputsTable } = await getDb();
+    const rows = await db
+      .select()
+      .from(agentOutputsTable)
+      .where(eq(agentOutputsTable.fundSlug, fundSlug))
+      .orderBy(desc(agentOutputsTable.createdAt))
+      .limit(limit);
+    return rows.map((r) => ({
+      id: r.id,
+      workProductType: r.workProductType as WorkProductType,
+      status: r.status,
+      modelVersion: r.modelVersion,
+      promptVersion: r.promptVersion,
+      publishedAt: r.publishedAt,
+      createdAt: r.createdAt,
+      attemptCount: r.attemptCount
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export interface LatestWeeklyAcrossFunds {

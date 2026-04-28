@@ -30,7 +30,6 @@
       aria-label="Primary"
     >
       <a href="{base}/dashboard/" onclick={close}>Dashboard</a>
-      <a href="{base}/agent/" onclick={close}>Agent</a>
       <a href="{base}/methodology/" onclick={close}>Methodology</a>
       <a href="{base}/implications/" onclick={close}>Levers</a>
       <a href="{base}/about/" onclick={close}>About</a>

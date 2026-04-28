@@ -1,15 +1,18 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-const basePath = process.env.BASE_PATH ?? '/';
+const basePath = process.env.BASE_PATH ?? '';
 const normalizedBase = basePath === '/' ? '' : basePath.replace(/\/$/, '');
 
 const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter({
-      out: 'dist/server',
-      precompress: false
+      pages: 'build',
+      assets: 'build',
+      fallback: undefined,
+      precompress: false,
+      strict: true
     }),
     paths: {
       base: normalizedBase

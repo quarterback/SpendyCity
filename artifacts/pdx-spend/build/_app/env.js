@@ -1,0 +1,1 @@
+export const env={"PUBLIC_OBJECT_SEARCH_PATHS":"/replit-objstore-985a093d-dbbd-4b4c-b8aa-f6abb1dd0527/public"}
