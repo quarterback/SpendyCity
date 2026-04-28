@@ -17,7 +17,12 @@ export const corpusDocumentsTable = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => ({
-    hashUnique: uniqueIndex("corpus_documents_content_hash_idx").on(t.contentHash),
+    // Dedupe per fund so two funds may legitimately reference the same
+    // source document without losing the per-fund linkage.
+    fundHashUnique: uniqueIndex("corpus_documents_fund_hash_idx").on(
+      t.fundSlug,
+      t.contentHash,
+    ),
     fundIdx: index("corpus_documents_fund_idx").on(t.fundSlug),
     fundTypeIdx: index("corpus_documents_fund_type_idx").on(t.fundSlug, t.docType),
   }),

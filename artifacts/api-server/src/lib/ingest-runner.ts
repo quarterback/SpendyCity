@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { db, corpusDocumentsTable, DOC_TYPES, type DocType } from "@workspace/db";
 import { logger } from "./logger";
 
@@ -57,7 +57,12 @@ export async function ingestOne(
     const existing = await db
       .select({ id: corpusDocumentsTable.id })
       .from(corpusDocumentsTable)
-      .where(eq(corpusDocumentsTable.contentHash, contentHash))
+      .where(
+        and(
+          eq(corpusDocumentsTable.fundSlug, fundSlug),
+          eq(corpusDocumentsTable.contentHash, contentHash),
+        ),
+      )
       .limit(1);
     if (existing.length > 0) {
       return "skipped";
