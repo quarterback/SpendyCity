@@ -4,7 +4,7 @@
    * single brand placeholder shipped under /static/og-default.svg; per-page
    * overrides are accepted via the `image` prop.
    */
-  import { base } from '$app/paths';
+  import { SITE_URL } from '$lib/config';
 
   interface Props {
     title: string;
@@ -14,16 +14,24 @@
     type?: 'website' | 'article';
   }
 
+  const DEFAULT_OG_IMAGE = '/og-default.svg';
+
   const {
     title,
     description,
     path = '/',
-    image = `${base}/og-default.svg`,
+    image = DEFAULT_OG_IMAGE,
     type = 'article'
   }: Props = $props();
 
-  const SITE_URL = 'https://pdx-spend.example';
-  const fullUrl = `${SITE_URL}${path}`;
+  function toAbsoluteUrl(p: string): string {
+    if (/^https?:\/\//i.test(p)) return p;
+    const s = p.startsWith('/') ? p : `/${p}`;
+    return `${SITE_URL}${s}`;
+  }
+
+  const fullUrl = $derived(toAbsoluteUrl(path));
+  const fullImage = $derived(toAbsoluteUrl(image));
 </script>
 
 <svelte:head>
@@ -36,12 +44,12 @@
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={fullUrl} />
-  <meta property="og:image" content={`${SITE_URL}${image}`} />
+  <meta property="og:image" content={fullImage} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={`${SITE_URL}${image}`} />
+  <meta name="twitter:image" content={fullImage} />
 </svelte:head>

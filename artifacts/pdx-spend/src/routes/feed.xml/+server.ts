@@ -1,9 +1,9 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { FUNDS } from '$lib/data/funds';
+import { SITE_URL } from '$lib/config';
 
 export const prerender = true;
 
-const SITE_URL = 'https://pdx-spend.example';
 const SITE_TITLE = 'PDX Spend';
 const SITE_DESCRIPTION =
   'Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.';

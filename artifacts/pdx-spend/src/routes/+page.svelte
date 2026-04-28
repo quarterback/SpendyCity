@@ -5,6 +5,7 @@
   import SparkBalance from '$lib/components/SparkBalance.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
+  import { siteUrl } from '$lib/config';
   import {
     FUNDS,
     TOTAL_MODELED_BALANCE,
@@ -148,7 +149,7 @@
     <ShareBlock
       headline="Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances."
       summary="An editorial accounting of where the money came from, what it was promised for, and what it now does. Modeled figures, labeled as such."
-      url="https://pdx-spend.example/"
+      url={siteUrl('/')}
     />
   </section>
 </article>

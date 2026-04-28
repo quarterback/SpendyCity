@@ -6,6 +6,7 @@ import "d3";
 import { f as formatUSD, a as formatPct, C as ChartFrame } from "../../../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../../../chunks/ShareBlock.js";
+import { s as siteUrl } from "../../../../chunks/config.js";
 function AnnotatedLineChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     $$renderer2.push(`<div style="width:100%"><svg role="img" aria-label="Annotated cash position over time"></svg></div>`);
@@ -149,7 +150,7 @@ function _page($$renderer, $$props) {
     ShareBlock($$renderer2, {
       headline: `${fund().name} — ${fund().scandal}`,
       summary: fund().oneLineStatus,
-      url: `https://pdx-spend.example/funds/${fund().slug}/`
+      url: siteUrl(`/funds/${fund().slug}/`)
     });
     $$renderer2.push(`<!----></section> <section class="container fund-nav"><a class="nav-back"${attr("href", `${stringify(base)}/`)}>← Back to issue index</a> <a class="nav-back"${attr("href", `${stringify(base)}/dashboard/`)}>Cross-fund dashboard →</a></section></article>`);
   });

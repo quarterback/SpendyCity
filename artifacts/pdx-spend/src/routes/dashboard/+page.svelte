@@ -4,6 +4,7 @@
   import ChartFrame from '$lib/components/ChartFrame.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
+  import { siteUrl } from '$lib/config';
   import { FUNDS, TOTAL_MODELED_BALANCE, TOTAL_MOVABLE } from '$lib/data/funds';
   import { formatUSD } from '$lib/utils/format';
 
@@ -127,7 +128,7 @@
     <ShareBlock
       headline="Cross-fund dashboard: seven Portland-area restricted funds, in one frame."
       summary="Switch between dollars, share-restricted, and drift trajectory. Embeddable. Modeled figures."
-      url="https://pdx-spend.example/dashboard/"
+      url={siteUrl('/dashboard/')}
     />
   </section>
 </article>

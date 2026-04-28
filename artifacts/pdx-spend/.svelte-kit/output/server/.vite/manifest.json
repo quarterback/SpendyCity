@@ -69,9 +69,12 @@
     "name": "SiteMeta",
     "imports": [
       "_root.js",
-      "_server.js",
-      "_url.js"
+      "_config.js"
     ]
+  },
+  "_config.js": {
+    "file": "chunks/config.js",
+    "name": "config"
   },
   "_environment.js": {
     "file": "chunks/environment.js",
@@ -160,6 +163,7 @@
       "_ChartFrame.js",
       "_SiteMeta.js",
       "_ShareBlock.js",
+      "_config.js",
       "_funds.js"
     ]
   },
@@ -209,6 +213,7 @@
       "_ChartFrame.js",
       "_SiteMeta.js",
       "_ShareBlock.js",
+      "_config.js",
       "_funds.js"
     ]
   },
@@ -218,7 +223,8 @@
     "src": "src/routes/feed.xml/+server.ts",
     "isEntry": true,
     "imports": [
-      "_funds.js"
+      "_funds.js",
+      "_config.js"
     ]
   },
   "src/routes/feed/+page.svelte": {
@@ -245,7 +251,8 @@
       "_url.js",
       "_ChartFrame.js",
       "_SiteMeta.js",
-      "_ShareBlock.js"
+      "_ShareBlock.js",
+      "_config.js"
     ]
   },
   "src/routes/funds/[slug]/+page.ts": {
@@ -267,7 +274,8 @@
       "_server.js",
       "_url.js",
       "_SiteMeta.js",
-      "_ShareBlock.js"
+      "_ShareBlock.js",
+      "_config.js"
     ]
   },
   "src/routes/methodology/+page.svelte": {

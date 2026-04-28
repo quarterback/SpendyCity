@@ -6,6 +6,7 @@ import "d3";
 import { C as ChartFrame, f as formatUSD } from "../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../chunks/ShareBlock.js";
+import { s as siteUrl } from "../../chunks/config.js";
 import { a as FUNDS, T as TOTAL_CUMULATIVE_COLLECTED, b as TOTAL_MODELED_BALANCE, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
 function HeroChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -65,7 +66,7 @@ function _page($$renderer, $$props) {
     ShareBlock($$renderer2, {
       headline: "Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.",
       summary: "An editorial accounting of where the money came from, what it was promised for, and what it now does. Modeled figures, labeled as such.",
-      url: "https://pdx-spend.example/"
+      url: siteUrl("/")
     });
     $$renderer2.push(`<!----></section></article>`);
   });

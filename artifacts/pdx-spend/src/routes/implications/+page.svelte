@@ -2,6 +2,7 @@
   import { base } from '$app/paths';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
+  import { siteUrl } from '$lib/config';
 </script>
 
 <SiteMeta
@@ -64,7 +65,7 @@
     <ShareBlock
       headline="The pattern across seven Portland-area restricted funds is consistent enough to name."
       summary="An editorial accounting of how restricted public funds drift after they pass the ballot."
-      url="https://pdx-spend.example/implications/"
+      url={siteUrl('/implications/')}
     />
   </section>
 

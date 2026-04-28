@@ -1,6 +1,6 @@
 import { a as FUNDS } from "../../../chunks/funds.js";
+import { S as SITE_URL } from "../../../chunks/config.js";
 const prerender = true;
-const SITE_URL = "https://pdx-spend.example";
 const SITE_TITLE = "PDX Spend";
 const SITE_DESCRIPTION = "Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.";
 function escapeXml(input) {

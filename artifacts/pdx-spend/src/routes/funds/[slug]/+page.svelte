@@ -8,6 +8,7 @@
   import Scrolly from '$lib/components/Scrolly.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
+  import { siteUrl } from '$lib/config';
   import { formatUSD, formatPct } from '$lib/utils/format';
   import type { PageProps } from './$types';
 
@@ -215,7 +216,7 @@
     <ShareBlock
       headline={`${fund.name} — ${fund.scandal}`}
       summary={fund.oneLineStatus}
-      url={`https://pdx-spend.example/funds/${fund.slug}/`}
+      url={siteUrl(`/funds/${fund.slug}/`)}
     />
   </section>
 

@@ -6,6 +6,7 @@ import "d3";
 import { f as formatUSD, C as ChartFrame } from "../../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../../chunks/ShareBlock.js";
+import { s as siteUrl } from "../../../chunks/config.js";
 import { a as FUNDS, b as TOTAL_MODELED_BALANCE, d as TOTAL_MOVABLE } from "../../../chunks/funds.js";
 function StackedBarChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -64,7 +65,7 @@ function _page($$renderer, $$props) {
     ShareBlock($$renderer2, {
       headline: "Cross-fund dashboard: seven Portland-area restricted funds, in one frame.",
       summary: "Switch between dollars, share-restricted, and drift trajectory. Embeddable. Modeled figures.",
-      url: "https://pdx-spend.example/dashboard/"
+      url: siteUrl("/dashboard/")
     });
     $$renderer2.push(`<!----></section></article>`);
   });
