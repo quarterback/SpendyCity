@@ -2,6 +2,8 @@
   import * as d3 from 'd3';
   import { onMount } from 'svelte';
   import type { CashPoint } from '$lib/data/types';
+  import { chartColors } from '$lib/charts/colors';
+  import { formatChartUSD } from '$lib/charts/format';
 
   interface Props {
     data: CashPoint[];
@@ -13,11 +15,24 @@
 
   let svgEl: SVGSVGElement | undefined = $state();
 
+  const a11yLabel = $derived.by(() => {
+    if (!data.length) return 'Balance trend sparkline';
+    const first = data[0];
+    const last = data[data.length - 1];
+    return `Balance trend ${first.year}–${last.year}: ${formatChartUSD(first.balance, 'compact')} to ${formatChartUSD(last.balance, 'compact')}.`;
+  });
+
   function draw() {
     if (!svgEl) return;
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
-    svg.attr('viewBox', `0 0 ${width} ${height}`).attr('width', '100%').attr('height', height);
+    svg
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'none')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('role', 'img')
+      .attr('aria-label', a11yLabel);
 
     const x = d3
       .scaleLinear()
@@ -39,12 +54,12 @@
       .y((d) => y(d.balance))
       .curve(d3.curveMonotoneX);
 
-    svg.append('path').datum(data).attr('fill', '#c5bfae').attr('opacity', 0.55).attr('d', area as never);
-    svg.append('path').datum(data).attr('fill', 'none').attr('stroke', '#161513').attr('stroke-width', 1.2).attr('d', line as never);
+    svg.append('path').datum(data).attr('fill', chartColors.obligated).attr('opacity', 0.55).attr('d', area as never);
+    svg.append('path').datum(data).attr('fill', 'none').attr('stroke', chartColors.balance).attr('stroke-width', 1.2).attr('d', line as never);
 
     const last = data[data.length - 1];
     if (last) {
-      svg.append('circle').attr('cx', x(last.year)).attr('cy', y(last.balance)).attr('r', 2.4).attr('fill', '#b23c1a');
+      svg.append('circle').attr('cx', x(last.year)).attr('cy', y(last.balance)).attr('r', 2.4).attr('fill', chartColors.audit);
     }
   }
 
@@ -52,4 +67,4 @@
   onMount(() => draw());
 </script>
 
-<svg bind:this={svgEl} role="img" aria-label="Balance trend"></svg>
+<svg bind:this={svgEl}></svg>

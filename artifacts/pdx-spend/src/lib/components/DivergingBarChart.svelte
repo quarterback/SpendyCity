@@ -2,6 +2,8 @@
   import * as d3 from 'd3';
   import { onMount } from 'svelte';
   import type { PromiseVsHappened } from '$lib/data/types';
+  import { formatChartUSD } from '$lib/charts/format';
+  import { chartColors, CHART_COMPACT_BREAKPOINT } from '$lib/charts/colors';
 
   interface Props {
     data: PromiseVsHappened[];
@@ -16,36 +18,56 @@
   let containerEl: HTMLDivElement | undefined = $state();
   // svelte-ignore state_referenced_locally
   let renderedW = $state(width);
-  let tip = $state({ vis: false, x: 0, y: 0, html: '' });
+  let tip = $state({ vis: false, x: 0, y: 0, html: '', sticky: false });
+  let selectedCycle = $state<string | null>(null);
+  let liveMsg = $state('');
+  const selectedRow = $derived(data.find((d) => d.cycle === selectedCycle) ?? null);
+  function clearSelection() { selectedCycle = null; hideTip(true); }
 
-  const margin = { top: 28, right: 90, bottom: 36, left: 92 };
+  const isCompact = $derived(renderedW < CHART_COMPACT_BREAKPOINT);
+  const margin = $derived(
+    isCompact
+      ? { top: 22, right: 16, bottom: 56, left: 76 }
+      : { top: 28, right: 90, bottom: 36, left: 92 }
+  );
 
-  function showTip(event: MouseEvent, html: string) {
+  const a11yLabel = $derived.by(() => {
+    if (!data.length) return 'Promised vs delivered, by fiscal cycle';
+    const totalP = data.reduce((s, d) => s + d.promised, 0);
+    const totalD = data.reduce((s, d) => s + d.delivered, 0);
+    return `Promised vs delivered across ${data.length} cycles. Total promised ${formatChartUSD(totalP, 'precise')}, delivered ${formatChartUSD(totalD, 'precise')}.`;
+  });
+
+  function showTip(clientX: number, clientY: number, html: string, sticky = false) {
     if (!containerEl) return;
     const r = containerEl.getBoundingClientRect();
-    tip = { vis: true, x: event.clientX - r.left, y: event.clientY - r.top, html };
+    tip = { vis: true, x: clientX - r.left, y: clientY - r.top, html, sticky };
   }
-  function hideTip() { tip = { ...tip, vis: false }; }
-
-  function fmt(n: number) {
-    if (Math.abs(n) >= 1e9) return `$${(n / 1e9).toFixed(1)}B`;
-    if (Math.abs(n) >= 1e6) return `$${(n / 1e6).toFixed(0)}M`;
-    if (Math.abs(n) >= 1e3) return `$${(n / 1e3).toFixed(0)}K`;
-    return `$${n}`;
+  function hideTip(force = false) {
+    if (tip.sticky && !force) return;
+    tip = { ...tip, vis: false, sticky: false };
   }
 
   function draw() {
     if (!svgEl) return;
-    hideTip();
+    hideTip(true);
     const svg = d3.select(svgEl);
     svg.selectAll('*').remove();
 
     const w = renderedW;
-    const innerW = w - margin.left - margin.right;
-    const innerH = height - margin.top - margin.bottom;
+    const m = margin;
+    const innerW = w - m.left - m.right;
+    const innerH = height - m.top - m.bottom;
 
-    svg.attr('viewBox', `0 0 ${w} ${height}`).attr('width', w).attr('height', height);
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    svg
+      .attr('viewBox', `0 0 ${w} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .attr('width', '100%')
+      .attr('height', height)
+      .attr('role', 'img')
+      .attr('aria-label', a11yLabel);
+
+    const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
 
     const y = d3
       .scaleBand()
@@ -56,26 +78,22 @@
     const maxVal = d3.max(data, (d) => Math.max(d.promised, d.delivered)) ?? 0;
     const x = d3.scaleLinear().domain([0, maxVal * 1.1]).range([0, innerW]);
 
-    // grid
     g.append('g')
       .attr('class', 'grid')
-      .call(
-        d3.axisBottom(x).ticks(4).tickSize(innerH).tickFormat(() => '') as never
-      )
+      .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickSize(innerH).tickFormat(() => '') as never)
       .attr('transform', `translate(0,0)`);
 
-    // axes
     g.append('g')
       .attr('class', 'axis')
       .attr('transform', `translate(0,${innerH})`)
-      .call(d3.axisBottom(x).ticks(4).tickFormat((d) => fmt(+d)) as never);
+      .call(d3.axisBottom(x).ticks(isCompact ? 3 : 4).tickFormat((d) => formatChartUSD(+d, 'compact')) as never);
 
     g.append('g').attr('class', 'axis').call(d3.axisLeft(y) as never);
 
     const barH = y.bandwidth() / 2 - 1;
 
     const tipFor = (d: PromiseVsHappened) =>
-      `<strong>${d.cycle}</strong> · ${fmt(d.delivered)} delivered<span class="sub">of ${fmt(d.promised)} promised · gap ${fmt(d.promised - d.delivered)}</span>`;
+      `<strong>${d.cycle}</strong> · ${formatChartUSD(d.delivered, 'precise')} delivered<span class="sub">of ${formatChartUSD(d.promised, 'precise')} promised · gap ${formatChartUSD(d.promised - d.delivered, 'precise')}</span>`;
 
     // promised bar (lighter)
     g.selectAll('rect.promised')
@@ -84,13 +102,12 @@
       .append('rect')
       .attr('class', 'promised')
       .attr('x', 0)
-      .attr('y', (d) => (y(d.cycle) ?? 0) + 0)
+      .attr('y', (d) => (y(d.cycle) ?? 0))
       .attr('width', (d) => x(d.promised))
       .attr('height', barH)
-      .attr('fill', '#c5bfae')
-      .style('cursor', 'pointer')
-      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
-      .on('mouseleave', hideTip);
+      .attr('fill', chartColors.obligated)
+      .attr('stroke', chartColors.obligated)
+      .attr('stroke-width', 0.5);
 
     g.selectAll('rect.delivered')
       .data(data)
@@ -101,12 +118,9 @@
       .attr('y', (d) => (y(d.cycle) ?? 0) + barH + 2)
       .attr('width', (d) => x(d.delivered))
       .attr('height', barH)
-      .attr('fill', '#161513')
-      .style('cursor', 'pointer')
-      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
-      .on('mouseleave', hideTip);
+      .attr('fill', chartColors.balance);
 
-    // transparent hit row covering the full row height for easier hover
+    // transparent hit row covering the full row height for easier hover/tap
     g.selectAll('rect.hit')
       .data(data)
       .enter()
@@ -117,54 +131,77 @@
       .attr('width', innerW)
       .attr('height', y.bandwidth())
       .attr('fill', 'transparent')
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', (d) =>
+        `${d.cycle}: promised ${formatChartUSD(d.promised, 'precise')}, delivered ${formatChartUSD(d.delivered, 'precise')}`
+      )
       .style('cursor', 'pointer')
-      .on('mouseenter mousemove', (event: MouseEvent, d) => showTip(event, tipFor(d)))
-      .on('mouseleave', hideTip);
+      .on('pointerenter pointermove', (event: PointerEvent, d) => {
+        const sticky = event.pointerType !== 'mouse';
+        showTip(event.clientX, event.clientY, tipFor(d), sticky);
+      })
+      .on('pointerdown', (event: PointerEvent, d) => {
+        selectedCycle = d.cycle;
+        liveMsg = `${d.cycle}: ${formatChartUSD(d.delivered, 'precise')} delivered of ${formatChartUSD(d.promised, 'precise')} promised`;
+        showTip(event.clientX, event.clientY, tipFor(d), true);
+      })
+      .on('pointerleave', (event: PointerEvent) => {
+        if (event.pointerType !== 'mouse') return;
+        hideTip();
+      })
+      .on('focus', function (this: SVGRectElement, _e, d) {
+        const r = this.getBoundingClientRect();
+        selectedCycle = d.cycle;
+        liveMsg = `${d.cycle}: ${formatChartUSD(d.delivered, 'precise')} delivered of ${formatChartUSD(d.promised, 'precise')} promised`;
+        showTip(r.left + r.width / 2, r.top + r.height / 2, tipFor(d), true);
+      })
+      .on('blur', () => hideTip(true));
 
-    // gap labels
-    g.selectAll('text.gap')
-      .data(data)
-      .enter()
-      .append('text')
-      .attr('class', 'annotation-label')
-      .attr('x', (d) => x(d.promised) + 6)
-      .attr('y', (d) => (y(d.cycle) ?? 0) + barH / 2)
-      .attr('dy', '0.32em')
-      .attr('fill', '#b23c1a')
-      .text((d) => `gap ${fmt(d.promised - d.delivered)}`);
+    // gap labels (omit on compact for space)
+    if (!isCompact) {
+      g.selectAll('text.gap')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'annotation-label')
+        .attr('x', (d) => Math.min(x(d.promised) + 6, innerW - 4))
+        .attr('y', (d) => (y(d.cycle) ?? 0) + barH / 2)
+        .attr('dy', '0.32em')
+        .attr('fill', chartColors.movable)
+        .text((d) => `gap ${formatChartUSD(d.promised - d.delivered, 'compact')}`);
 
-    // bar value labels at end of delivered bar
-    g.selectAll('text.deliv-val')
-      .data(data)
-      .enter()
-      .append('text')
-      .attr('class', 'annotation-label')
-      .attr('x', (d) => x(d.delivered) + 6)
-      .attr('y', (d) => (y(d.cycle) ?? 0) + barH + 2 + barH / 2)
-      .attr('dy', '0.32em')
-      .attr('fill', '#161513')
-      .text((d) => fmt(d.delivered));
+      g.selectAll('text.deliv-val')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'annotation-label')
+        .attr('x', (d) => Math.min(x(d.delivered) + 6, innerW - 4))
+        .attr('y', (d) => (y(d.cycle) ?? 0) + barH + 2 + barH / 2)
+        .attr('dy', '0.32em')
+        .attr('fill', chartColors.balance)
+        .text((d) => formatChartUSD(d.delivered, 'compact'));
+    }
 
-    // legend
+    // legend (bottom on all sizes, but in compact stacks vertically)
     const legend = svg
       .append('g')
-      .attr('transform', `translate(${margin.left}, ${height - 10})`);
-    legend.append('rect').attr('x', 0).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', '#c5bfae');
+      .attr('transform', `translate(${m.left}, ${height - (isCompact ? 24 : 10)})`);
+    legend.append('rect').attr('x', 0).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', chartColors.obligated);
     legend
       .append('text')
       .attr('class', 'label')
       .attr('x', 16)
       .attr('y', -3)
-      .attr('fill', '#54514a')
+      .attr('fill', chartColors.axis)
       .text('Promised');
-    legend.append('rect').attr('x', 96).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', '#161513');
-    legend
-      .append('text')
-      .attr('class', 'label')
-      .attr('x', 112)
-      .attr('y', -3)
-      .attr('fill', '#54514a')
-      .text('Delivered');
+    if (isCompact) {
+      legend.append('rect').attr('x', 0).attr('y', 6).attr('width', 12).attr('height', 8).attr('fill', chartColors.balance);
+      legend.append('text').attr('class', 'label').attr('x', 16).attr('y', 13).attr('fill', chartColors.axis).text('Delivered');
+    } else {
+      legend.append('rect').attr('x', 96).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', chartColors.balance);
+      legend.append('text').attr('class', 'label').attr('x', 112).attr('y', -3).attr('fill', chartColors.axis).text('Delivered');
+    }
   }
 
   $effect(() => {
@@ -173,23 +210,38 @@
     draw();
   });
 
+  function onContainerPointerDown(event: PointerEvent) {
+    if (event.target instanceof SVGElement && (event.target as SVGElement).classList.contains('hit')) return;
+    if (tip.sticky) hideTip(true);
+  }
+
   onMount(() => {
     if (svgEl && register) register(svgEl);
     if (!containerEl) return;
     const ro = new ResizeObserver((e) => {
       const w = e[0]?.contentRect.width ?? width;
-      renderedW = Math.max(360, Math.floor(w));
+      renderedW = Math.max(320, Math.floor(w));
     });
     ro.observe(containerEl);
     return () => ro.disconnect();
   });
 </script>
 
-<div bind:this={containerEl} style="width:100%; position:relative;">
-  <svg bind:this={svgEl} role="img" aria-label="Promised vs delivered, by fiscal cycle"></svg>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div bind:this={containerEl} style="width:100%; position:relative;" onpointerdown={onContainerPointerDown}>
+  <svg bind:this={svgEl}></svg>
   <div
     class="chart-tip"
     class:visible={tip.vis}
     style="left:{tip.x}px; top:{tip.y}px"
   >{@html tip.html}</div>
+  <p class="sr-only" aria-live="polite">{liveMsg}</p>
+  {#if selectedRow}
+    <p class="chart-selection-chip">
+      <span class="chip-year">{selectedRow.cycle}</span>
+      <span class="chip-val">{formatChartUSD(selectedRow.delivered, 'precise')} delivered</span>
+      <span class="chip-sub">of {formatChartUSD(selectedRow.promised, 'precise')} promised · gap {formatChartUSD(selectedRow.promised - selectedRow.delivered, 'precise')}</span>
+      <button class="chip-clear" onclick={clearSelection} aria-label="Clear selection">×</button>
+    </p>
+  {/if}
 </div>

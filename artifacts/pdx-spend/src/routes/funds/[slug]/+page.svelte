@@ -45,6 +45,16 @@
     fund.promiseVsHappened.map((p) => [p.cycle, Math.round(p.promised), Math.round(p.delivered), Math.round(p.promised - p.delivered)])
   );
 
+  const reserveCsvHeaders = ['Year', 'Unspent reserve (USD)'];
+  const reserveCsvRows = $derived(
+    fund.reserveSeries.map((r) => [r.year, Math.round(r.reserve)])
+  );
+
+  const driftCsvHeaders = ['Year', 'On voter intent (%)', 'Drift (%)', 'Note'];
+  const driftCsvRows = $derived(
+    fund.drift.map((d) => [d.year, Math.round(d.actualUse), 100 - Math.round(d.actualUse), d.note ?? ''])
+  );
+
   const intentLine = $derived(fund.voterIntentPlain ?? fund.voterIntent);
 </script>
 
@@ -226,6 +236,10 @@
       modeled={true}
       chartId="{fund.slug}-reserve"
       pngName="{fund.slug}-reserve.png"
+      csvName="{fund.slug}-reserve.csv"
+      csvHeaders={reserveCsvHeaders}
+      csvRows={reserveCsvRows}
+      a11ySummary="Each row shows the dollars left sitting unspent in this fund at the end of that year."
     >
       {#snippet children({ register })}
         <ReserveStream series={fund.reserveSeries} {register} />
@@ -255,6 +269,10 @@
       modeled={true}
       chartId="{fund.slug}-drift"
       pngName="{fund.slug}-drift.png"
+      csvName="{fund.slug}-drift.csv"
+      csvHeaders={driftCsvHeaders}
+      csvRows={driftCsvRows}
+      a11ySummary="Modeled share of dollars still aimed at the original ballot purpose, with each council vote that broadens the eligible uses pulling the score down."
     >
       {#snippet children({ register })}
         <DriftTimeline drift={fund.drift} {register} />

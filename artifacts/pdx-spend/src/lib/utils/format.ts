@@ -28,11 +28,32 @@ export function downloadCSV(filename: string, headers: string[], rows: (string |
 }
 
 export function downloadSVGAsPNG(svg: SVGSVGElement, filename: string, scale = 2) {
-  const xml = new XMLSerializer().serializeToString(svg);
+  // Export at a stable size derived from the SVG's intrinsic viewBox so a
+  // mobile-rendered chart still produces a sensibly-sized PNG. Falls back to
+  // on-screen size only if no viewBox is set, and enforces a 1200px minimum
+  // width so phone-rendered exports remain legible.
+  const vb = svg.viewBox && svg.viewBox.baseVal;
+  const vbW = vb && vb.width ? vb.width : 0;
+  const vbH = vb && vb.height ? vb.height : 0;
+  let w = vbW || svg.clientWidth || 1200;
+  let h = vbH || svg.clientHeight || 720;
+  const MIN_W = 1200;
+  if (w < MIN_W) {
+    const ratio = MIN_W / w;
+    w = MIN_W;
+    h = Math.round(h * ratio);
+  }
+  // Ensure the serialized SVG carries explicit width/height matching the
+  // export size so the rasterizer scales the contents instead of clipping.
+  const clone = svg.cloneNode(true) as SVGSVGElement;
+  clone.setAttribute('width', String(w));
+  clone.setAttribute('height', String(h));
+  if (!clone.getAttribute('viewBox') && vbW && vbH) {
+    clone.setAttribute('viewBox', `0 0 ${vbW} ${vbH}`);
+  }
+  const xml = new XMLSerializer().serializeToString(clone);
   const svg64 = btoa(unescape(encodeURIComponent(xml)));
   const img = new Image();
-  const w = svg.clientWidth || svg.viewBox.baseVal.width || 800;
-  const h = svg.clientHeight || svg.viewBox.baseVal.height || 480;
   const canvas = document.createElement('canvas');
   canvas.width = w * scale;
   canvas.height = h * scale;
