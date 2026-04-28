@@ -25,3 +25,9 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+- **api-server** (`/api`) — Express 5, hosts `/api/healthz` and `/api/regenerate-memo` (SSE streaming, Anthropic Claude Sonnet via Replit AI Integrations).
+- **mockup-sandbox** (`/__mockup`) — Vite preview server for canvas mockups.
+- **pdx-spend** (`/`) — PDX Spend editorial site. SvelteKit 2 + adapter-static, Svelte 5 runes, D3 v7, scrollama. Type: Fraunces + JetBrains Mono. Burnt-sienna accent on movable funds. All fund figures are MODELED reconstructions (see `artifacts/pdx-spend/src/lib/data/funds.ts`); the corpus task swaps audited figures in-place. Static build outputs to `dist/public`. Live agent demo POSTs to the api-server `/api/regenerate-memo` SSE endpoint. Author: Ron Bronson / Public Capacity Lab / State Capacity AI.

@@ -1,0 +1,28 @@
+{
+	"/": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/about": [
+		"src/routes/+layout.ts"
+	],
+	"/agent": [
+		"src/routes/+layout.ts"
+	],
+	"/dashboard": [
+		"src/routes/+layout.ts"
+	],
+	"/feed": [
+		"src/routes/+layout.ts"
+	],
+	"/funds/[slug]": [
+		"src/routes/funds/[slug]/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/implications": [
+		"src/routes/+layout.ts"
+	],
+	"/methodology": [
+		"src/routes/+layout.ts"
+	]
+}

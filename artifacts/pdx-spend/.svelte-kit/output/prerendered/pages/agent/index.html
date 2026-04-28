@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+    <link href="../_app/immutable/entry/start.-jCouJyh.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BwIi6QXd.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXLDUKcu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/J02zB2Fb.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/-UyI9lYi.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.CoakY3re.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/C1FmrZbK.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CAeyNYap.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DTmN85vv.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CrvE5QRZ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DP51QsYD.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BMLf9AI7.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.BBKxx8VL.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9t0yhpg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CPhDkl6G.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CYoUI2Kb.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/4.Cy0hkMrl.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/gcOiOMUG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DdlF4Tdr.js" rel="modulepreload">
+		<!--1mf7izu--><!----><title>Agent demo — PDX Spend</title>
+		<link href="../_app/immutable/assets/0.D-mTjaha.css" rel="stylesheet">
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents"><!--[--><!--[0--><!--[--><header class="masthead"><div class="container masthead-inner"><a class="brand" href="../">PDX <span class="dot">·</span> Spend</a> <nav class="nav"><a href="../dashboard">Dashboard</a> <a href="../agent">Agent</a> <a href="../methodology">Methodology</a> <a href="../implications">Implications</a> <a href="../about">About</a></nav></div></header><!----> <main><!--[--><article><header class="container fund-header"><p class="kicker">AGENT DEMO · STRUCTURED MEMO</p> <h1 class="article-title">Generate a structured financial memo</h1> <p class="article-deck">Pick a fund and a lens. The agent reads the fund's modeled record and writes a brief in the voice you select. Each page of this site already ships with a pre-generated memo; this view re-runs it live.</p></header> <section class="container two-col"><div class="prose"><h2>How this works</h2> <p>The agent receives the fund's enabling code, voter intent, modeled balances, audit-event log, drift index, and promise-vs-delivered series. It is asked to produce a single-page structured memo: summary, structural findings, recommendations. No editorial framing.</p> <p>The endpoint is rate-limited per IP and the modeled-data caveat is enforced in the system prompt. If the live endpoint is unavailable, the pre-generated memo on each fund's page is the canonical version.</p></div> <aside class="margin-note"><h4>Lenses</h4> <p>The lens parameter changes the voice but not the structure. A "voter" lens explains what they were sold and what arrived. An "auditor" lens cites code and resolution numbers. A "reporter" lens names the structural gap.</p></aside></section> <section class="container"><div class="agent-controls"><label><span>Fund</span> <select><!--[--><option value="arts-tax" selected="">Arts Tax — Arts Education and Access Fund</option><option value="pcef">PCEF — Portland Clean Energy Community Benefits Fund</option><option value="housing-investment">Housing Investment — Housing Investment Fund (TIF Set-Aside)</option><option value="rental-services">Rental Services — Rental Services / Tenant Protections Fund</option><option value="affordable-housing-dev">Affordable Housing Bond — Metro Affordable Housing Bond</option><option value="preschool-for-all">Preschool For All — Preschool For All</option><option value="supportive-housing">SHS — Supportive Housing Services Measure</option><!--]--></select></label> <label><span>Lens</span> <select><!--[--><option value="financial-officer" selected="">Public-finance officer</option><option value="auditor">City auditor</option><option value="voter">Voter who passed the measure</option><option value="reporter">Investigative reporter</option><!--]--></select></label> <button class="run-btn">Regenerate live</button></div> <!--[-1--><!--]--></section> <section class="container"><p class="kicker">PRE-GENERATED MEMO</p> <pre class="memo">INTERNAL FINANCIAL MEMO
+TO:        Council President, City Auditor
+FROM:      Office of Public Capacity (modeled)
+SUBJECT:   Arts Education and Access Fund — material reserve and scope drift
+DATE:      As of latest reporting cycle
+
+1. SUMMARY
+The Arts Education and Access Fund ("Arts Tax") was authorized by Measure
+26-146 (2012) under PCC 5.73 to fund (a) K-5 arts and music teachers in
+five area public school districts and (b) competitive grants to
+qualifying arts non-profits.
+
+Modeled year-end balance: see fund page.
+Cumulative collections since inception: see fund page.
+Modeled restricted share of balance: 74%.
+Modeled movable / reclassified share of balance: 26%.
+
+2. STRUCTURAL FINDINGS
+2.1  Collection cost overhead has remained materially above the original
+     5% statutory ceiling, addressed historically by amending the
+     ceiling rather than reducing overhead.
+
+2.2  Council action in 2017 expanded the eligible-uses definition beyond
+     the K-5 teacher and grants frame defined in the ballot text. This
+     was effected by ordinance, not by a follow-on ballot measure.
+
+2.3  Carryover balance has been reported as "available for future
+     allocation" without a published spend-down plan that ties
+     disbursement to the original beneficiary classes.
+
+3. RECOMMENDATIONS
+3.1  Re-baseline the eligible-uses definition to the ballot text and
+     report all post-2017 reallocations against that baseline.
+3.2  Publish a multi-year spend-down plan tied to verifiable
+     beneficiary outcomes (teacher headcount, grants disbursed).
+3.3  Independent collections audit with public reporting on the
+     compliance-rate gap relative to the eligible adult population.
+
+— end —</pre></section> <section class="container two-col"><div class="prose"><h2>Why a memo, not an opinion</h2> <p>Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form of that accounting is not a press release or a feature story; it is a memo. The agent is asked to produce that memo and nothing else.</p></div> <aside class="margin-note"><h4>Provenance</h4> <p>The model behind this endpoint is Anthropic's Claude (Sonnet generation) accessed through Replit's AI integration proxy. The system prompt and structure live in <code>artifacts/api-server/src/routes/regenerate-memo.ts</code>.</p> <p style="margin-top: 12px">See <a href="../methodology/">methodology →</a></p></aside></section></article><!--]--><!----></main> <footer class="colophon"><div class="container colophon-inner"><div><h4>About this site</h4> <p>PDX Spend is an editorial accounting of seven voter-passed restricted funds in Portland and Multnomah County. All figures on this site are <em>modeled</em> reconstructions illustrating the structural pattern documented across audits, ordinances, and reporting.</p></div> <div><h4>Sections</h4> <p><a href="../">Home</a><br/> <a href="../dashboard">Cross-fund dashboard</a><br/> <a href="../agent">Agent demo</a><br/> <a href="../methodology">Methodology</a><br/> <a href="../implications">Implications</a><br/> <a href="../feed">Feed / RSS</a><br/> <a href="../about">About</a></p></div> <div><h4>Authored by</h4> <p>Ron Bronson<br/> Public Capacity Lab<br/> State Capacity AI</p></div> <div><h4>Use</h4> <p>Charts on each page can be downloaded as PNG or CSV. The dashboard provides an embed snippet. Pages link to enabling code, ballot text, and audit reports.</p></div></div></footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_bhzce2 = {
+						base: new URL("..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.-jCouJyh.js"),
+						import("../_app/immutable/entry/app.CoakY3re.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>

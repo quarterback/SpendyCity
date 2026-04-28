@@ -1,0 +1,27 @@
+{
+  "name": "@workspace/pdx-spend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --host 0.0.0.0",
+    "build": "vite build",
+    "serve": "vite preview --host 0.0.0.0",
+    "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.8",
+    "@sveltejs/kit": "^2.20.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.4",
+    "@types/d3": "^7.4.3",
+    "@types/node": "catalog:",
+    "d3": "^7.9.0",
+    "scrollama": "^3.2.0",
+    "svelte": "^5.20.0",
+    "svelte-check": "^4.1.4",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.14"
+  }
+}
