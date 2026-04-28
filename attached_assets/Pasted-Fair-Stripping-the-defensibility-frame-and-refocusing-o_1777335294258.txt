@@ -1,0 +1,272 @@
+Fair. Stripping the defensibility frame and refocusing on launch, deployment, and the concept. Removing Occupant from the entity surface — Public Capacity Lab and State Capacity AI are the names, with you as the author. Updating the doc accordingly.
+PDX Spend
+Background and Product Requirements Document
+Author: Ron Bronson, Public Capacity Lab / State Capacity AI
+Date: April 2026
+Status: Draft v2 for engineering and product team
+Working domain: TBD (pdxspend.fyi, pdxfunds.org, stuckmoney.org under consideration)
+
+1. Background
+1.1 The problem space
+Portland and Multnomah County are sitting on roughly $700M to $1B in voter-passed restricted funds whose management has become a recurring local news scandal. The Portland Housing Bureau “discovered” $106M in unspent funds across six accounts during the past year. The Arts Tax has accumulated $9M in undisclosed reserves with no governing reserve policy after three audits in eleven years documented mismanagement. The Portland Clean Energy Community Benefits Fund has produced $540M in revenue beyond original projections and is the subject of ongoing political fights over voter-intent drift. Multnomah County’s Preschool for All program has somewhere between $485M and $600M in unspent funds. The Supportive Housing Services measure was placed under a Metro corrective action plan in 2023 after a $27M spending deviation in a single quarter.
+The pattern is consistent. Each fund was created by ballot measure or citizen initiative. Each was assigned to a bureau or department without dedicated fund-management infrastructure. Each operates on its own ledger, with its own oversight committee, its own reporting cadence, and no obligation to share information with the others or with a consolidated city-or-county view. Portland’s new charter took effect in January 2025 and the City Administrator’s office began consolidating, surfacing the $106M nobody had been tracking.
+The diagnosis converging across journalists, councilors, and auditors is that there is no integrated fund management function for these voter-passed restricted programs. Nobody’s job description includes producing a quarterly fund manager’s report across the portfolio. The function does not exist anywhere in the org chart.
+1.2 Why now
+Three conditions make this the moment.
+The data is in the news cycle continuously. New fund balance discoveries, audit findings, and council oversight hearings are producing fresh local coverage every two to four weeks. Reporters at OPB, the Portland Mercury, KGW, KOIN, KATU, Oregon ArtsWatch, BikePortland, and the Oregon Journalism Project are actively covering the beat. The story is hot.
+Frontier AI capability has crossed the threshold needed to produce credible fund management work product from public records. Reading enabling ordinances, parsing audit reports, generating fiscal impact statements, drafting council memos are tasks current frontier models perform reliably. The bottleneck is not capability. The bottleneck is that nobody has built the application.
+The discursive moment around AI in government is open. State CIOs, federal civic tech offices, frontier labs, and foundations are looking for examples of AI applied to local government problems that are not vendor pitches and not vaporware. A working artifact addressing a real local problem with a real AI agent gets amplified.
+1.3 What we are building
+PDX Spend is a public-facing simulator that demonstrates what an integrated public fund manager for Portland and Multnomah County’s voter-passed restricted funds would do. The simulator runs on public records — enabling ordinances, audits, financial reports, council minutes, oversight committee reports, news coverage — and uses a frontier-model agent to produce the work products a competent fund manager would produce. Outputs include weekly fund manager memos, monthly cash flow models, drafted council ordinances, eligibility analyses, and a cross-fund dashboard.
+The simulator is positioned as a demonstration. The data it operates on is public, supplemented with modeled assumptions where public data is incomplete. Outputs are labeled as drafts demonstrating methodology.
+The artifact is designed for sharing. Every screen, chart, and output is engineered to be screenshotted, embedded, or quoted. Primary distribution is social media and local press. Secondary distribution is direct outbound to councilors, reporters, advocates, and researchers already on the beat.
+The strategic objective is to establish Public Capacity Lab and State Capacity AI as the entity that built and operates the public fund manager methodology for voter-passed restricted funds, and to make the question of what real implementation would look like a question that natural inbound parties ask. Real implementation is out of scope for the launch.
+1.4 What success looks like
+Within thirty days of launch: covered by at least three Portland-area news outlets, shared by at least one Portland city councilor or Multnomah County commissioner on a public channel, referenced in at least one council or commission meeting, and at least one substantive inbound from a foundation, frontier lab, or peer city government.
+Within ninety days: referenced as a methodological example in at least one piece of national coverage of AI in local government, at least one funded engagement or partnership conversation, and at least 50,000 unique visitors with measurable share rates on the cross-fund dashboard.
+The success metric is category position — when reporters writing about Portland public finance treat the tool as a normal source, when councilors treat it as a normal reference, when foundations considering AI-in-government grantmaking treat State Capacity AI as a normal grantee.
+
+2. Product principles
+The principles below govern product and engineering decisions. When tradeoffs surface, these are the tiebreakers.
+Public records only. The corpus consists of public information. The simulator does not require access to any city or county system. This is a feature — the artifact’s premise is that this work was always doable from outside.
+Synthesized data is labeled as synthesized. Where public data is incomplete and the simulator must model assumptions, those assumptions are explicit and visually distinguished from verified data. Every modeled value has a “what would replace this with real data” footer naming the specific city or county data source required.
+Cold tone, technical voice. Outputs are written in the voice of a public finance officer. The simulator does not editorialize, does not name individual staff, does not characterize motives. It produces work product. The contrast between the dryness and the public absence of the work is what carries the argument.
+Designed to be shared. Every page has a primary unit designed to be screenshotted or embedded. Every chart is downloadable. The cross-fund dashboard has an embed code. OG images are designed per page.
+Plausibly something the city could have built. Standard web stack, familiar UI patterns, conservative design. The radicalism is the existence, not the form. A councilor or reporter visiting should think we could have built this. The point is they didn’t.
+The methodology travels. Code, prompts, schemas, and design are portable to Seattle, Oakland, San Francisco, Denver, Minneapolis, and other cities with analogous fund families.
+
+3. Scope
+3.1 In scope for v1 launch
+Seven funds:
+City of Portland
+	•	Arts Education and Access Fund (PCC 6.10) — ~$9M reserves
+	•	Portland Clean Energy Community Benefits Fund (PCC 7.07) — ~$1.5B projected through 2028
+	•	Housing Investment Fund — part of the $106M PHB scandal
+	•	Rental Services Office Fund — ~$20.7M
+	•	Affordable Housing Development Fund — ~$6.5M
+Multnomah County
+	•	Preschool for All — ~$600M reserves
+	•	Supportive Housing Services (Multnomah share) — FY27 fiscal cliff projected
+For each fund, v1 produces:
+	•	Fund landing page with enabling code summary, current modeled balance, restriction class, last meaningful action, one-line status
+	•	Cash position chart with overlays for audits, council actions, transfers, drift events
+	•	Latest weekly fund manager’s memo, generated by the agent, downloadable as PDF
+	•	Latest monthly cash flow model, downloadable as PDF and CSV
+	•	Drift log showing recommended actions and city/county response status
+	•	“Watch the agent work” embedded run, generating a fresh memo on demand
+The cross-fund dashboard shows all seven funds in a single visualization with restriction class, voter-intent alignment, and movability.
+A methodology page explains the corpus, modeling assumptions, agent architecture, and limitations.
+An “implications” page explains in two paragraphs what real implementation would require and includes a single contact link.
+3.2 Out of scope for v1
+Real-time fund balance integration with city or county systems. Authenticated access to non-public data. User accounts. Real money movement. Funds outside Portland and Multnomah County. Outputs naming individual staff. Mobile-native applications.
+3.3 Future scope, not committed
+Expansion to Seattle, Oakland, San Francisco, Denver, Minneapolis fund families. Real implementation behind a city’s firewall. Federated cross-city dashboard. API for researchers and journalists. None committed. All natural extensions if funded engagement materializes.
+
+4. Visitor model
+4.1 Primary visitors
+The local reporter. Already on the beat. Visits for a quotable summary, sharable chart, or methodological lens. Needs the cross-fund dashboard, individual fund pages, methodology page. Returns repeatedly.
+The councilor or commissioner. Visits because constituents or staff shared it. Needs to understand what the tool claims and does not claim. Needs methodology, “what this is and is not” framing, and the cross-fund dashboard. Returns to fund pages before meetings.
+The advocate. Arts org, tenant rights group, climate justice nonprofit, homelessness service provider. Visits because the tool gives them a credible reference for arguments they already make. Needs the per-fund deep dive, drift log, shareable units.
+The casual voter. Encounters the site through a social share. Two minutes. Needs the landing sentence, seven fund cards, and a clear “what is this” answer. Most won’t click further. The landing must work for this visitor alone.
+4.2 Secondary visitors
+The frontier lab employee or AI policy researcher. Visits because the artifact is being shared in their networks as civic AI. Needs methodology page, agent architecture description, “watch the agent work” view.
+The peer city government employee. Staffer in another city with analogous fund families. Visits to see what was built and how. May lead to inbound for real implementation.
+The foundation program officer. Civic tech, public finance reform, AI-in-government grantmaking. Visits for due diligence on the entity. Inbound from this visitor is the primary commercial outcome.
+4.3 Visitor flows
+Most visitors arrive via social share with a specific fund or chart in mind. The tool must work as a series of discrete shareable units, not a guided tour.
+A smaller cohort lands on the homepage. For these, landing-to-cross-fund-dashboard-to-individual-fund is one click each.
+Returning visitors are the highest-value cohort — reporters, councilors, researchers using the tool as a reference. Performance, freshness, and reliability matter most for them.
+
+5. Information architecture
+5.1 Site structure
+
+/                               Landing
+/funds/arts-tax                 Arts Education and Access Fund
+/funds/pcef                     Portland Clean Energy Community Benefits Fund
+/funds/housing-investment       Housing Investment Fund
+/funds/rental-services          Rental Services Office Fund
+/funds/affordable-housing-dev   Affordable Housing Development Fund
+/funds/preschool-for-all        Preschool for All
+/funds/supportive-housing       Supportive Housing Services
+/dashboard                      Cross-fund consolidated view
+/agent                          Watch the agent work
+/methodology                    Corpus, modeling, architecture
+/implications                   What real implementation would require
+/about                          Public Capacity Lab, State Capacity AI attribution
+/feed                           RSS feed of agent outputs
+
+
+5.2 Per-fund page anatomy
+Each fund page is a single scrollable view in five sections.
+Header. Fund name, current modeled balance, restriction class chip, one-line status, share affordance.
+Enabling code summary. Plain-English summary with a citation to the actual code section, opened in a side panel on click.
+Cash position over time. Time-series chart with overlay markers for audits, council actions, transfers, drift events. Hover for detail. Downloadable.
+Latest fund manager’s work product. Most recent weekly memo, monthly cash flow model, draft ordinances or eligibility analyses produced by the agent. Each opens in a reading view and downloads as PDF.
+Drift log. Chronological list of agent recommendations and city/county response status. Each entry is a card with a recommendation summary, date, status chip, and link to the underlying memo.
+5.3 Cross-fund dashboard
+A single page showing all seven funds in one consolidated visualization. Default view is a horizontal stacked bar per fund showing restricted vs. movable balances, with a secondary axis showing voter-intent alignment status. Toggle between dollars view, percentage view, and trajectory view. Embed code provided. Designed to be the screenshot that travels.
+5.4 Agent view
+The “watch the agent work” page shows a synthetic run, animated by default and steppable on demand. The visitor can request a fresh run on a specific fund and watch the agent produce a new memo against the live corpus in 30-90 seconds.
+This is the AI-buzz unit. It is also the substantive demonstration that the agent is real software doing real work.
+
+6. Functional requirements
+6.1 Corpus management
+The system maintains a versioned, timestamped corpus per fund. Each document has a type (ordinance, audit, financial report, council minute, oversight committee document, news article), a source URL, an ingestion timestamp, and a content hash. Queryable by document type, date range, and fund.
+New documents added on cadence: audits as released, financial reports quarterly, council actions weekly, news articles daily, oversight committee documents as published.
+6.2 Agent architecture
+The agent operates as a structured pipeline per work product type. Each pipeline takes the corpus snapshot for a fund as input, runs a generation pass with a frontier model, runs a citation check pass, and produces output.
+Work product types in v1:
+	•	Weekly fund manager’s memo
+	•	Monthly cash flow model
+	•	Event-triggered fiscal impact statement (when a new council ordinance or commission action is added)
+	•	Event-triggered audit response memo (when a new audit is added)
+	•	Eligibility analysis (on demand)
+The agent’s prompts and schemas are version-controlled in the repo. Every published output records the prompt version and model version it was generated against.
+6.3 Modeling layer
+For values where public data is incomplete, the modeling layer produces estimated values using documented methodology. The methodology is published. Each modeled value is tagged with provenance.
+Modeling required for: current-period balances when the latest published financial report is more than a quarter old, projected revenues beyond the most recent forecast, recently transferred funds before the receiving fund reports, cross-fund consolidation where underlying accounting differs.
+Modeling not used for: ordinance content, audit content, news content. These are sourced verbatim with citation.
+6.4 Publishing layer
+Every output has a permanent URL, timestamp, citation manifest, prompt version, and model version. Outputs accessible as web pages and PDFs. Cross-fund and per-fund data accessible as CSV and JSON.
+The site exposes RSS and JSON feeds. Email digest available on opt-in. Bluesky bot posts new outputs automatically with a one-line summary and link.
+6.5 Sharing affordances
+Every page has a primary share unit defined in metadata: a designed OG image, pre-formatted social copy, a permanent canonical URL. Charts download as PNG, SVG, CSV. The cross-fund dashboard exposes an embed code rendering an iframe-compatible view. Output PDFs include a footer with canonical URL and publication date.
+
+7. Non-functional requirements
+7.1 Performance
+Landing page first contentful paint under 1.5 seconds on a median connection. Fund pages full load under 3 seconds. Cross-fund dashboard interactive under 2 seconds. Agent fresh-run completes within 90 seconds and shows progress during the run. Static content cached at the CDN. Generated content cached aggressively with versioned invalidation.
+7.2 Reliability
+99.5 percent uptime during launch window and the subsequent 90 days. Agent fresh-run targets 95 percent successful completion. Failures degrade gracefully — most recent published output displayed if a fresh run fails.
+7.3 Accessibility
+WCAG 2.1 AA compliance. Keyboard navigation throughout. Screen reader compatibility for charts via accessible data tables. Color is not the sole information channel. Text contrast meets AA thresholds.
+7.4 Maintainability
+Adding a new fund requires creating a fund definition file, populating the corpus with initial documents, configuring per-fund prompt overrides. No code changes required for per-fund configuration. The agent pipeline is fund-agnostic. Adding a new city requires defining the city’s fund portfolio and configuring regional prompt overrides. The architecture is portable by design.
+
+8. Technical architecture
+8.1 Stack
+Frontend: Next.js with TypeScript on Vercel. Tailwind for styling. Recharts or Visx for visualizations. Statically rendered where possible, dynamic islands for the agent fresh-run.
+Backend: Agent pipeline runs as Vercel API routes (v0) or as a separate service if needed (v1+). Pipeline orchestrates model calls, citation checks, output rendering, publishing.
+Data: Vercel Postgres or Neon for corpus metadata index. Vercel Blob or Cloudflare R2 for document storage and rendered outputs. Versioned.
+Models: Frontier models via API. Strong reasoning model for memo generation and cash flow modeling. Faster model for citation checks and short-form narration. Model selection configurable per pipeline step.
+Cron: Vercel Cron for scheduled agent runs.
+Repo: GitHub. Public at launch. Monorepo structure:
+
+/apps/web              Next.js frontend
+/apps/agent            Pipeline service (API routes for v0)
+/packages/corpus       Corpus management, ingestion
+/packages/prompts      Versioned prompt templates
+/packages/schemas      Zod schemas for outputs
+/content/funds         Per-fund definition files (markdown + frontmatter)
+/content/methodology   Methodology page sections
+
+
+8.2 The agent pipeline
+A single agent run:
+	1.	Receives a request specifying fund and work product type.
+	2.	Assembles the corpus snapshot for the fund as of the request timestamp.
+	3.	Constructs the structured prompt using the fund’s enabling code, most recent audit, most recent financial report, most recent oversight committee document, and relevant news from the past 90 days.
+	4.	Generation pass invokes the frontier model and produces a draft.
+	5.	Citation check pass invokes a second model invocation, verifying every claim is traceable to a source in the corpus.
+	6.	If validation fails, returns feedback to generation pass and retries up to a configured limit.
+	7.	If validation passes, signs the output against the corpus snapshot hash, prompt version, model version, and publishes.
+	8.	Publishing renders the output as a web page and PDF, updates per-fund and cross-fund views, posts to RSS and JSON feeds, posts to Bluesky.
+Pipeline is idempotent and resumable. Emits structured events for every step.
+8.3 The cross-fund consolidation
+Cross-fund dashboard generated by a separate pipeline running after each per-fund update. Reads latest published outputs across all funds and produces consolidated visualization data, served statically to the dashboard page. The consolidation pipeline is fund-agnostic and is the primary integration point for adding new cities.
+8.4 The fresh-run feature
+The “watch the agent work” view exposes a constrained version of the agent pipeline as a public-facing feature. A visitor requests a fresh run on a specific fund. The pipeline runs with a streamed response showing the agent’s progress through the steps. Uses cached corpus snapshots and rate-limits requests per IP. Output of a fresh run is published to a temporary URL with a 24-hour TTL, distinguishing it from canonical scheduled outputs.
+8.5 Sharing infrastructure
+Every page emits OG metadata for the page’s primary share unit, including a generated OG image at 1200x630. OG image generation handled by Vercel’s @vercel/og package or a separate service rendering a dedicated React component to PNG. Share copy configurable per page in a content file. Bluesky bot operates as a cron-triggered job consuming the JSON feed and posting on new output events.
+8.6 Abuse prevention
+Site is read-only from the public perspective. No user accounts, no authenticated endpoints, no write paths exposed. The fresh-run feature is rate-limited per IP and per fund. Inbound contact via a single email address routed to a managed inbox.
+
+9. Content strategy
+9.1 Voice
+The simulator’s outputs and copy are written in the voice of a public finance officer. Restrained, technical, dry. The voice does not editorialize.
+The launch post and any author-voiced commentary live elsewhere — on the makingpublicwork newsletter or Ron’s personal channels.
+9.2 Naming
+Funds named using their official ordinance names. Acronyms introduced once and used thereafter.
+The simulator is named PDX Spend (working name; final TBD). The implementing entity is Public Capacity Lab, with State Capacity AI as the methodological home. Author attribution is Ron Bronson.
+9.3 Copy on the landing page
+The landing does the work for the casual visitor. Opens with one sentence stating the dollar amount and the question the tool answers. Shows seven fund cards with dollar amounts, restriction classes, and one-line statuses. Links to cross-fund dashboard, agent view, methodology page. No narrative explanation. The cards explain the tool by being the tool.
+9.4 Copy on the methodology and implications pages
+Straightforward prose, no marketing voice. Names the corpus, modeling, limitations, gaps explicitly. Includes the named data sources real implementation would require. The implications page closes with a single contact link.
+
+10. Build and launch plan
+10.1 Build phases
+Build proceeds in three phases over approximately six to eight weeks of focused work.
+Phase one, weeks one through three. Repo structure, deployment pipeline, corpus ingestion for all seven funds, agent pipeline for the weekly memo work product, basic fund pages, methodology page draft. End of phase one: a single fund (Arts Tax) renders end-to-end with a real generated memo and a real cash position chart on a deployed preview URL. The team can read the output and decide whether the artifact is what we believe it is.
+Phase two, weeks four through six. All seven funds operational. Cross-fund dashboard. Agent fresh-run feature. PDF generation. RSS, JSON feeds, Bluesky bot. Sharing infrastructure. Polish pass on visual design.
+Phase three, weeks seven through eight. Pre-launch QA. Press pre-briefs. Launch sequencing planned. Monitoring and analytics in place.
+10.2 Deployment
+GitHub repo connected to Vercel. Main branch deploys to production. PR branches deploy to preview URLs. Environment variables set in Vercel: Anthropic API key, model provider keys, Bluesky credentials, Postgres connection string, Blob storage credentials.
+Custom domain pointed at Vercel from launch day. SSL handled automatically.
+Cron jobs configured in vercel.json for the weekly memo cadence (Mondays 9am Pacific), monthly cash flow cadence (first Monday of each month), and daily news ingestion (6am Pacific).
+10.3 Launch sequencing
+Pre-brief two reporters under embargo: Alex Zielinski at OPB and Jeremiah Hayden at the Portland Mercury are first targets. Oregon ArtsWatch as a second-tier brief for the Arts Tax angle. Send the methodology page, screenshots, a five-minute walkthrough.
+Launch on a Tuesday morning. Site goes live. The makingpublicwork post goes up within an hour. Bluesky and LinkedIn launch threads within the hour. Direct email to the network goes out same morning. National civic-tech and AI-in-government targets receive a separate direct email by midday.
+Launch post is written by Ron in the makingpublicwork voice. It is the place where the author’s perspective lives. The simulator stays cold.
+10.4 Post-launch operations
+The agent runs on its scheduled cadence. The corpus is maintained by a defined process for ingesting new audits, financial reports, council actions, oversight committee documents.
+The team monitors press coverage, social sharing, and inbound. Inbound triaged into press, government, and partnership categories with defined response templates.
+A 30-day, 60-day, and 90-day retrospective is scheduled. Each includes traffic, share, and inbound metrics, and a decision on whether to expand to a second city’s fund family.
+
+11. What we need from the team
+11.1 Engineering
+A small senior team, two to four people. One full-stack engineer comfortable with Next.js and TypeScript on Vercel. One backend or ML engineer comfortable with frontier-model APIs, prompt engineering, structured pipeline design. One designer with strong information design and editorial sensibility, comfortable with charts and editorial typography. Optional: one part-time platform engineer for infrastructure and observability.
+The team works against this PRD with weekly check-ins with Ron. Major design and methodology decisions are reviewed in those check-ins. Day-to-day execution is owned by the team.
+11.2 Product
+This document is the product brief. The team operates against it with autonomy. Questions, gaps, and scope changes surface in weekly check-ins. The product principles in section two are the tiebreakers when tradeoffs arise.
+A second pass on this document is expected after the team’s first week of corpus exploration. Adjustments to scope based on what’s actually present in the public record are welcome and expected.
+11.3 Editorial and PR
+Ron handles the makingpublicwork launch post, the press pre-briefs, and the founder-level inbound. The team is not on the hook for media engagement.
+
+12. Open questions for team review
+Should the agent pipeline use a single frontier model with multiple passes, or a cheaper-faster model for citation checks and a stronger model for generation? Cost-quality tradeoff worth benchmarking early.
+Should the cross-fund dashboard support a time-slider letting visitors see the portfolio as of any past date? Adds engineering effort but produces a powerful unit for launch.
+Should the fresh-run feature be available at launch, or held for v1.1? Strongest AI-buzz unit but most complex piece of the launch surface.
+Should we build a “what would you do” interactive variant where a visitor proposes a disbursement and the agent runs an eligibility analysis on it in real time? Compelling but high-risk and likely best held for later.
+Real-time public data integration where it does exist (Portland’s open data portal has some financial data) — worth pursuing for v1 or hold for v1.1?
+
+13. Appendix: key public sources by fund
+Starting points for the corpus per fund. Each fund’s corpus expands during phase one ingestion.
+Arts Education and Access Fund
+	•	Portland City Code 6.10
+	•	2015, 2018, and 2026 City Auditor reports
+	•	Arts Access Fund Oversight Committee annual reports
+	•	Office of Arts and Culture grant program documentation
+	•	Oregon ArtsWatch, OPB, KGW, Hoodline, Portland Mercury coverage
+Portland Clean Energy Community Benefits Fund
+	•	Portland City Code 7.07
+	•	2022 Hull Caballero audit
+	•	PCEF Climate Investment Plan
+	•	PCEF Funding Roadmap presentation
+	•	PCEF Committee annual reports
+	•	City Council actions on PCEF transfers
+	•	BikePortland, OPB, Willamette Week coverage
+Housing Investment Fund and related Portland Housing Bureau funds
+	•	Portland Housing Bureau financial reports
+	•	City Administrator’s February 2026 memo on $106M discovery
+	•	April 2026 Council oversight hearing materials
+	•	City Auditor commentary (March 2026)
+	•	OPB, Portland Mercury, KOIN, KATU, KGW, Axios coverage
+Preschool for All
+	•	Multnomah County Code provisions for PFA
+	•	2020 ballot measure language
+	•	PFA Plan and Local Implementation Plan
+	•	Multnomah County Auditor’s PFA review (April 2025)
+	•	Multnomah County FY budget documents for PFA
+	•	Governor Kotek’s June 2025 letter
+	•	OPB, KGW, KATU coverage
+Supportive Housing Services (Multnomah)
+	•	Metro Measure 26-210 (2020 ballot)
+	•	Multnomah County Local Implementation Plan
+	•	Joint Office of Homeless Services / Homeless Services Department reports
+	•	Metro Corrective Action Plan documents (May 2023)
+	•	SHS Advisory Committee reports
+	•	Multnomah County FY budget documents for SHS
+	•	OPB, KOIN, KGW coverage
+
+End of document.
+
+On the “why I kept pushing defensibility” — fair callout. I was over-indexing on it. You’re right that nobody’s going to sue or formally rebut a simulator at this stage. The thing that actually matters at launch is whether the artifact is sharp, fast, and shareable. If it lands and someone serious raises a real concern later, you fix it then. Don’t slow the launch worrying about objections that haven’t shown up yet.​​​​​​​​​​​​​​​​
