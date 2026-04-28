@@ -1,0 +1,131 @@
+Skip to content
+
+Find…
+F
+Other
+Overview
+Deployments
+Logs
+Analytics
+Speed Insights
+Observability
+Firewall
+CDN
+Environment Variables
+Domains
+Integrations
+Storage
+Flags
+Agent
+AI Gateway
+Sandboxes
+Workflows
+Usage
+Support
+Settings
+Secure your account
+Prevent unauthorized access by enabling two factor authentication.
+
+Avatar for quarterback
+quarterback
+
+
+Deployments
+5Qm7XYCbn
+Deployment
+Logs
+Resources
+Source
+Open Graph
+Deployment Details
+Build Failed
+src/app.ts(10,3): error TS2349: This expression is not callable. Type 'typeof import("/vercel/path0/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/index")' has no call signatures. src/app.ts(13,11): error TS7006: Parameter 'req' implicitly has an 'any' type. src/app.ts(20,11): error TS7006: Parameter 'res' implicitly has an 'any' type.
+Created
+github/quarterback
+quarterback
+1m ago
+Status
+Error
+Latest
+Duration
+43s
+Just now
+Environment
+Production
+Domains
+spendy-city-api-server-git-main-quarterbacks-projects.vercel.app
+spendy-city-api-server-3jh95p99s-quarterbacks-projects.vercel.app
+Source
+main
+c75b819
+Merge pull request #1 from quarterback/claude/fix-menu-improve-content-gOh9R
+
+Deployment Settings
+3 Recommendations
+Build Logs
+43s
+84 lines
+Find in logs
+⌘F
+09:46:54.087 
+09:46:54.088 
+> @workspace/api-server@0.0.0 build /vercel/path0/artifacts/api-server
+09:46:54.088 
+> node ./build.mjs
+09:46:54.089 
+09:46:54.890 
+09:46:54.891 
+  dist/index.mjs                       3.4mb ⚠️
+09:46:54.892 
+  dist/pino-worker.mjs               153.4kb
+09:46:54.892 
+  dist/pino-file.mjs                 142.0kb
+09:46:54.892 
+  dist/pino-pretty.mjs               114.6kb
+09:46:54.893 
+  dist/thread-stream-worker.mjs        7.3kb
+09:46:54.893 
+  dist/index.mjs.map                   5.9mb
+09:46:54.893 
+  dist/pino-worker.mjs.map           256.9kb
+09:46:54.893 
+  dist/pino-file.mjs.map             229.0kb
+09:46:54.894 
+  dist/pino-pretty.mjs.map           203.9kb
+09:46:54.894 
+  dist/thread-stream-worker.mjs.map   12.0kb
+09:46:54.894 
+09:46:54.894 
+⚡ Done in 748ms
+09:46:55.122 
+Using TypeScript 5.9.3 (local user-provided)
+09:47:19.249 
+Error: src/app.ts(10,3): error TS2349: This expression is not callable.
+09:47:19.250 
+  Type 'typeof import("/vercel/path0/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/index")' has no call signatures.
+09:47:19.250 
+src/app.ts(13,11): error TS7006: Parameter 'req' implicitly has an 'any' type.
+09:47:19.250 
+src/app.ts(20,11): error TS7006: Parameter 'res' implicitly has an 'any' type.
+09:47:19.250 
+Deployment Summary
+Deployment Checks
+Assigning Custom Domains
+Runtime Logs
+
+View and debug runtime logs & errors
+
+Observability
+
+Monitor app health & performance
+
+Speed Insights
+
+Not Enabled
+Performance metrics from real users
+
+Web Analytics
+
+Not Enabled
+Analyze visitors & traffic in real-time
+
