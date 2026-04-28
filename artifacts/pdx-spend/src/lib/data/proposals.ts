@@ -153,7 +153,7 @@ export const PROPOSALS: Record<string, ProposalSet> = {
       }
     ],
     ifUnblocked:
-      'Pull the definition back to 80% AMI and require district-level delivery, and the existing backlog clears as roughly 1,200 deeply-affordable units within four years.',
+      'Pull the definition back to 80% AMI and require district-level delivery. The existing backlog clears as roughly 1,200 deeply-affordable units within four years.',
     blockerNews:
       'The 2018 district-swap resolution remains in force. The original obligations have not been reattached to their original districts.'
   },

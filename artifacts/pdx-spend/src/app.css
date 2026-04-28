@@ -20,10 +20,10 @@
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Breakpoints: phone ≤639, tablet 640–1023, desktop ≥1024. */
-  --bp-phone-max: 639px;
-  --bp-tablet-max: 1023px;
-  --bp-desktop-min: 1024px;
+  /* Breakpoints (min-width thresholds). */
+  --bp-phone: 0px;
+  --bp-tablet: 640px;
+  --bp-desktop: 1024px;
 }
 
 * {
@@ -515,11 +515,13 @@ svg .annotation-label {
 }
 .fund-select button {
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   background: transparent;
   border: 1px solid var(--rule-2);
   color: var(--ink-3);
-  padding: 0.4rem 0.7rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.6rem 1rem;
   cursor: pointer;
   border-radius: 2px;
 }
@@ -1090,18 +1092,21 @@ svg .axis text { pointer-events: none; }
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--ink-4);
-  padding: 0.5rem 0.6rem;
+  min-height: 44px;
+  padding: 0.6rem 0.7rem;
   min-width: 240px;
 }
 .run-btn {
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   background: var(--ink);
   color: var(--paper);
   border: 1px solid var(--ink);
-  padding: 0.7rem 1.2rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.8rem 1.4rem;
   cursor: pointer;
 }
 .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -1212,13 +1217,15 @@ svg .axis text { pointer-events: none; }
 }
 .share-copy-btn {
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   background: var(--ink);
   color: var(--paper);
   border: none;
-  padding: 9px 16px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 18px;
   cursor: pointer;
   border-radius: 0;
 }

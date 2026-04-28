@@ -514,7 +514,7 @@ export const FUNDS: Fund[] = [
     steward: 'Multnomah County Preschool & Early Learning Division',
     restrictionClass: 'voter-restricted',
     voterIntent:
-      'A graduated personal income tax dedicated to providing tuition-free, high-quality preschool to all 3- and 4-year-olds in Multnomah County, with workforce wage standards.',
+      'A graduated personal income tax. Dedicated to tuition-free, high-quality preschool for every 3- and 4-year-old in Multnomah County, plus workforce wage standards.',
     oneLineStatus:
       'Collections sharply outran ramp-up capacity, producing a multi-hundred-million accumulated balance even as enrollment lagged the implementation plan.',
     modeledBalance: last(preschoolCash).balance,
@@ -523,7 +523,7 @@ export const FUNDS: Fund[] = [
     cumulativeCollected: preschoolCash.reduce((s, c) => s + c.inflow, 0),
     collectionsCadence: 'Annual filings + payroll withholding',
     scandal:
-      'A tuition-free preschool tax has built a half-billion-dollar surplus while serving a fraction of the eligible 3- and 4-year-olds the measure was designed to cover.',
+      'A tuition-free preschool tax has built a half-billion-dollar surplus. It serves a fraction of the eligible 3- and 4-year-olds the measure was designed to cover.',
     cashSeries: preschoolCash,
     reserveSeries: buildReserveSeries(preschoolCash),
     auditEvents: [

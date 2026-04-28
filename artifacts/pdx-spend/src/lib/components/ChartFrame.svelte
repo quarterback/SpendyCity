@@ -137,9 +137,11 @@
     margin-top: 8px;
   }
   .tool-btn {
-    padding: 4px 10px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.05em;
     background: transparent;
     border: 1px solid var(--rule, #d4cfc4);
@@ -222,9 +224,11 @@
   }
   .copy-btn {
     flex-shrink: 0;
-    padding: 6px 12px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.05em;
     background: var(--ink, #1a1714);
     color: var(--paper, #fbf8f1);
