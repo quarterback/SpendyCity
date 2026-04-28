@@ -1,9 +1,11 @@
 import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
-import type { SerializedRequest, SerializedResponse } from "pino-std-serializers";
 import router from "./routes";
 import { logger } from "./lib/logger";
+
+type SerializedReq = { id?: unknown; method?: string; url?: string };
+type SerializedRes = { statusCode?: number };
 
 const app: Express = express();
 
@@ -11,14 +13,14 @@ app.use(
   pinoHttp({
     logger,
     serializers: {
-      req(req: SerializedRequest) {
+      req(req: SerializedReq) {
         return {
           id: req.id,
           method: req.method,
           url: req.url?.split("?")[0],
         };
       },
-      res(res: SerializedResponse) {
+      res(res: SerializedRes) {
         return {
           statusCode: res.statusCode,
         };
