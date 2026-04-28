@@ -8,6 +8,9 @@ function formatUSD(n, opts = {}) {
   }
   return `${sign}$${Math.round(n).toLocaleString()}`;
 }
+function formatNumber(n) {
+  return Math.round(n).toLocaleString();
+}
 function formatPct(n, digits = 0) {
   return `${(n * 100).toFixed(digits)}%`;
 }
@@ -17,6 +20,7 @@ function ChartFrame($$renderer, $$props) {
       title,
       sub,
       source,
+      modeled = false,
       csvName,
       csvHeaders,
       csvRows,
@@ -27,7 +31,14 @@ function ChartFrame($$renderer, $$props) {
     function register(s) {
       svgEl = s;
     }
-    $$renderer2.push(`<figure class="chart-frame"><p class="chart-title">${escape_html(title)}</p> `);
+    $$renderer2.push(`<figure class="chart-frame"><div class="chart-header svelte-p0vybj"><p class="chart-title">${escape_html(title)}</p> `);
+    if (modeled) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<span class="chart-modeled-badge svelte-p0vybj">MODELED</span>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></div> `);
     if (sub) {
       $$renderer2.push("<!--[0-->");
       $$renderer2.push(`<p class="chart-sub">${escape_html(sub)}</p>`);
@@ -69,6 +80,7 @@ function ChartFrame($$renderer, $$props) {
 }
 export {
   ChartFrame as C,
-  formatPct as a,
+  formatNumber as a,
+  formatPct as b,
   formatUSD as f
 };

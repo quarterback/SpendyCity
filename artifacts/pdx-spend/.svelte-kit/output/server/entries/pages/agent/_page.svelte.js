@@ -1,4 +1,4 @@
-import { c as ensure_array_like, e as escape_html, a as attr, s as stringify } from "../../../chunks/root.js";
+import { d as ensure_array_like, e as escape_html, a as attr, s as stringify } from "../../../chunks/root.js";
 import { b as base } from "../../../chunks/server.js";
 import "../../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
@@ -13,16 +13,16 @@ function _page($$renderer, $$props) {
     const lenses = [
       { value: "financial-officer", label: "Public-finance officer" },
       { value: "auditor", label: "City auditor" },
-      { value: "voter", label: "Voter who passed the measure" },
+      { value: "voter", label: "Voter who passed it" },
       { value: "reporter", label: "Investigative reporter" }
     ];
     SiteMeta($$renderer2, {
-      title: "Agent demo — Generate a structured financial memo — PDX Spend",
-      description: "Pick a fund and a lens. The agent re-runs a structured public-finance memo against the modeled record.",
+      title: "Agent demo — PDX Spend",
+      description: "Pick a fund and a lens. The agent writes a short memo about that fund in the voice you choose.",
       path: "/agent/",
       type: "article"
     });
-    $$renderer2.push(`<!----> <article><header class="container fund-header"><p class="kicker">AGENT DEMO · STRUCTURED MEMO</p> <h1 class="article-title">Generate a structured financial memo</h1> <p class="article-deck">Pick a fund and a lens. The agent reads the fund's modeled record and writes a brief in the voice you select. Each page of this site already ships with a pre-generated memo; this view re-runs it live.</p></header> <section class="container two-col"><div class="prose"><h2>How this works</h2> <p>The agent receives the fund's enabling code, voter intent, modeled balances, audit-event log, drift index, and promise-vs-delivered series. It is asked to produce a single-page structured memo: summary, structural findings, recommendations. No editorial framing.</p> <p>The endpoint is rate-limited per IP and the modeled-data caveat is enforced in the system prompt. If the live endpoint is unavailable, the pre-generated memo on each fund's page is the canonical version.</p></div> <aside class="margin-note"><h4>Lenses</h4> <p>The lens parameter changes the voice but not the structure. A "voter" lens explains what they were sold and what arrived. An "auditor" lens cites code and resolution numbers. A "reporter" lens names the structural gap.</p></aside></section> <section class="container"><div class="agent-controls"><label><span>Fund</span> `);
+    $$renderer2.push(`<!----> <article><header class="container fund-header"><p class="kicker">AGENT DEMO · WRITE A MEMO</p> <h1 class="article-title">Write a memo for any fund, in any voice</h1> <p class="article-deck">Pick a fund and pick a lens. The agent reads what we have on the fund and writes a short memo. Use it as a starting draft for your own letter or testimony.</p></header> <section class="container two-col"><div class="prose"><h2>How it works</h2> <p>The agent gets the fund’s ballot text, statute, balances, audit events, and recent memos. It writes a one-page memo in the voice you pick.</p> <p>The endpoint is rate-limited per IP. If it’s busy, the saved memo for each fund is the version on the fund page itself.</p></div> <aside class="margin-note"><h4>What the lens changes</h4> <p>The lens changes the voice, not the facts. <em>Auditor</em> cites code numbers. <em>Reporter</em> names the gap. <em>Voter</em> names what was promised and what arrived.</p></aside></section> <section class="container"><div class="agent-controls"><label><span>Fund</span> `);
     $$renderer2.select({ value: selectedSlug }, ($$renderer3) => {
       $$renderer3.push(`<!--[-->`);
       const each_array = ensure_array_like(FUNDS);
@@ -46,11 +46,11 @@ function _page($$renderer, $$props) {
       }
       $$renderer3.push(`<!--]-->`);
     });
-    $$renderer2.push(`</label> <button class="run-btn"${attr("disabled", streaming, true)}>${escape_html("Regenerate live")}</button></div> `);
+    $$renderer2.push(`</label> <button class="run-btn"${attr("disabled", streaming, true)}>${escape_html("Generate")}</button></div> `);
     {
       $$renderer2.push("<!--[-1-->");
     }
-    $$renderer2.push(`<!--]--></section> <section class="container"><p class="kicker">${escape_html("PRE-GENERATED MEMO")}</p> <pre class="memo">${escape_html(memo)}</pre></section> <section class="container two-col"><div class="prose"><h2>Why a memo, not an opinion</h2> <p>Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form of that accounting is not a press release or a feature story; it is a memo. The agent is asked to produce that memo and nothing else.</p></div> <aside class="margin-note"><h4>Provenance</h4> <p>The model behind this endpoint is Anthropic's Claude (Sonnet generation), accessed through Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code> inside this site. Fund context is assembled server-side from the static fund modules, so the prompt cannot be tampered with from the client.</p> <p style="margin-top: 12px">See <a${attr("href", `${stringify(base)}/methodology/`)}>methodology →</a></p></aside></section></article>`);
+    $$renderer2.push(`<!--]--></section> <section class="container"><p class="kicker">${escape_html("SAVED MEMO")}</p> <pre class="memo">${escape_html(memo)}</pre></section> <section class="container two-col"><div class="prose"><h2>Why a memo, not a press release</h2> <p>If you voted for one of these funds, you’re owed a short, structured account of what your dollars now do. A memo — summary, findings, recommendations — gives you something you can hand to a council member or a reporter the same day.</p></div> <aside class="margin-note"><h4>What runs this</h4> <p>Anthropic’s Claude (Sonnet) via Replit’s AI integration proxy. The system prompt and lens templates live in <code>src/routes/api/regenerate-memo/+server.ts</code>. The fund context is built server-side.</p> <p style="margin-top: 12px">See <a${attr("href", `${stringify(base)}/methodology/`)}>methodology →</a></p></aside></section></article>`);
   });
 }
 export {

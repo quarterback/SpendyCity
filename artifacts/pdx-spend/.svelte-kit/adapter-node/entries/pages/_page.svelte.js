@@ -1,13 +1,13 @@
-import { e as escape_html, c as ensure_array_like, a as attr, s as stringify, d as derived } from "../../chunks/root.js";
+import { s as stringify, e as escape_html, d as ensure_array_like, a as attr, f as derived } from "../../chunks/root.js";
 import { b as base } from "../../chunks/server.js";
 import "../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
 import "d3";
-import { C as ChartFrame, f as formatUSD } from "../../chunks/ChartFrame.js";
+import { f as formatUSD, C as ChartFrame } from "../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../chunks/ShareBlock.js";
 import { s as siteUrl } from "../../chunks/config.js";
-import { a as FUNDS, F as FUND_BY_SLUG, T as TOTAL_CUMULATIVE_COLLECTED, b as TOTAL_MODELED_BALANCE, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
+import { a as FUNDS, F as FUND_BY_SLUG, T as TOTAL_MODELED_BALANCE, b as TOTAL_CUMULATIVE_COLLECTED, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
 import { h as html } from "../../chunks/html.js";
 function HeroChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -40,32 +40,41 @@ function _page($$renderer, $$props) {
       Math.round(r.restricted),
       Math.round(r.movable)
     ]);
+    const movablePct = TOTAL_MODELED_BALANCE > 0 ? Math.round(TOTAL_MOVABLE / TOTAL_MODELED_BALANCE * 100) : 0;
+    const headlineBlockerNews = FUND_BY_SLUG.pcef?.blockerNews ?? "";
     SiteMeta($$renderer2, {
-      title: "PDX Spend — Seven funds, modeled in plain view",
-      description: "An editorial accounting of seven voter-restricted funds in Portland and Multnomah County: where the money came from, what it was promised for, and what it now does.",
+      title: "PDX Spend — What Portland's voter funds could pay for, and what's blocking them",
+      description: `Seven Portland-area voter funds hold ${stringify(formatUSD(TOTAL_MODELED_BALANCE))}. See what each one could pay for tomorrow, and the named rule blocking it.`,
       path: "/",
       type: "website"
     });
-    $$renderer2.push(`<!----> <article><section class="hero container"><p class="kicker">PDX SPEND · ISSUE 01 · MODELED FIGURES</p> <h1 class="hero-title">Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.</h1> <p class="hero-deck">Each was sold as a fix to a specific civic problem — arts, climate, housing, preschool, homelessness. Each now carries a multi-million-dollar surplus, an audit trail of scope-broadening votes, and a public ledger that lives in PDF appendices. This is what the structural pattern looks like when you draw it.</p></section> <section class="hero-figure container-wide">`);
+    $$renderer2.push(`<!----> <article><section class="hero container"><p class="kicker">PDX SPEND</p> <h1 class="hero-title">Seven Portland-area voter funds. What they could pay for, and what’s blocking it.</h1> <p class="headline-figure">${escape_html(formatUSD(TOTAL_MODELED_BALANCE))}</p> <p class="headline-figure-sub">sits across the seven funds today. About ${escape_html(movablePct)}% of it has been re-aimed away from what voters approved.</p> `);
+    if (headlineBlockerNews) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div class="stop-banner"><p class="lbl">Live example, this month</p> <p>${escape_html(headlineBlockerNews)}</p></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <p class="hero-deck">Pick a fund. See what it could pay for at its current balance. See who controls the rule that stops it. Send the page to that person.</p></section> <section class="hero-figure container-wide">`);
     {
       let children = function($$renderer3, { register }) {
         HeroChart($$renderer3);
       };
       ChartFrame($$renderer2, {
-        title: "Modeled year-end carry across the seven funds",
-        sub: "Black blocks are dollars still restricted to the original voter intent. Burnt-orange caps are dollars that have been reclassified, swept, or otherwise made movable.",
-        source: "Modeled reconstruction (PDX Spend)",
+        title: "Year-end balance, all seven funds",
+        sub: "Each bar is one fund. The orange share is the part already re-aimed.",
+        source: "PDX Spend",
+        modeled: true,
         pngName: "pdxspend-hero.png",
         csvHeaders,
         csvRows,
         children
       });
     }
-    $$renderer2.push(`<!----></section> <section class="container two-col"><div class="prose"><h2>What you are looking at</h2> <p>Public funding measures in Portland and Multnomah County share a recurring shape: a measure passes with a clear, narrow charge; collections come in faster than the standing-up of the program; balances accumulate; and within four to seven years, ordinances and resolutions begin to broaden what those dollars are allowed to do.</p> <p>The seven funds on this page span fifteen years of measures, three jurisdictions of stewardship, and almost every kind of revenue instrument the city uses — flat per-adult tax, gross-receipts surcharge, real-estate excise, dedicated property levy, county-wide marginal income tax. They behave the same way.</p> <h2>What is modeled</h2> <p>Cash positions, audit annotations, and disposition curves on this site are <em>modeled</em>. They are constructed to illustrate the structural pattern that is documented across audits, council actions, and reporting on these funds. They are not a live ledger and should not be cited as such. The corpus team is working on a published-figures version; this site will swap to it when it ships.</p></div> <aside class="margin-note"><h4>Read the issue</h4> <p>Each fund has its own page with a chart-driven scrollytelling read. The dashboard shows them side-by-side. The agent demo runs a structured-finance prompt against the modeled record.</p> <p style="margin-top: 14px"><strong>Stewards across:</strong> City of Portland Revenue Division, Multnomah County, Metro, Portland Housing Bureau, Bureau of Planning and Sustainability, Office of Management and Finance.</p></aside></section> <section class="container"><p class="kicker">SUMMARY · SEVEN FUNDS</p> <div class="big-stats"><div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_CUMULATIVE_COLLECTED))}</p> <p class="lbl">Modeled cumulative collected, all funds</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_MODELED_BALANCE))}</p> <p class="lbl">Modeled current carry across the seven</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_RESTRICTED))}</p> <p class="lbl">Still tied to original voter intent</p></div> <div class="big-stat"><p class="num accent">${escape_html(formatUSD(TOTAL_MOVABLE))}</p> <p class="lbl">Reclassified, swept, or made movable</p></div></div></section> `);
+    $$renderer2.push(`<!----></section> <section class="container"><p class="section-eyebrow">The seven, totaled</p> <div class="big-stats"><div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_CUMULATIVE_COLLECTED))}</p> <p class="lbl">Collected from you, all years</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_MODELED_BALANCE))}</p> <p class="lbl">Sitting in the funds today</p></div> <div class="big-stat"><p class="num">${escape_html(formatUSD(TOTAL_RESTRICTED))}</p> <p class="lbl">Still aimed where you voted</p></div> <div class="big-stat"><p class="num accent">${escape_html(formatUSD(TOTAL_MOVABLE))}</p> <p class="lbl">Re-aimed since you voted</p></div></div></section> <section class="container how-to svelte-1uha8ag"><p class="section-eyebrow">How to use this site</p> <ol class="how-list svelte-1uha8ag"><li class="svelte-1uha8ag"><span class="step-n svelte-1uha8ag">1</span> <p class="svelte-1uha8ag"><strong>Pick a fund.</strong> Each page opens with what you voted for, in plain words.</p></li> <li class="svelte-1uha8ag"><span class="step-n svelte-1uha8ag">2</span> <p class="svelte-1uha8ag"><strong>Read what it could pay for.</strong> Concrete units, grounded in published unit costs.</p></li> <li class="svelte-1uha8ag"><span class="step-n svelte-1uha8ag">3</span> <p class="svelte-1uha8ag"><strong>Read who controls the blocker.</strong> Every blocker names a defense and a rebuttal. Send the page to the office that holds the lever.</p></li></ol></section> `);
     if (latestWeekly().length > 0) {
       $$renderer2.push("<!--[0-->");
-      $$renderer2.push(`<section class="container changed-this-week svelte-1uha8ag"><p class="kicker">WHAT CHANGED THIS WEEK</p> <h2 class="section-title">Latest agent memos across the seven funds</h2> <p class="section-deck">Each card pulls from the most recent succeeded weekly memo for that
-        fund. The full memo, byline, and run history live on the fund page.</p> <div class="changed-grid svelte-1uha8ag"><!--[-->`);
+      $$renderer2.push(`<section class="container changed-this-week svelte-1uha8ag"><p class="section-eyebrow">What changed this week</p> <h2 class="section-title">Latest memos</h2> <div class="changed-grid svelte-1uha8ag"><!--[-->`);
       const each_array = ensure_array_like(latestWeekly());
       for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
         let item = each_array[$$index];
@@ -91,18 +100,18 @@ function _page($$renderer, $$props) {
     } else {
       $$renderer2.push("<!--[-1-->");
     }
-    $$renderer2.push(`<!--]--> <section class="container"><p class="kicker">ISSUE INDEX · BEGIN HERE</p> <h2 class="section-title">The seven funds</h2> <div class="fund-grid"><!--[-->`);
+    $$renderer2.push(`<!--]--> <section class="container"><p class="section-eyebrow">The seven funds</p> <h2 class="section-title">Pick one to open it</h2> <div class="fund-grid"><!--[-->`);
     const each_array_1 = ensure_array_like(FUNDS);
     for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
       let fund = each_array_1[$$index_1];
       $$renderer2.push(`<a class="fund-card"${attr("href", `${stringify(base)}/funds/${stringify(fund.slug)}/`)}><p class="fund-meta">${escape_html(fund.enacted)} · ${escape_html(fund.ballotMeasure ?? fund.enablingCode)}</p> <h3 class="fund-name">${escape_html(fund.name)}</h3> <p class="fund-deck">${escape_html(fund.oneLineStatus)}</p> <div class="fund-spark">`);
       SparkBalance($$renderer2, { data: fund.cashSeries });
-      $$renderer2.push(`<!----></div> <div class="fund-stats"><span>${escape_html(formatUSD(fund.modeledBalance))} carry</span> <span class="accent">${escape_html(Math.round(fund.modeledMovableShare * 100))}% movable</span></div></a>`);
+      $$renderer2.push(`<!----></div> <div class="fund-stats"><span>${escape_html(formatUSD(fund.modeledBalance))} sitting</span> <span class="accent">${escape_html(Math.round(fund.modeledMovableShare * 100))}% re-aimed</span></div></a>`);
     }
-    $$renderer2.push(`<!--]--></div></section> <section class="container two-col"><div class="prose"><h2>How to read this</h2> <p>Each fund page opens with a single chart and a short read. Scroll, and the chart annotates itself with the audit events, council resolutions, and fiscal moves that produced the shape on screen. At the bottom of each page is the agent's structured memo — the kind of document a public-finance officer would write if they were asked to inventory the fund honestly.</p> <p>The dashboard view pulls all seven into one frame, switchable between dollars, percent restricted, and trajectory of drift. The methodology and implications pages explain how this site was constructed, and what it suggests about how restricted funds are governed in this jurisdiction.</p></div> <aside class="margin-note"><h4>A note on tone</h4> <p>This site is published as journalism, not advocacy. There are no calls to action. The figures are modeled and labeled as such. The authorial position is that voters who pass restricted-fund measures are entitled to a clear public accounting of what those funds become. This is one such accounting.</p></aside></section> <section class="container">`);
+    $$renderer2.push(`<!--]--></div></section> <section class="container">`);
     ShareBlock($$renderer2, {
-      headline: "Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.",
-      summary: "An editorial accounting of where the money came from, what it was promised for, and what it now does. Modeled figures, labeled as such.",
+      headline: `Seven Portland voter funds hold ${stringify(formatUSD(TOTAL_MODELED_BALANCE))}. Here’s what each one could pay for, and what’s blocking it.`,
+      summary: "Pick a fund. See what it could buy. See who controls the rule that stops it. PDX Spend.",
       url: siteUrl("/")
     });
     $$renderer2.push(`<!----></section></article>`);

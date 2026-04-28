@@ -2,7 +2,7 @@ import { a as FUNDS } from "../../../chunks/funds.js";
 import { S as SITE_URL } from "../../../chunks/config.js";
 const prerender = true;
 const SITE_TITLE = "PDX Spend";
-const SITE_DESCRIPTION = "Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.";
+const SITE_DESCRIPTION = "Seven Portland-area voter funds. What each one could pay for, and the named rule blocking it.";
 function escapeXml(input) {
   return input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 }
@@ -15,35 +15,35 @@ const GET = async () => {
       <title>${escapeXml(f.name)}</title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
-      <description>${escapeXml(f.scandal)}</description>
+      <description>${escapeXml(f.oneLineStatus)}</description>
       <pubDate>${lastBuild}</pubDate>
     </item>`;
   }).join("");
   const staticItems = [
     {
-      title: "PDX Spend, Issue 01",
+      title: "PDX Spend — Seven Portland-area voter funds, in plain view",
       url: `${SITE_URL}/`,
-      description: "Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances."
+      description: "What each of the seven funds could pay for, and the named rule that purports to stop it."
     },
     {
-      title: "Cross-fund dashboard",
+      title: "All seven funds, side by side",
       url: `${SITE_URL}/dashboard/`,
-      description: "Three views of all seven funds: dollars, share-restricted, and drift trajectory."
+      description: "Three angles on the same dollars: balance, share re-aimed, share still on-mission."
     },
     {
-      title: "Generate a structured financial memo",
+      title: "Write a memo for any fund",
       url: `${SITE_URL}/agent/`,
-      description: "Pick a fund and a lens; the agent re-runs the memo against the modeled record."
+      description: "Pick a fund, pick a lens, get a one-page memo."
     },
     {
-      title: "Methodology",
+      title: "Methodology and glossary",
       url: `${SITE_URL}/methodology/`,
-      description: "How this site was built: what is modeled, why, and how audited figures will be swapped in."
+      description: "What the figures mean, where they come from, and a glossary of every term."
     },
     {
-      title: "Implications",
+      title: "Five levers that would unblock the seven funds",
       url: `${SITE_URL}/implications/`,
-      description: "What the seven funds, taken together, suggest about the structural pattern."
+      description: "Mechanical, not rhetorical. Each lever names who controls it."
     }
   ].map(
     (e) => `

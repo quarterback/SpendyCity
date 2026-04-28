@@ -3,93 +3,93 @@
   <channel>
     <title>PDX Spend</title>
     <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev</link>
-    <description>Seven voter-passed funds in Portland and Multnomah County, quietly redrawn around their balances. An editorial accounting of restricted public funds.</description>
+    <description>Seven Portland-area voter funds. What each one could pay for, and the named rule blocking it.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 03:23:02 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 04:19:43 GMT</lastBuildDate>
     <atom:link href="https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>PDX Spend, Issue 01</title>
+      <title>PDX Spend — Seven Portland-area voter funds, in plain view</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/</guid>
-      <description>Seven voter-passed funds in Portland and Multnomah County have been quietly redrawn around their balances.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>What each of the seven funds could pay for, and the named rule that purports to stop it.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
-      <title>Cross-fund dashboard</title>
+      <title>All seven funds, side by side</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/dashboard/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/dashboard/</guid>
-      <description>Three views of all seven funds: dollars, share-restricted, and drift trajectory.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Three angles on the same dollars: balance, share re-aimed, share still on-mission.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
-      <title>Generate a structured financial memo</title>
+      <title>Write a memo for any fund</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/agent/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/agent/</guid>
-      <description>Pick a fund and a lens; the agent re-runs the memo against the modeled record.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Pick a fund, pick a lens, get a one-page memo.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
-      <title>Methodology</title>
+      <title>Methodology and glossary</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/methodology/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/methodology/</guid>
-      <description>How this site was built: what is modeled, why, and how audited figures will be swapped in.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>What the figures mean, where they come from, and a glossary of every term.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
-      <title>Implications</title>
+      <title>Five levers that would unblock the seven funds</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/implications/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/implications/</guid>
-      <description>What the seven funds, taken together, suggest about the structural pattern.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Mechanical, not rhetorical. Each lever names who controls it.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Arts Education and Access Fund</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/arts-tax/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/arts-tax/</guid>
-      <description>A flat tax billed as a teacher-funding measure spends roughly one in eight dollars on the cost of collecting itself, and Council periodically expands what counts as &quot;arts.&quot;</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Collections lag, administrative overhead is structurally high, and the Council periodically authorizes carve-outs to &quot;support arts ecosystem&quot; outside the schools-and-grants frame.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Portland Clean Energy Community Benefits Fund</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/pcef/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/pcef/</guid>
-      <description>A surcharge passed for clean energy and BIPOC workforce now backfills street paving and parks budgets after Council expanded &quot;eligible uses&quot; by simple majority.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Collections vastly outran original projections; the Council subsequently authorized broader uses including general transportation, parks, and sewer maintenance — items not contemplated in the ballot text.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Housing Investment Fund (TIF Set-Aside)</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/housing-investment/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/housing-investment/</guid>
-      <description>A 30% set-aside policy has been re-engineered through reclassification: projects counted as &quot;affordable&quot; include workforce-grade and market-rate-with-amenities developments.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Set-aside percentages have been honored in headline reporting but partially offset by reclassifying eligible projects, swapping districts, and converting &quot;obligations&quot; into deferred allocations.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Rental Services / Tenant Protections Fund</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/rental-services/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/rental-services/</guid>
-      <description>A landlord-paid fund for tenant services consistently spends less than half its inflow on tenant services, with the remainder absorbed into housing-bureau overhead.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Fee revenue is routinely under-deployed against the program lines it was created for; balances have been periodically swept toward general housing administration.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Metro Affordable Housing Bond</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/affordable-housing-dev/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/affordable-housing-dev/</guid>
-      <description>A 3,900-home bond is on track to deliver fewer homes per dollar than promised; jurisdictions have re-classified &quot;preservation&quot; of existing units to keep count metrics intact.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Unit counts have been adjusted downward relative to original targets; per-unit costs have grown well above the projection range; &quot;preserved&quot; vs &quot;built&quot; classification has shifted to maintain headline numbers.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Preschool For All</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/preschool-for-all/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/preschool-for-all/</guid>
-      <description>A tuition-free preschool tax has built a half-billion-dollar surplus while serving a fraction of the eligible 3- and 4-year-olds the measure was designed to cover.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Collections sharply outran ramp-up capacity, producing a multi-hundred-million accumulated balance even as enrollment lagged the implementation plan.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
     <item>
       <title>Supportive Housing Services Measure</title>
       <link>https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/supportive-housing/</link>
       <guid isPermaLink="true">https://3774176a-206f-4cee-888e-8688c6144ca0-00-43dsz18dma51.picard.replit.dev/funds/supportive-housing/</guid>
-      <description>A homelessness measure has accumulated a multi-hundred-million dollar reserve while service contracts go unfilled and rent assistance waitlists grow.</description>
-      <pubDate>Tue, 28 Apr 2026 03:23:02 GMT</pubDate>
+      <description>Counties have collected far more than they could disburse against contracted capacity; carryover balances are being reframed as &quot;long-term reserves&quot; without clear voter mandate.</description>
+      <pubDate>Tue, 28 Apr 2026 04:19:43 GMT</pubDate>
     </item>
   </channel>
 </rss>

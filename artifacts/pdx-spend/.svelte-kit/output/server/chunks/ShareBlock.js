@@ -1,4 +1,4 @@
-import { e as escape_html, d as derived } from "./root.js";
+import { e as escape_html, f as derived } from "./root.js";
 function ShareBlock($$renderer, $$props) {
   const { headline, summary, url } = $$props;
   const social = derived(() => `${headline}

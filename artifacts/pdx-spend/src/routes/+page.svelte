@@ -2,7 +2,6 @@
   import { base } from '$app/paths';
   import HeroChart from '$lib/components/HeroChart.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
-  import SparkBalance from '$lib/components/SparkBalance.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
   import { siteUrl } from '$lib/config';
@@ -165,17 +164,27 @@
     <h2 class="section-title">Pick one to open it</h2>
     <div class="fund-grid">
       {#each FUNDS as fund}
+        {@const topCould = fund.couldFund?.[0]}
+        {@const topBlocker = fund.blockers?.[0]}
         <a class="fund-card" href="{base}/funds/{fund.slug}/">
           <p class="fund-meta">{fund.enacted} · {fund.ballotMeasure ?? fund.enablingCode}</p>
           <h3 class="fund-name">{fund.name}</h3>
-          <p class="fund-deck">{fund.oneLineStatus}</p>
-          <div class="fund-spark">
-            <SparkBalance data={fund.cashSeries} />
-          </div>
-          <div class="fund-stats">
-            <span>{formatUSD(fund.modeledBalance)} sitting</span>
+          <p class="fund-balance">{formatUSD(fund.modeledBalance)} <span class="lbl">sitting</span></p>
+          {#if topCould}
+            <p class="fund-line">
+              <span class="lbl">Could pay for</span>
+              {topCould.item}
+            </p>
+          {/if}
+          {#if topBlocker}
+            <p class="fund-line blocker">
+              <span class="lbl">Blocked by</span>
+              {topBlocker.name}
+            </p>
+          {/if}
+          <p class="fund-stats">
             <span class="accent">{Math.round(fund.modeledMovableShare * 100)}% re-aimed</span>
-          </div>
+          </p>
         </a>
       {/each}
     </div>
