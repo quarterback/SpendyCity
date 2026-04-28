@@ -2,7 +2,7 @@ import { a as attr, e as escape_html, c as ensure_array_like, s as stringify } f
 import { b as base } from "../../../chunks/server.js";
 import "../../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
-import { F as FUNDS } from "../../../chunks/funds.js";
+import { a as FUNDS } from "../../../chunks/funds.js";
 import { S as SiteMeta } from "../../../chunks/SiteMeta.js";
 function _page($$renderer) {
   SiteMeta($$renderer, {

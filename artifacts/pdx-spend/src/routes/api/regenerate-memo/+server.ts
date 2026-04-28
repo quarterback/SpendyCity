@@ -1,4 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
+import { FUND_BY_SLUG } from '$lib/data/funds';
 
 export const prerender = false;
 
@@ -51,11 +52,31 @@ DATE:      As of latest reporting cycle
 
 — end —`;
 
-function buildUserPrompt(payload: {
-  fundSlug: string;
-  lens: string;
-  fund: Record<string, unknown>;
-}): string {
+type FundRecord = (typeof FUND_BY_SLUG)[keyof typeof FUND_BY_SLUG];
+
+function serializeFundForPrompt(f: FundRecord) {
+  return {
+    name: f.name,
+    shortName: f.shortName,
+    enacted: f.enacted,
+    ballotMeasure: f.ballotMeasure,
+    enablingCode: f.enablingCode,
+    voterIntent: f.voterIntent,
+    modeledBalance: f.modeledBalance,
+    modeledRestrictedShare: f.modeledRestrictedShare,
+    modeledMovableShare: f.modeledMovableShare,
+    cumulativeCollected: f.cumulativeCollected,
+    auditEvents: f.auditEvents.map((e) => ({
+      year: e.year,
+      label: e.label,
+      body: e.body
+    })),
+    drift: f.drift,
+    promiseVsHappened: f.promiseVsHappened
+  };
+}
+
+function buildUserPrompt(fund: FundRecord, lens: string): string {
   const lensInstruction =
     {
       'financial-officer':
@@ -66,13 +87,13 @@ function buildUserPrompt(payload: {
         'Write in the voice of a voter who passed the ballot measure, explaining what they were sold and what arrived. Keep the memo structure exactly.',
       reporter:
         'Write in the voice of an investigative reporter who has read the audit trail. Name the structural gap directly. Keep the memo structure exactly.'
-    }[payload.lens] ??
+    }[lens] ??
     'Write in the voice of a public-finance officer producing an internal memo.';
 
   return `${lensInstruction}
 
-Fund record (modeled):
-${JSON.stringify(payload.fund, null, 2)}
+Fund record (modeled, server-assembled from the static fund module):
+${JSON.stringify(serializeFundForPrompt(fund), null, 2)}
 
 Produce the memo. Plain text only.`;
 }
@@ -176,7 +197,7 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
     return new Response(stream, { headers: sseHeaders });
   }
 
-  let body: { fundSlug?: string; lens?: string; fund?: Record<string, unknown> };
+  let body: { fundSlug?: string; lens?: string };
   try {
     body = (await request.json()) as typeof body;
   } catch {
@@ -189,11 +210,22 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
     return new Response(stream, { headers: sseHeaders });
   }
 
-  if (!body?.fundSlug || !body?.fund) {
+  if (!body?.fundSlug) {
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(sseFrame({ error: 'Missing fundSlug.' }));
+        controller.close();
+      }
+    });
+    return new Response(stream, { headers: sseHeaders });
+  }
+
+  const fund = FUND_BY_SLUG[body.fundSlug];
+  if (!fund) {
     const stream = new ReadableStream({
       start(controller) {
         controller.enqueue(
-          sseFrame({ error: 'Missing fundSlug or fund payload.' })
+          sseFrame({ error: `Unknown fundSlug: ${body.fundSlug}` })
         );
         controller.close();
       }
@@ -201,11 +233,16 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
     return new Response(stream, { headers: sseHeaders });
   }
 
-  const userPrompt = buildUserPrompt({
-    fundSlug: body.fundSlug,
-    lens: body.lens ?? 'financial-officer',
-    fund: body.fund
-  });
+  const allowedLenses = new Set([
+    'financial-officer',
+    'auditor',
+    'voter',
+    'reporter'
+  ]);
+  const lens =
+    body.lens && allowedLenses.has(body.lens) ? body.lens : 'financial-officer';
+
+  const userPrompt = buildUserPrompt(fund, lens);
 
   const stream = new ReadableStream({
     async start(controller) {

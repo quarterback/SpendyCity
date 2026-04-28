@@ -192,7 +192,10 @@
     "file": "entries/endpoints/api/regenerate-memo/_server.ts.js",
     "name": "entries/endpoints/api/regenerate-memo/_server.ts",
     "src": "src/routes/api/regenerate-memo/+server.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_funds.js"
+    ]
   },
   "src/routes/dashboard/+page.svelte": {
     "file": "entries/pages/dashboard/_page.svelte.js",

@@ -6,7 +6,7 @@ import "d3";
 import { C as ChartFrame, f as formatUSD } from "../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../chunks/ShareBlock.js";
-import { F as FUNDS, T as TOTAL_CUMULATIVE_COLLECTED, a as TOTAL_MODELED_BALANCE, b as TOTAL_RESTRICTED, c as TOTAL_MOVABLE } from "../../chunks/funds.js";
+import { a as FUNDS, T as TOTAL_CUMULATIVE_COLLECTED, b as TOTAL_MODELED_BALANCE, c as TOTAL_RESTRICTED, d as TOTAL_MOVABLE } from "../../chunks/funds.js";
 function HeroChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     $$renderer2.push(`<div style="width:100%"><svg role="img" aria-label="Modeled carry across all seven restricted funds"></svg></div>`);

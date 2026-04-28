@@ -2,7 +2,7 @@ import { c as ensure_array_like, e as escape_html, a as attr, s as stringify } f
 import { b as base } from "../../../chunks/server.js";
 import "../../../chunks/url.js";
 import "@sveltejs/kit/internal/server";
-import { F as FUNDS } from "../../../chunks/funds.js";
+import { a as FUNDS } from "../../../chunks/funds.js";
 import { S as SiteMeta } from "../../../chunks/SiteMeta.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -50,7 +50,7 @@ function _page($$renderer, $$props) {
     {
       $$renderer2.push("<!--[-1-->");
     }
-    $$renderer2.push(`<!--]--></section> <section class="container"><p class="kicker">${escape_html("PRE-GENERATED MEMO")}</p> <pre class="memo">${escape_html(memo)}</pre></section> <section class="container two-col"><div class="prose"><h2>Why a memo, not an opinion</h2> <p>Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form of that accounting is not a press release or a feature story; it is a memo. The agent is asked to produce that memo and nothing else.</p></div> <aside class="margin-note"><h4>Provenance</h4> <p>The model behind this endpoint is Anthropic's Claude (Sonnet generation) accessed through Replit's AI integration proxy. The system prompt and structure live in <code>artifacts/api-server/src/routes/regenerate-memo.ts</code>.</p> <p style="margin-top: 12px">See <a${attr("href", `${stringify(base)}/methodology/`)}>methodology →</a></p></aside></section></article>`);
+    $$renderer2.push(`<!--]--></section> <section class="container"><p class="kicker">${escape_html("PRE-GENERATED MEMO")}</p> <pre class="memo">${escape_html(memo)}</pre></section> <section class="container two-col"><div class="prose"><h2>Why a memo, not an opinion</h2> <p>Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form of that accounting is not a press release or a feature story; it is a memo. The agent is asked to produce that memo and nothing else.</p></div> <aside class="margin-note"><h4>Provenance</h4> <p>The model behind this endpoint is Anthropic's Claude (Sonnet generation), accessed through Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code> inside this site. Fund context is assembled server-side from the static fund modules, so the prompt cannot be tampered with from the client.</p> <p style="margin-top: 12px">See <a${attr("href", `${stringify(base)}/methodology/`)}>methodology →</a></p></aside></section></article>`);
   });
 }
 export {

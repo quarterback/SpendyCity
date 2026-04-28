@@ -1,4 +1,4 @@
-import { F as FUNDS } from "../../../chunks/funds.js";
+import { a as FUNDS } from "../../../chunks/funds.js";
 const prerender = true;
 const SITE_URL = "https://pdx-spend.example";
 const SITE_TITLE = "PDX Spend";

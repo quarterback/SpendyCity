@@ -1,3 +1,4 @@
+import { F as FUND_BY_SLUG } from "../../../../chunks/funds.js";
 const prerender = false;
 const RATE_LIMIT_PER_MIN = 8;
 const ipBuckets = /* @__PURE__ */ new Map();
@@ -45,17 +46,38 @@ DATE:      As of latest reporting cycle
 3.3  <one-sentence recommendation, structural>
 
 — end —`;
-function buildUserPrompt(payload) {
+function serializeFundForPrompt(f) {
+  return {
+    name: f.name,
+    shortName: f.shortName,
+    enacted: f.enacted,
+    ballotMeasure: f.ballotMeasure,
+    enablingCode: f.enablingCode,
+    voterIntent: f.voterIntent,
+    modeledBalance: f.modeledBalance,
+    modeledRestrictedShare: f.modeledRestrictedShare,
+    modeledMovableShare: f.modeledMovableShare,
+    cumulativeCollected: f.cumulativeCollected,
+    auditEvents: f.auditEvents.map((e) => ({
+      year: e.year,
+      label: e.label,
+      body: e.body
+    })),
+    drift: f.drift,
+    promiseVsHappened: f.promiseVsHappened
+  };
+}
+function buildUserPrompt(fund, lens) {
   const lensInstruction = {
     "financial-officer": "Write in the voice of a public-finance officer producing an internal memo to the Council President.",
     auditor: "Write in the voice of a city auditor closing out a performance review. Cite enabling code and resolution categories where relevant.",
     voter: "Write in the voice of a voter who passed the ballot measure, explaining what they were sold and what arrived. Keep the memo structure exactly.",
     reporter: "Write in the voice of an investigative reporter who has read the audit trail. Name the structural gap directly. Keep the memo structure exactly."
-  }[payload.lens] ?? "Write in the voice of a public-finance officer producing an internal memo.";
+  }[lens] ?? "Write in the voice of a public-finance officer producing an internal memo.";
   return `${lensInstruction}
 
-Fund record (modeled):
-${JSON.stringify(payload.fund, null, 2)}
+Fund record (modeled, server-assembled from the static fund module):
+${JSON.stringify(serializeFundForPrompt(fund), null, 2)}
 
 Produce the memo. Plain text only.`;
 }
@@ -150,22 +172,35 @@ const POST = async ({ request, getClientAddress }) => {
     });
     return new Response(stream2, { headers: sseHeaders });
   }
-  if (!body?.fundSlug || !body?.fund) {
+  if (!body?.fundSlug) {
+    const stream2 = new ReadableStream({
+      start(controller) {
+        controller.enqueue(sseFrame({ error: "Missing fundSlug." }));
+        controller.close();
+      }
+    });
+    return new Response(stream2, { headers: sseHeaders });
+  }
+  const fund = FUND_BY_SLUG[body.fundSlug];
+  if (!fund) {
     const stream2 = new ReadableStream({
       start(controller) {
         controller.enqueue(
-          sseFrame({ error: "Missing fundSlug or fund payload." })
+          sseFrame({ error: `Unknown fundSlug: ${body.fundSlug}` })
         );
         controller.close();
       }
     });
     return new Response(stream2, { headers: sseHeaders });
   }
-  const userPrompt = buildUserPrompt({
-    fundSlug: body.fundSlug,
-    lens: body.lens ?? "financial-officer",
-    fund: body.fund
-  });
+  const allowedLenses = /* @__PURE__ */ new Set([
+    "financial-officer",
+    "auditor",
+    "voter",
+    "reporter"
+  ]);
+  const lens = body.lens && allowedLenses.has(body.lens) ? body.lens : "financial-officer";
+  const userPrompt = buildUserPrompt(fund, lens);
   const stream = new ReadableStream({
     async start(controller) {
       try {

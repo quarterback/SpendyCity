@@ -30,10 +30,10 @@
     error = null;
     liveOutput = '';
     try {
-      const res = await fetch('/api/regenerate-memo', {
+      const res = await fetch(`${base}/api/regenerate-memo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fundSlug: fund.slug, lens, fund: serializeFundForPrompt(fund) })
+        body: JSON.stringify({ fundSlug: fund.slug, lens })
       });
       if (!res.ok) throw new Error(`Server returned ${res.status}`);
       if (!res.body) throw new Error('No response body');
@@ -67,22 +67,6 @@
     }
   }
 
-  function serializeFundForPrompt(f: typeof FUNDS[number]) {
-    return {
-      name: f.name,
-      enacted: f.enacted,
-      ballotMeasure: f.ballotMeasure,
-      enablingCode: f.enablingCode,
-      voterIntent: f.voterIntent,
-      modeledBalance: f.modeledBalance,
-      modeledRestrictedShare: f.modeledRestrictedShare,
-      modeledMovableShare: f.modeledMovableShare,
-      cumulativeCollected: f.cumulativeCollected,
-      auditEvents: f.auditEvents.map((e) => ({ year: e.year, label: e.label, body: e.body })),
-      drift: f.drift,
-      promiseVsHappened: f.promiseVsHappened
-    };
-  }
 </script>
 
 <SiteMeta
@@ -162,7 +146,7 @@
     <aside class="margin-note">
       <h4>Provenance</h4>
       <p>
-        The model behind this endpoint is Anthropic's Claude (Sonnet generation) accessed through Replit's AI integration proxy. The system prompt and structure live in <code>artifacts/api-server/src/routes/regenerate-memo.ts</code>.
+        The model behind this endpoint is Anthropic's Claude (Sonnet generation), accessed through Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code> inside this site. Fund context is assembled server-side from the static fund modules, so the prompt cannot be tampered with from the client.
       </p>
       <p style="margin-top: 12px">See <a href="{base}/methodology/">methodology →</a></p>
     </aside>

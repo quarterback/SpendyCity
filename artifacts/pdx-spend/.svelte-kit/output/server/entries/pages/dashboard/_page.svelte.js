@@ -6,7 +6,7 @@ import "d3";
 import { f as formatUSD, C as ChartFrame } from "../../../chunks/ChartFrame.js";
 import { S as SiteMeta } from "../../../chunks/SiteMeta.js";
 import { S as ShareBlock } from "../../../chunks/ShareBlock.js";
-import { F as FUNDS, a as TOTAL_MODELED_BALANCE, c as TOTAL_MOVABLE } from "../../../chunks/funds.js";
+import { a as FUNDS, b as TOTAL_MODELED_BALANCE, d as TOTAL_MOVABLE } from "../../../chunks/funds.js";
 function StackedBarChart($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     $$renderer2.push(`<div style="width:100%"><svg role="img" aria-label="Cross-fund stacked bar chart"></svg></div>`);
