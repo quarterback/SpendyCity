@@ -45,6 +45,18 @@ body {
   font-variation-settings: "opsz" 14, "SOFT" 30;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--serif);
   font-weight: 480;
@@ -130,6 +142,12 @@ a:hover { text-decoration-color: var(--accent); }
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+@media (max-width: 720px) {
+  .container { padding: 0 1.1rem; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 0.9rem; }
+}
 
 .prose {
   max-width: var(--measure-prose);
@@ -173,7 +191,7 @@ a:hover { text-decoration-color: var(--accent); }
   margin-top: 0.4rem;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1023px) {
   .editorial {
     grid-template-columns: 1fr min(var(--measure-prose), 100%) 1fr;
   }
@@ -481,7 +499,7 @@ svg .annotation-label {
 .scrolly .step p { margin: 0 0 0.6rem; max-width: none; }
 .scrolly .step p:last-child { margin-bottom: 0; }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .scrolly {
     grid-template-columns: 1fr;
   }
@@ -655,7 +673,7 @@ table.data tr:hover td { background: var(--paper-2); }
   gap: 3rem;
   align-items: start;
 }
-@media (max-width: 880px) {
+@media (max-width: 1023px) {
   .two-col { grid-template-columns: 1fr; gap: 1.6rem; }
 }
 
@@ -696,7 +714,10 @@ table.data tr:hover td { background: var(--paper-2); }
   padding: 1.6rem 0;
 }
 @media (max-width: 720px) {
-  .big-stats { grid-template-columns: 1fr 1fr; }
+  .big-stats { grid-template-columns: 1fr 1fr; gap: 0.9rem; padding: 1.2rem 0; }
+}
+@media (max-width: 480px) {
+  .big-stats { grid-template-columns: 1fr; gap: 0.7rem; }
 }
 .big-stat .num {
   font-family: var(--serif);
@@ -804,9 +825,12 @@ table.data tr:hover td { background: var(--paper-2); }
 
 /* Article (fund / dashboard / methodology / etc) */
 .fund-header {
-  padding: 3.5rem 1.6rem 2rem;
+  padding: 3.5rem 0 2rem;
   border-bottom: 1px solid var(--ink);
   margin-bottom: 2.4rem;
+}
+@media (max-width: 720px) {
+  .fund-header { padding: 2.4rem 0 1.4rem; margin-bottom: 1.6rem; }
 }
 .article-title {
   font-family: var(--serif);
@@ -835,8 +859,11 @@ table.data tr:hover td { background: var(--paper-2); }
   padding-top: 1.2rem;
   border-top: 1px solid var(--rule);
 }
-@media (max-width: 880px) {
+@media (max-width: 720px) {
   .fund-meta-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .fund-meta-grid { grid-template-columns: 1fr; }
 }
 .fund-meta-grid > div { margin: 0; }
 .fund-meta-grid dt {
@@ -867,8 +894,10 @@ table.data tr:hover td { background: var(--paper-2); }
   gap: 2rem;
   align-items: start;
 }
-@media (max-width: 880px) {
-  .scrolly-grid { grid-template-columns: 1fr; }
+@media (max-width: 1023px) {
+  .scrolly-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+  .scrolly-sticky { position: relative; top: 0; }
+  .scrolly .step { min-height: auto; padding: 1.6rem 0; opacity: 1; }
 }
 .scrolly-sticky {
   position: sticky;
@@ -998,10 +1027,16 @@ table.data tr:hover td { background: var(--paper-2); }
   margin-right: 0.3rem;
 }
 
+.dash-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.2rem 0 2.6rem;
+}
 .dash-table {
   width: 100%;
+  min-width: 640px;
   border-collapse: collapse;
-  margin: 1.2rem 0 2.6rem;
+  margin: 0;
   font-family: var(--mono);
   font-size: 0.82rem;
 }
@@ -1208,4 +1243,139 @@ table.data tr:hover td { background: var(--paper-2); }
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* ============================================================
+   Issue 02 — "could fund / what's blocking it" surfaces
+   ============================================================ */
+
+/* Live "creative interpretation" example callout */
+.stop-banner {
+  background: var(--paper-2);
+  border: 1px solid var(--accent);
+  border-left-width: 3px;
+  padding: 1rem 1.2rem;
+  margin: 0 0 2rem;
+}
+.stop-banner .lbl {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+.stop-banner p {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0;
+  max-width: none;
+}
+
+/* Layout for multiple BlockerCard items */
+.blocker-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1rem 0 2rem;
+}
+
+/* "If unblocked" line — set apart, not buried */
+.if-unblocked {
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding: 1.2rem 0;
+  margin: 1.4rem 0 2rem;
+}
+.if-unblocked .lbl {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-4);
+  margin: 0 0 0.4rem;
+}
+.if-unblocked p {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2vw, 1.32rem);
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0;
+  max-width: none;
+  font-weight: 460;
+}
+
+/* Glossary on /methodology */
+.glossary {
+  margin: 1rem 0 2rem;
+  border-top: 1px solid var(--ink);
+}
+.glossary dt {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+  margin: 1rem 0 0.2rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+}
+.glossary dt:first-child { border-top: 0; padding-top: 0; }
+.glossary dd {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0 0 0.4rem;
+  max-width: none;
+}
+
+/* Section labels — short, bold, plain */
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+}
+
+/* Big number on the homepage hero */
+.headline-figure {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin: 0.4rem 0 0.6rem;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.headline-figure-sub {
+  font-family: var(--serif);
+  font-size: clamp(1.08rem, 1.7vw, 1.32rem);
+  line-height: 1.4;
+  color: var(--ink-2);
+  margin: 0 0 1.6rem;
+  max-width: 38ch;
+}
+
+/* Homepage fund cards: bigger touch targets, simpler on mobile */
+@media (max-width: 720px) {
+  .fund-card { min-height: 0; padding: 1.2rem 1.1rem; }
+  .fund-card .num-large { font-size: 1.45rem; }
+  .fund-grid { grid-template-columns: 1fr; }
+}
+
+/* Hero deck on phone */
+@media (max-width: 720px) {
+  .hero { padding-top: 2.4rem; padding-bottom: 1rem; }
+  .hero-title { margin: 0.5rem 0 1rem; }
+}
+
+/* Fluid base type — keep readable on small screens */
+@media (max-width: 480px) {
+  body { font-size: 17px; }
 }

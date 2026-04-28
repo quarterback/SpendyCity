@@ -639,8 +639,17 @@ export const FUNDS: Fund[] = [
 ];
 
 import { PREGENERATED_MEMOS } from './memos';
+import { PROPOSALS } from './proposals';
 FUNDS.forEach((f) => {
   if (PREGENERATED_MEMOS[f.slug]) f.memo = PREGENERATED_MEMOS[f.slug];
+  const p = PROPOSALS[f.slug];
+  if (p) {
+    f.voterIntentPlain = p.voterIntentPlain;
+    f.couldFund = p.couldFund;
+    f.blockers = p.blockers;
+    f.ifUnblocked = p.ifUnblocked;
+    f.blockerNews = p.blockerNews;
+  }
 });
 
 export const FUND_BY_SLUG = Object.fromEntries(FUNDS.map((f) => [f.slug, f]));

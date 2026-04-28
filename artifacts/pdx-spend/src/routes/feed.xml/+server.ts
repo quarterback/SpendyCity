@@ -6,7 +6,7 @@ export const prerender = true;
 
 const SITE_TITLE = 'PDX Spend';
 const SITE_DESCRIPTION =
-  'Seven voter-passed funds in Portland and Multnomah County hold hundreds of millions in carry. This is what that looks like, drawn.';
+  'Seven Portland-area voter funds. What each one could pay for, and the named rule blocking it.';
 
 function escapeXml(input: string): string {
   return input
@@ -27,37 +27,38 @@ export const GET: RequestHandler = async () => {
       <title>${escapeXml(f.name)}</title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
-      <description>${escapeXml(f.scandal)}</description>
+      <description>${escapeXml(f.oneLineStatus)}</description>
       <pubDate>${lastBuild}</pubDate>
     </item>`;
   }).join('');
 
   const staticItems = [
     {
-      title: 'PDX Spend, Issue 01',
+      title: 'PDX Spend — Seven Portland-area voter funds, in plain view',
       url: `${SITE_URL}/`,
       description:
-        'Seven Portland-area voter funds, their balances, and what those balances now do.'
+        'What each of the seven funds could pay for, and the named rule that purports to stop it.'
     },
     {
-      title: 'Cross-fund dashboard',
+      title: 'All seven funds, side by side',
       url: `${SITE_URL}/dashboard/`,
-      description: 'All seven funds in one frame: dollars, share restricted, and drift trajectory.'
+      description:
+        'Three angles on the same dollars: balance, share re-aimed, share still on-mission.'
     },
     {
-      title: 'Agent demo',
+      title: 'Write a memo for any fund',
       url: `${SITE_URL}/agent/`,
-      description: 'Pick a fund and a lens. The agent writes a structured financial memo against the fund record.'
+      description: 'Pick a fund, pick a lens, get a one-page memo.'
     },
     {
-      title: 'Methodology',
+      title: 'Methodology and glossary',
       url: `${SITE_URL}/methodology/`,
-      description: 'How figures are constructed, what modeling choices were made, and how audited numbers will replace them.'
+      description: 'What the figures mean, where they come from, and a glossary of every term.'
     },
     {
-      title: 'Implications',
+      title: 'Five levers that would unblock the seven funds',
       url: `${SITE_URL}/implications/`,
-      description: 'The pattern across seven Portland-area restricted funds is consistent enough to name.'
+      description: 'Mechanical, not rhetorical. Each lever names who controls it.'
     }
   ]
     .map(

@@ -49,6 +49,6 @@ declare module "$app/types" {
 		};
 		Pathname(): "/" | "/about/" | "/agent/" | "/api/regenerate-memo" | "/dashboard/" | "/feed.xml" | "/feed/" | `/funds/${string}` & {} | `/funds/${string}/` & {} | "/implications/" | "/methodology/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/favicon.svg" | "/og-default.png" | "/og-default.svg" | string & {};
+		Asset(): "/favicon.svg" | "/og-default.png" | "/og-default.svg" | "/voice.md" | string & {};
 	}
 }

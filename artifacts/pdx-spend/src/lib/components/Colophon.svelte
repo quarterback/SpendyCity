@@ -5,19 +5,19 @@
 <footer class="colophon">
   <div class="container colophon-inner">
     <div>
-      <h4>About this site</h4>
-      <p>PDX Spend is an editorial accounting of seven voter-passed restricted funds in Portland and Multnomah County. All figures on this site are <em>modeled</em> reconstructions illustrating the structural pattern documented across audits, ordinances, and reporting.</p>
+      <h4>What this site is</h4>
+      <p>A tool for showing what seven Portland-area public funds could pay for tomorrow, and the named rule that purports to stop them. All figures are <em>modeled</em> until audited records replace them — see Methodology.</p>
     </div>
     <div>
       <h4>Sections</h4>
       <p>
         <a href="{base}/">Home</a><br />
-        <a href="{base}/dashboard">Cross-fund dashboard</a><br />
-        <a href="{base}/agent">Agent demo</a><br />
-        <a href="{base}/methodology">Methodology</a><br />
-        <a href="{base}/implications">Implications</a><br />
-        <a href="{base}/feed">Feed / RSS</a><br />
-        <a href="{base}/about">About</a>
+        <a href="{base}/dashboard/">Cross-fund dashboard</a><br />
+        <a href="{base}/agent/">Agent demo</a><br />
+        <a href="{base}/methodology/">Methodology &amp; glossary</a><br />
+        <a href="{base}/implications/">Levers</a><br />
+        <a href="{base}/feed/">Feed / RSS</a><br />
+        <a href="{base}/about/">About</a>
       </p>
     </div>
     <div>
@@ -29,8 +29,8 @@
       </p>
     </div>
     <div>
-      <h4>Use</h4>
-      <p>Charts on each page can be downloaded as PNG or CSV. The dashboard provides an embed snippet. Pages link to enabling code, ballot text, and audit reports.</p>
+      <h4>Use it</h4>
+      <p>Pick a fund. Read what it could pay for. Read who controls the blocker. Send the page to the person who controls the lever. Every chart downloads as PNG or CSV.</p>
     </div>
   </div>
 </footer>

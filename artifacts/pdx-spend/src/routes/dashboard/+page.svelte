@@ -24,7 +24,7 @@
   const csvHeaders = ['Fund', 'Balance', 'Restricted', 'Movable', 'Drift_Pct'];
   const csvRows = rows.map((r) => [r.shortName, Math.round(r.balance), Math.round(r.restricted), Math.round(r.movable), Math.round(r.drift)]);
 
-  const embedSnippet = `<iframe src="https://pdxspend.replit.app/dashboard/" width="100%" height="640" style="border:1px solid #161513"></iframe>`;
+  const embedSnippet = `<iframe src="${siteUrl('/dashboard/')}" width="100%" height="640" style="border:1px solid #161513"></iframe>`;
   let copied = $state(false);
   function copyEmbed() {
     navigator.clipboard.writeText(embedSnippet).then(() => {
@@ -36,7 +36,7 @@
 
 <SiteMeta
   title="Dashboard — PDX Spend"
-  description="All seven voter-restricted funds in one frame. Switch between dollars, share restricted, and drift trajectory."
+  description="All seven Portland-area voter funds in one frame. Three views: dollars, share re-aimed, and how much each is still on-mission."
   path="/dashboard/"
   type="article"
 />
@@ -44,31 +44,31 @@
 <article>
   <header class="container fund-header">
     <p class="kicker">DASHBOARD · ALL SEVEN FUNDS</p>
-    <h1 class="article-title">Cross-fund dashboard</h1>
+    <h1 class="article-title">All seven funds, side by side</h1>
     <p class="article-deck">
-      Three views of the same seven funds: absolute carry, share made movable, and drift from voter intent.
+      Same dollars, three angles. Switch between absolute balance, share re-aimed, and how much each fund is still on-mission.
     </p>
   </header>
 
   <section class="container">
     <div class="dash-controls">
-      <div class="seg">
-        <button class:active={mode === 'dollars'} onclick={() => (mode = 'dollars')}>Dollars</button>
-        <button class:active={mode === 'percent'} onclick={() => (mode = 'percent')}>% Restricted vs. movable</button>
-        <button class:active={mode === 'trajectory'} onclick={() => (mode = 'trajectory')}>Drift trajectory</button>
+      <div class="seg" role="group" aria-label="Choose dashboard view">
+        <button type="button" aria-pressed={mode === 'dollars'} class:active={mode === 'dollars'} onclick={() => (mode = 'dollars')}>Dollars</button>
+        <button type="button" aria-pressed={mode === 'percent'} class:active={mode === 'percent'} onclick={() => (mode = 'percent')}>Share re-aimed</button>
+        <button type="button" aria-pressed={mode === 'trajectory'} class:active={mode === 'trajectory'} onclick={() => (mode = 'trajectory')}>Still on-mission</button>
       </div>
       <div class="dash-summary">
-        <span><strong>{formatUSD(TOTAL_MODELED_BALANCE)}</strong> total carry</span>
-        <span class="accent"><strong>{formatUSD(TOTAL_MOVABLE)}</strong> movable</span>
-        <span>{Math.round((TOTAL_MOVABLE / TOTAL_MODELED_BALANCE) * 100)}% of total now movable</span>
+        <span><strong>{formatUSD(TOTAL_MODELED_BALANCE)}</strong> sitting today</span>
+        <span class="accent"><strong>{formatUSD(TOTAL_MOVABLE)}</strong> already re-aimed</span>
+        <span>{Math.round((TOTAL_MOVABLE / TOTAL_MODELED_BALANCE) * 100)}% across the seven</span>
       </div>
     </div>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title={mode === 'dollars' ? 'Carry by fund' : mode === 'percent' ? 'Restricted vs. movable, by fund' : 'Drift trajectory by fund'}
-      sub={mode === 'trajectory' ? '100% means fund operates entirely within original voter intent.' : 'Sorted by absolute carry. Click a fund to open its page.'}
+      title={mode === 'dollars' ? 'Balance by fund' : mode === 'percent' ? 'Share re-aimed, by fund' : 'Share still on-mission, by fund'}
+      sub={mode === 'trajectory' ? '100% means a fund is still spending entirely on what voters approved.' : 'Sorted by absolute balance. Click a fund to open it.'}
       source="PDX Spend"
       modeled={true}
       pngName="dashboard-{mode}.png"
@@ -82,40 +82,42 @@
   </section>
 
   <section class="container">
-    <h2 class="section-title">Fund index</h2>
-    <table class="dash-table">
-      <thead>
-        <tr>
-          <th>Fund</th>
-          <th>Enacted</th>
-          <th>Carry</th>
-          <th>Restricted</th>
-          <th>Movable</th>
-          <th>Drift</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each rows as r}
+    <h2 class="section-title">Pick a fund</h2>
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
           <tr>
-            <td>{r.shortName}</td>
-            <td>{r.enacted}</td>
-            <td class="num">{formatUSD(r.balance)}</td>
-            <td class="num">{formatUSD(r.restricted)}</td>
-            <td class="num accent">{formatUSD(r.movable)}</td>
-            <td class="num">{Math.round(100 - r.drift)}%</td>
-            <td><a href="{base}/funds/{r.slug}/">read →</a></td>
+            <th>Fund</th>
+            <th>Passed</th>
+            <th>Sitting</th>
+            <th>On-mission</th>
+            <th>Re-aimed</th>
+            <th>Off-mission</th>
+            <th><span class="sr-only">Open fund detail</span></th>
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {#each rows as r}
+            <tr>
+              <td>{r.shortName}</td>
+              <td>{r.enacted}</td>
+              <td class="num">{formatUSD(r.balance)}</td>
+              <td class="num">{formatUSD(r.restricted)}</td>
+              <td class="num accent">{formatUSD(r.movable)}</td>
+              <td class="num">{Math.round(100 - r.drift)}%</td>
+              <td><a href="{base}/funds/{r.slug}/">open →</a></td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="container two-col">
     <div class="prose">
       <h2>Embed this dashboard</h2>
       <p>
-        Copy the snippet at right. The chart renders at full width inside the iframe and respects the container's responsive width.
+        Copy the snippet on the right. The chart fills its frame and stays readable on phones and tablets.
       </p>
     </div>
     <aside class="margin-note">
@@ -127,8 +129,8 @@
 
   <section class="container">
     <ShareBlock
-      headline="Seven Portland-area restricted funds in one frame."
-      summary="Switch between dollars, share restricted, and drift trajectory. Embeddable. PDX Spend."
+      headline="Seven Portland-area voter funds, side by side. Same dollars, three angles."
+      summary="Dollars, share re-aimed, share still on-mission. Embeddable. PDX Spend."
       url={siteUrl('/dashboard/')}
     />
   </section>

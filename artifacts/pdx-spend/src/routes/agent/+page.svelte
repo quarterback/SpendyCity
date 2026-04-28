@@ -21,7 +21,7 @@
   const lenses = [
     { value: 'financial-officer', label: 'Public-finance officer' },
     { value: 'auditor', label: 'City auditor' },
-    { value: 'voter', label: 'Voter who passed the measure' },
+    { value: 'voter', label: 'Voter who passed it' },
     { value: 'reporter', label: 'Investigative reporter' }
   ];
 
@@ -71,17 +71,17 @@
 
 <SiteMeta
   title="Agent demo — PDX Spend"
-  description="Pick a fund and a lens. The agent writes a structured financial memo against the fund record."
+  description="Pick a fund and a lens. The agent writes a short memo about that fund in the voice you choose."
   path="/agent/"
   type="article"
 />
 
 <article>
   <header class="container fund-header">
-    <p class="kicker">AGENT DEMO · STRUCTURED MEMO</p>
-    <h1 class="article-title">Generate a structured financial memo</h1>
+    <p class="kicker">AGENT DEMO · WRITE A MEMO</p>
+    <h1 class="article-title">Write a memo for any fund, in any voice</h1>
     <p class="article-deck">
-      Pick a fund and a lens. The agent reads the fund record and writes a brief in the voice you select.
+      Pick a fund and pick a lens. The agent reads what we have on the fund and writes a short memo. Use it as a starting draft for your own letter or testimony.
     </p>
   </header>
 
@@ -89,16 +89,16 @@
     <div class="prose">
       <h2>How it works</h2>
       <p>
-        The agent receives the fund's enabling code, voter intent, balances, audit-event log, drift index, and promise-vs-delivered series. It produces a single-page memo: summary, structural findings, recommendations.
+        The agent gets the fund&rsquo;s ballot text, statute, balances, audit events, and recent memos. It writes a one-page memo in the voice you pick.
       </p>
       <p>
-        The endpoint is rate-limited per IP. If it is unavailable, the pre-generated memo on each fund page is the canonical version.
+        The endpoint is rate-limited per IP. If it&rsquo;s busy, the saved memo for each fund is the version on the fund page itself.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Lenses</h4>
+      <h4>What the lens changes</h4>
       <p>
-        The lens changes the voice, not the structure. "Auditor" cites code and resolution numbers. "Reporter" names the structural gap. "Voter" names what was promised and what arrived.
+        The lens changes the voice, not the facts. <em>Auditor</em> cites code numbers. <em>Reporter</em> names the gap. <em>Voter</em> names what was promised and what arrived.
       </p>
     </aside>
   </section>
@@ -122,31 +122,31 @@
         </select>
       </label>
       <button class="run-btn" onclick={regenerate} disabled={streaming}>
-        {streaming ? 'Generating…' : 'Regenerate live'}
+        {streaming ? 'Writing…' : 'Generate'}
       </button>
     </div>
 
     {#if error}
-      <p class="agent-error">Live endpoint failed: {error}. Pre-generated memo shown below.</p>
+      <p class="agent-error">Live endpoint failed: {error}. The saved memo is shown below.</p>
     {/if}
   </section>
 
   <section class="container">
-    <p class="kicker">{liveOutput ? 'LIVE OUTPUT' : 'PRE-GENERATED MEMO'}</p>
+    <p class="kicker">{liveOutput ? 'LIVE OUTPUT' : 'SAVED MEMO'}</p>
     <pre class="memo">{liveOutput || memo}</pre>
   </section>
 
   <section class="container two-col">
     <div class="prose">
-      <h2>Memo, not opinion</h2>
+      <h2>Why a memo, not a press release</h2>
       <p>
-        Voters who pass restricted-fund measures are entitled to a structured accounting of what their dollars now do. The form is a memo — summary, findings, recommendations — not a press release or a feature story.
+        If you voted for one of these funds, you&rsquo;re owed a short, structured account of what your dollars now do. A memo — summary, findings, recommendations — gives you something you can hand to a council member or a reporter the same day.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Provenance</h4>
+      <h4>What runs this</h4>
       <p>
-        This endpoint runs Anthropic's Claude (Sonnet) via Replit's AI integration proxy. The system prompt, lens templates, and rate limit live in <code>src/routes/api/regenerate-memo/+server.ts</code>. Fund context is assembled server-side.
+        Anthropic&rsquo;s Claude (Sonnet) via Replit&rsquo;s AI integration proxy. The system prompt and lens templates live in <code>src/routes/api/regenerate-memo/+server.ts</code>. The fund context is built server-side.
       </p>
       <p style="margin-top: 12px">See <a href="{base}/methodology/">methodology →</a></p>
     </aside>

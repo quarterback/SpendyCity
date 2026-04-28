@@ -5,7 +5,7 @@
 
 <SiteMeta
   title="About — PDX Spend"
-  description="Authorship, license, citation, and contact for PDX Spend."
+  description="Who built PDX Spend, how to cite it, how to use it, and how to send corrections."
   path="/about/"
   type="article"
 />
@@ -15,51 +15,51 @@
     <p class="kicker">ABOUT</p>
     <h1 class="article-title">PDX Spend</h1>
     <p class="article-deck">
-      Seven voter-restricted funds in Portland and Multnomah County, drawn in plain view.
+      A tool for showing what seven Portland-area voter funds could pay for, and the named rule that purports to stop them.
     </p>
   </header>
 
   <section class="container two-col">
     <div class="prose">
-      <h2>The work</h2>
+      <h2>What this is</h2>
       <p>
-        PDX Spend is a single-issue publication. It documents a structural pattern across seven public funds in one jurisdiction: how voter-passed restricted dollars accumulate, get redefined, and end up doing something other than what they were passed for.
+        PDX Spend is a single-issue tool. It documents seven public funds in one region and shows, for each one, three things: what it could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
       </p>
       <p>
-        It is a static, citable, embed-friendly site organized around chart-driven scrollytelling, with a small agent endpoint that can rewrite each fund's structured memo on demand.
-      </p>
-
-      <h2>Authorship</h2>
-      <p>
-        Reporting and design by <strong>Ron Bronson</strong>, working under <strong>Public Capacity Lab</strong> and <strong>State Capacity AI</strong>. The agent endpoint runs Anthropic's Claude (Sonnet) via Replit's AI integration proxy.
-      </p>
-      <p>
-        Editorial reference: <em>The Pudding</em> (single-narrative, chart-led longform), the <em>Financial Times</em> visual desk (chart language, restraint), <em>Reveal</em> and <em>ProPublica</em> (structural framing of public-money stories).
+        It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. The agent endpoint can rewrite each fund&rsquo;s memo on demand.
       </p>
 
-      <h2>Use</h2>
+      <h2>Who built it</h2>
       <p>
-        Every chart has download buttons for PNG and CSV. The dashboard is embeddable. The site is structured so modeled figures can be swapped for audited figures with a one-file edit per fund.
+        Reporting and design by <strong>Ron Bronson</strong>, working under <strong>Public Capacity Lab</strong> and <strong>State Capacity AI</strong>. The agent endpoint runs Anthropic&rsquo;s Claude (Sonnet) via Replit&rsquo;s AI integration proxy.
+      </p>
+      <p>
+        Editorial reference: <em>The Pudding</em> (chart-led longform), the <em>Financial Times</em> visual desk (chart language, restraint), <em>Reveal</em> and <em>ProPublica</em> (structural framing of public-money stories), <a href="https://plainlanguage.gov" rel="noopener">plainlanguage.gov</a> (writing standards).
       </p>
 
-      <h2>Data status</h2>
+      <h2>How to use it</h2>
       <p>
-        All figures in Issue 01 are modeled reconstructions. See the <a href="{base}/methodology/">methodology</a> page for the construction choices.
+        Pick a fund. Read what it could pay for. Read who controls the blocker. Send the page to that office. Every chart has download buttons for PNG and CSV.
+      </p>
+
+      <h2>Status of the figures</h2>
+      <p>
+        Every figure on this site is modeled until audited records replace it. The agent pipeline behind the site is building the audited set as documents become available. See the <a href="{base}/methodology/">methodology</a>.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Contact</h4>
+      <h4>Send a correction</h4>
       <p>
-        For corrections, source documents, or to provide an audited figure that should replace a modeled one:<br />
+        Send a source document, an audited figure, or a correction to:<br />
         <a href="mailto:hello@publiccapacitylab.org">hello@publiccapacitylab.org</a>
       </p>
       <h4 style="margin-top: 22px">Cite this</h4>
       <p>
-        Bronson, R. (2026). <em>PDX Spend, Issue 01: Seven voter-restricted funds, modeled in plain view.</em> Public Capacity Lab / State Capacity AI.
+        Bronson, R. (2026). <em>PDX Spend: Seven Portland-area voter funds, what they could pay for, and what&rsquo;s blocking it.</em> Public Capacity Lab / State Capacity AI.
       </p>
       <h4 style="margin-top: 22px">License</h4>
       <p>
-        Charts and prose released under CC BY 4.0. Code released under MIT.
+        Charts and prose under CC BY 4.0. Code under MIT.
       </p>
     </aside>
   </section>

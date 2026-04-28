@@ -3,67 +3,91 @@
   import SiteMeta from '$lib/components/SiteMeta.svelte';
   import ShareBlock from '$lib/components/ShareBlock.svelte';
   import { siteUrl } from '$lib/config';
+
+  const levers = [
+    {
+      n: 1,
+      name: 'Put a sunset on every restricted fund',
+      who: 'Council, by ordinance amendment',
+      body: 'Each fund should have an end date. If the work is done, return the surplus. If the work isn\u2019t done, return to voters. Sunsets close the door that scope-broadening votes open.'
+    },
+    {
+      n: 2,
+      name: 'Cap carryover at one year of operations',
+      who: 'Council; County Board for tri-county funds',
+      body: 'Anything above one year of operating cost gets disbursed against the published plan within the next two budget cycles. A reserve is for volatility. A multi-year balance is undeployed capacity.'
+    },
+    {
+      n: 3,
+      name: 'Require a binding multi-year deployment plan',
+      who: 'Bureau steward, ratified by Council',
+      body: 'Every fund publishes a five-year plan with quarterly reconciliation between awards and delivery. \u201CAwarded\u201D doesn\u2019t equal weatherized, trained, built, or housed. The plan and the report use the same units.'
+    },
+    {
+      n: 4,
+      name: 'Send any change in eligible uses back to voters',
+      who: 'Council; County Board; Metro Council',
+      body: 'A simple-majority vote should not be enough to redefine what voter-restricted dollars can be spent on. New uses go on the next ballot, or come from a different source.'
+    },
+    {
+      n: 5,
+      name: 'Require third-party verification of beneficiary outcomes',
+      who: 'City Auditor, County Auditor, Metro Auditor',
+      body: 'A bureau reporting on its own delivery is not the same as an auditor verifying it. Annual outcome verification — units occupied, kids enrolled, retrofits completed, jobs placed — should be a precondition for next year\u2019s appropriation.'
+    }
+  ];
 </script>
 
 <SiteMeta
-  title="Implications — PDX Spend"
-  description="Across instruments and stewards, the pattern across seven Portland-area restricted funds is consistent enough to name."
+  title="Levers — PDX Spend"
+  description="Five named structural changes that would unblock the seven Portland-area voter funds. Each names who controls the lever."
   path="/implications/"
   type="article"
 />
 
 <article>
   <header class="container fund-header">
-    <p class="kicker">IMPLICATIONS · ISSUE 01</p>
-    <h1 class="article-title">What the seven funds suggest</h1>
+    <p class="kicker">LEVERS · ISSUE 01</p>
+    <h1 class="article-title">Five levers that unblock the seven funds</h1>
     <p class="article-deck">
-      The pattern is consistent across instruments and stewards. It is worth naming.
+      Each lever is mechanical, not rhetorical. Each one names the office that controls it.
     </p>
   </header>
 
   <section class="container two-col">
     <div class="prose">
-      <h2>1. Restriction lives in ordinances</h2>
       <p>
-        The seven funds were enacted under a range of restriction classes — voter-restricted by ballot measure, charter-restricted, enabling-act-restricted. In practice, restriction is a property of the council, the bureau, and the ordinances that follow enactment. Each of the seven shows the same arc: a narrow charge, an accumulating balance, an ordinance that broadens the charge, and a balance that flows under the new definition.
-      </p>
-
-      <h2>2. Instrument doesn't change the shape</h2>
-      <p>
-        It doesn't matter whether the fund is a flat per-adult tax, a gross-receipts surcharge, a real-estate excise, a dedicated property levy, or a county-wide marginal income tax. The accumulation curve is the same. The drift curve is the same. The pattern is not a property of any one bureau or revenue mechanism.
-      </p>
-
-      <h2>3. Carryover is the governance event</h2>
-      <p>
-        In every fund on this site, the policy event that created drift was the moment a multi-year carryover became unavoidable. Carryover is treated in bureau memos as a neutral fact — a balance to be allocated. It is a governable surplus that creates standing pressure to redefine eligible uses.
-      </p>
-
-      <h2>4. Audit findings are absorbed</h2>
-      <p>
-        The City Auditor and County Auditor have, across the seven funds, produced findings that name the structural problem in plain language: collection-cost overruns, scope expansions, surplus carryover, compliance-rate gaps. In nearly every case, the bureau response is to amend the definition that produced the finding rather than to change the practice.
-      </p>
-
-      <h2>5. The remedy is structural</h2>
-      <p>
-        The remedy is in the enabling code: a sunset on each restricted fund, a public spend-down plan tied to verifiable beneficiary outcomes, and a hard ceiling on carryover beyond which the council must either disburse or return.
+        The pattern across the seven funds is consistent enough to fix structurally. The five changes below would each remove one of the named blockers across the whole portfolio. None of them require a ballot measure. All of them require a vote.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>— Ron Bronson</h4>
+      <h4>Why these five</h4>
       <p>
-        Public Capacity Lab<br />
-        State Capacity AI
-      </p>
-      <p style="margin-top: 14px">
-        <a href="{base}/methodology/">Methodology →</a>
+        Each lever appears in audit recommendations across multiple funds. None has been adopted as a portfolio-wide standard.
       </p>
     </aside>
   </section>
 
   <section class="container">
+    <ol class="lever-list">
+      {#each levers as l}
+        <li class="lever">
+          <p class="lever-n">Lever {l.n}</p>
+          <h2 class="lever-name">{l.name}</h2>
+          <dl class="lever-meta">
+            <dt>Who controls it</dt>
+            <dd>{l.who}</dd>
+          </dl>
+          <p class="lever-body">{l.body}</p>
+        </li>
+      {/each}
+    </ol>
+  </section>
+
+  <section class="container">
     <ShareBlock
-      headline="The pattern across seven Portland-area restricted funds is consistent enough to name."
-      summary="How voter-passed dollars accumulate, get redefined, and end up elsewhere. PDX Spend."
+      headline="Five named levers would unblock seven Portland-area voter funds. None requires a ballot measure."
+      summary="Sunset, carryover cap, deployment plan, no-redefinition-without-voters, third-party outcome verification. PDX Spend."
       url={siteUrl('/implications/')}
     />
   </section>
@@ -73,3 +97,63 @@
     <a class="nav-back" href="{base}/about/">About →</a>
   </section>
 </article>
+
+<style>
+  .lever-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 2rem;
+  }
+  .lever {
+    border-top: 1px solid var(--ink);
+    padding: 1.4rem 0 1.4rem;
+  }
+  .lever:last-child {
+    border-bottom: 1px solid var(--ink);
+  }
+  .lever-n {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 0.3rem;
+  }
+  .lever-name {
+    font-family: var(--serif);
+    font-weight: 460;
+    font-size: clamp(1.3rem, 2.4vw, 1.65rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.7rem;
+    max-width: none;
+  }
+  .lever-meta {
+    margin: 0 0 0.7rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .lever-meta dt {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-4);
+    margin: 0 0 0.2rem;
+  }
+  .lever-meta dd {
+    font-family: var(--serif);
+    font-size: 0.96rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  .lever-body {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 60ch;
+  }
+</style>
