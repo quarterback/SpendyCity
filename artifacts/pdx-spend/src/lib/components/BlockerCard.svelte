@@ -9,12 +9,12 @@
 </script>
 
 <article class="blocker">
-  <p class="num">Blocker {index}</p>
+  <p class="num">Mechanism {index}</p>
   <h3>{blocker.name}</h3>
   <p class="mechanism">{blocker.mechanism}</p>
 
   <dl class="lever">
-    <dt>Who controls the lever</dt>
+    <dt>Where the discretion sits</dt>
     <dd>{blocker.controlledBy}</dd>
   </dl>
 
@@ -24,7 +24,7 @@
   </div>
 
   <div class="rebuttal">
-    <p class="lbl">Why it doesn&rsquo;t hold up</p>
+    <p class="lbl">Structural reading</p>
     <p class="line">{blocker.rebuttal}</p>
   </div>
 </article>

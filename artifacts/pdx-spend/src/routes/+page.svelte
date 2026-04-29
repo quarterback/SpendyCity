@@ -2,9 +2,8 @@
   import { base } from '$app/paths';
   import HeroChart from '$lib/components/HeroChart.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
+  import SparkBalance from '$lib/components/SparkBalance.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
-  import ShareBlock from '$lib/components/ShareBlock.svelte';
-  import { siteUrl } from '$lib/config';
   import {
     FUNDS,
     FUND_BY_SLUG,
@@ -41,49 +40,31 @@
   const movablePct = TOTAL_MODELED_BALANCE > 0
     ? Math.round((TOTAL_MOVABLE / TOTAL_MODELED_BALANCE) * 100)
     : 0;
-
-  // Pull the live blocker example from PCEF (the Moda Center proposal).
-  const headlineBlockerNews = FUND_BY_SLUG.pcef?.blockerNews ?? '';
 </script>
 
 <SiteMeta
-  title="PDX Spend — What Portland's voter funds could pay for, and what's blocking them"
-  description="Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. See what each one could pay for tomorrow, and the named rule blocking it."
+  title="PDX Spend — Seven voter funds, modeled in plain view"
+  description="Seven voter-passed funds in Portland and Multnomah County hold {formatUSD(TOTAL_MODELED_BALANCE)} in modeled carry. {movablePct}% has been reclassified since enactment."
   path="/"
   type="website"
-  oembedIds={['pdxspend-hero']}
 />
 
 <article>
   <section class="hero container">
-    <p class="kicker">PDX SPEND</p>
+    <p class="kicker">PDX SPEND · ISSUE 01 · MODELED FIGURES</p>
     <h1 class="hero-title">
-      What Portland&rsquo;s seven voter funds could pay for.
+      Seven voter-passed funds in Portland and Multnomah County have quietly been redrawn around their balances.
     </h1>
-    <p class="headline-figure">{formatUSD(TOTAL_MODELED_BALANCE)}</p>
-    <p class="headline-figure-sub hero-sentence">
-      Seven Portland-area voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)} today. One rule per fund controls how the money moves.
-    </p>
-
-    {#if headlineBlockerNews}
-      <div class="stop-banner">
-        <p class="lbl">Live example, this month</p>
-        <p>{headlineBlockerNews}</p>
-      </div>
-    {/if}
-
     <p class="hero-deck">
-      Pick a fund. See what it funds. Find who controls the rule. Send them the page.
+      Arts, climate, housing, preschool, homelessness. Each was sold as a fix to a specific civic problem. Each now carries a multi-million-dollar surplus. This is what that pattern looks like, drawn — and what those balances could pay for at today&rsquo;s unit costs.
     </p>
   </section>
 
   <section class="hero-figure container-wide">
     <ChartFrame
-      title="Year-end balance, all seven funds"
-      sub="Each bar is one fund. Orange shows money moved to new uses since voters approved it."
-      source="PDX Spend"
+      title="Modeled year-end balance, all seven funds"
+      sub="Each bar is one fund. The orange caps are the share that has been reclassified, swept, or otherwise moved off the original voter mandate."
       modeled={true}
-      chartId="pdxspend-hero"
       pngName="pdxspend-hero.png"
       csvHeaders={csvHeaders}
       csvRows={csvRows}
@@ -94,49 +75,56 @@
     </ChartFrame>
   </section>
 
+  <section class="container two-col">
+    <div class="prose">
+      <h2>What you are looking at</h2>
+      <p>
+        Public funding measures in Portland and Multnomah County share a recurring shape: a measure passes with a clear, narrow charge; collections come in faster than the standing-up of the program; balances accumulate; and within four to seven years, ordinances and resolutions begin to broaden what those dollars are allowed to do.
+      </p>
+      <p>
+        The seven funds on this page span fifteen years of measures, three jurisdictions, and almost every revenue instrument the city uses — flat per-adult tax, gross-receipts surcharge, real-estate excise, dedicated property levy, county-wide marginal income tax. They behave the same way.
+      </p>
+      <h2>What is modeled</h2>
+      <p>
+        Cash positions, audit annotations, and disposition curves on this site are <em>modeled</em>. They are constructed to illustrate a structural pattern documented across audits, council actions, and reporting on these funds. They are not a live ledger and should not be cited as such.
+      </p>
+    </div>
+    <aside class="margin-note">
+      <h4>Read the issue</h4>
+      <p>
+        Each fund has its own page with a chart-driven scrollytelling read of how the balance got here, plus a visual of what that balance could pay for at today&rsquo;s unit costs. The dashboard shows all seven side by side.
+      </p>
+      <p style="margin-top: 14px">
+        <strong>Stewards across:</strong> City of Portland Revenue Division, Multnomah County, Metro, Portland Housing Bureau, Bureau of Planning and Sustainability, Office of Management and Finance.
+      </p>
+    </aside>
+  </section>
+
   <section class="container">
-    <h2 class="section-eyebrow">The seven, totaled</h2>
+    <p class="kicker">SUMMARY · SEVEN FUNDS</p>
     <div class="big-stats">
       <div class="big-stat">
         <p class="num">{formatUSD(TOTAL_CUMULATIVE_COLLECTED)}</p>
-        <p class="lbl">Collected from you, all years</p>
+        <p class="lbl">Modeled cumulative collected, all funds</p>
       </div>
       <div class="big-stat">
         <p class="num">{formatUSD(TOTAL_MODELED_BALANCE)}</p>
-        <p class="lbl">Sitting in the funds today</p>
+        <p class="lbl">Modeled balance sitting today</p>
       </div>
       <div class="big-stat">
         <p class="num">{formatUSD(TOTAL_RESTRICTED)}</p>
-        <p class="lbl">Still aimed where you voted</p>
+        <p class="lbl">Still tied to original voter intent</p>
       </div>
       <div class="big-stat">
         <p class="num accent">{formatUSD(TOTAL_MOVABLE)}</p>
-        <p class="lbl">Moved to new uses since you voted</p>
+        <p class="lbl">Reclassified, swept, or made movable</p>
       </div>
     </div>
   </section>
 
-  <section class="container how-to">
-    <h2 class="section-eyebrow">How to use this site</h2>
-    <ol class="how-list">
-      <li>
-        <span class="step-n">1</span>
-        <p><strong>Pick a fund.</strong> Each page opens with what you voted for, in plain words.</p>
-      </li>
-      <li>
-        <span class="step-n">2</span>
-        <p><strong>See the units it buys.</strong> Counts grounded in published unit costs.</p>
-      </li>
-      <li>
-        <span class="step-n">3</span>
-        <p><strong>See who holds the lever.</strong> Each rule names the office, its defense, and the rebuttal. Send the page to that office.</p>
-      </li>
-    </ol>
-  </section>
-
   {#if latestWeekly.length > 0}
     <section class="container changed-this-week">
-      <p class="section-eyebrow">What changed this week</p>
+      <p class="kicker">WHAT CHANGED THIS WEEK</p>
       <h2 class="section-title">Latest memos</h2>
       <div class="changed-grid">
         {#each latestWeekly as item}
@@ -162,42 +150,42 @@
   {/if}
 
   <section class="container">
-    <p class="section-eyebrow">The seven funds</p>
-    <h2 class="section-title">Pick one to open it</h2>
+    <p class="kicker">ISSUE INDEX · BEGIN HERE</p>
+    <h2 class="section-title">The seven funds</h2>
     <div class="fund-grid">
       {#each FUNDS as fund}
-        {@const topCould = fund.couldFund?.[0]}
-        {@const topBlocker = fund.blockers?.[0]}
         <a class="fund-card" href="{base}/funds/{fund.slug}/">
           <p class="fund-meta">{fund.enacted} · {fund.ballotMeasure ?? fund.enablingCode}</p>
           <h3 class="fund-name">{fund.name}</h3>
-          <p class="fund-balance">{formatUSD(fund.modeledBalance)} <span class="lbl">sitting</span></p>
-          {#if topCould}
-            <p class="fund-line">
-              <span class="lbl">Could pay for</span>
-              {topCould.item}
-            </p>
-          {/if}
-          {#if topBlocker}
-            <p class="fund-line blocker">
-              <span class="lbl">Controlled by</span>
-              {topBlocker.name}
-            </p>
-          {/if}
-          <p class="fund-stats">
-            <span class="accent">{Math.round(fund.modeledMovableShare * 100)}% moved to new uses</span>
-          </p>
+          <p class="fund-deck">{fund.oneLineStatus}</p>
+          <div class="fund-spark">
+            <SparkBalance data={fund.cashSeries} />
+          </div>
+          <div class="fund-stats">
+            <span>{formatUSD(fund.modeledBalance)} balance</span>
+            <span class="accent">{Math.round(fund.modeledMovableShare * 100)}% movable</span>
+          </div>
         </a>
       {/each}
     </div>
   </section>
 
-  <section class="container">
-    <ShareBlock
-      headline="Seven Portland voter funds hold {formatUSD(TOTAL_MODELED_BALANCE)}. Here&rsquo;s what each one could pay for, and what&rsquo;s blocking it."
-      summary="Pick a fund. See what it could buy. See who controls the rule that stops it. PDX Spend."
-      url={siteUrl('/')}
-    />
+  <section class="container two-col">
+    <div class="prose">
+      <h2>How to read this</h2>
+      <p>
+        Each fund page opens with what the measure was sold as, in plain words. Then a single chart, scrolled — annotated with the audits and council actions that produced its current shape. Then a visual of what that balance could pay for now, at published unit costs. At the bottom of each page is the agent&rsquo;s memo: the kind of document a public-finance officer would write if they were asked to inventory the fund honestly.
+      </p>
+      <p>
+        The dashboard view pulls all seven into one frame. The methodology and implications pages explain how this site was constructed, and what it suggests about how restricted funds are governed in this jurisdiction.
+      </p>
+    </div>
+    <aside class="margin-note">
+      <h4>A note on tone</h4>
+      <p>
+        This site is published as journalism, not advocacy. There are no calls to action. Figures are modeled and labeled as such. The authorial position is that voters who pass restricted-fund measures are entitled to a clear public accounting of what those funds become.
+      </p>
+    </aside>
   </section>
 </article>
 
@@ -250,41 +238,5 @@
     font-size: 13px;
     color: var(--accent);
     font-weight: 600;
-  }
-
-  .how-to { margin-top: 1.5rem; }
-  .how-list {
-    list-style: none;
-    padding: 0;
-    margin: 0.6rem 0 2.4rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-    border-top: 1px solid var(--ink);
-    padding-top: 1.2rem;
-  }
-  .how-list li {
-    display: flex;
-    gap: 0.9rem;
-    align-items: flex-start;
-  }
-  .step-n {
-    font-family: var(--mono, monospace);
-    font-size: 1.6rem;
-    color: var(--accent);
-    line-height: 1;
-    flex-shrink: 0;
-    min-width: 1.8rem;
-  }
-  .how-list p {
-    margin: 0;
-    font-family: var(--serif, Georgia, serif);
-    font-size: 1rem;
-    line-height: 1.45;
-    color: var(--ink-2);
-    max-width: none;
-  }
-  @media (max-width: 720px) {
-    .how-list { grid-template-columns: 1fr; gap: 0.8rem; }
   }
 </style>

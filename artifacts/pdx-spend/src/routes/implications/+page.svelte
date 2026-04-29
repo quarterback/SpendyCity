@@ -1,8 +1,6 @@
 <script lang="ts">
   import { base } from '$app/paths';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
-  import ShareBlock from '$lib/components/ShareBlock.svelte';
-  import { siteUrl } from '$lib/config';
 
   const levers = [
     {
@@ -82,14 +80,6 @@
         </li>
       {/each}
     </ol>
-  </section>
-
-  <section class="container">
-    <ShareBlock
-      headline="Five named levers would unblock seven Portland-area voter funds. None requires a ballot measure."
-      summary="Sunset, carryover cap, deployment plan, no-redefinition-without-voters, third-party outcome verification. PDX Spend."
-      url={siteUrl('/implications/')}
-    />
   </section>
 
   <section class="container fund-nav">

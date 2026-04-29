@@ -327,14 +327,6 @@ a:hover { text-decoration-color: var(--accent); }
   color: var(--ink-4);
   margin: 0 0 1rem;
 }
-.chart-source {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--ink-4);
-  margin: 0.25rem 0 0;
-  border-top: 1px solid var(--rule);
-  padding-top: 0.4rem;
-}
 .chart-tools {
   display: flex;
   gap: 0.6rem;
@@ -544,18 +536,6 @@ svg .annotation-label {
   color: var(--paper);
 }
 
-/* Code/embed snippet */
-.embed-code {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  background: var(--paper-2);
-  border: 1px solid var(--rule);
-  padding: 0.85rem 1rem;
-  overflow-x: auto;
-  white-space: pre;
-  color: var(--ink-2);
-}
-
 /* Sources note */
 .note {
   font-family: var(--mono);
@@ -756,28 +736,6 @@ table.data tr:hover td { background: var(--paper-2); }
   margin: 0 0 0.55rem;
 }
 .margin-note p { margin: 0 0 0.6rem; max-width: none; }
-.margin-note pre.snippet {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  background: var(--paper-2);
-  padding: 0.7rem 0.8rem;
-  white-space: pre-wrap;
-  word-break: break-all;
-  border: 1px solid var(--rule);
-  margin: 0.6rem 0 0.8rem;
-}
-.copy-btn {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-3);
-  background: none;
-  border: 1px solid var(--ink-4);
-  padding: 0.4rem 0.7rem;
-  cursor: pointer;
-}
-.copy-btn:hover { color: var(--ink); border-color: var(--ink); }
 
 /* Article (fund / dashboard / methodology / etc) */
 .fund-header {
@@ -1057,29 +1015,6 @@ svg .hit:focus-visible {
   color: var(--ink-2);
   margin: 0 0 0.6rem;
 }
-.step-source {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  color: var(--ink-4);
-  margin: 0;
-}
-
-/* Citations */
-.citations {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 2rem;
-  border-top: 1px solid var(--rule);
-}
-.citations li {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--ink-3);
-  padding: 0.55rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
 .fund-nav {
   display: flex;
   justify-content: space-between;
@@ -1311,54 +1246,6 @@ svg .hit:focus-visible {
   letter-spacing: 0.06em;
 }
 
-/* ── Share block ─────────────────────────────────────────────── */
-.share {
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding: 28px 0;
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 24px;
-  align-items: start;
-}
-.share .kicker {
-  margin: 0;
-  padding-top: 4px;
-}
-.share-copy {
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  color: var(--ink);
-  margin: 0 0 14px 0;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
-.share-copy-btn {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: var(--ink);
-  color: var(--paper);
-  border: none;
-  min-height: 44px;
-  min-width: 44px;
-  padding: 12px 18px;
-  cursor: pointer;
-  border-radius: 0;
-}
-.share-copy-btn:hover {
-  background: var(--accent);
-}
-@media (max-width: 1023px) {
-  .share { grid-template-columns: 1fr; gap: 12px; }
-  .share .kicker { padding-top: 0; }
-}
-
 /* ── RSS link ─────────────────────────────────────────────────── */
 .rss-link {
   font-family: var(--mono);
@@ -1376,15 +1263,15 @@ svg .hit:focus-visible {
    Issue 02 — "could fund / what's blocking it" surfaces
    ============================================================ */
 
-/* Live "creative interpretation" example callout */
-.stop-banner {
+/* Current-context callout (real-world example threaded through the editorial read) */
+.context-banner {
   background: var(--paper-2);
-  border: 1px solid var(--accent);
-  border-left-width: 3px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
   padding: 1rem 1.2rem;
   margin: 0 0 2rem;
 }
-.stop-banner .lbl {
+.context-banner .lbl {
   font-family: var(--mono);
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -1392,7 +1279,7 @@ svg .hit:focus-visible {
   color: var(--accent);
   margin: 0 0 0.4rem;
 }
-.stop-banner p {
+.context-banner p {
   font-family: var(--serif);
   font-size: 1.02rem;
   line-height: 1.5;

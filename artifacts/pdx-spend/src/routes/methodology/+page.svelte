@@ -142,15 +142,12 @@
 
       <h2>Provenance</h2>
       <p>
-        Every chart names its source. Charts carry a <code>MODELED</code> badge until the swap. When audited figures are wired in, the source line names the financial document the figure comes from, and the badge is removed.
+        Charts carry a <code>MODELED</code> badge until the swap. When audited figures are wired in, the badge is removed and the figures point at the audited financial documents they come from.
       </p>
 
       <h2>Download and reuse</h2>
       <p>
-        Each chart has download buttons for the rendered PNG and the underlying CSV. Use the "Share / Embed" button on any chart to get an iframe snippet and a direct embed link. Every embed carries a non-removable credit line linking back to the source page on PDX Spend.
-      </p>
-      <p>
-        See the <a href="{base}/embed/">embeddable charts index</a> for a full list of what's embeddable and the attribution policy. Code under MIT, prose under CC BY 4.0.
+        Each chart has download buttons for the rendered PNG and the underlying CSV. Code under MIT, prose under CC BY 4.0.
       </p>
     </div>
     <aside class="margin-note">
@@ -159,8 +156,7 @@
         <a href="{base}/">Home</a><br />
         <a href="{base}/dashboard/">Dashboard</a><br />
         <a href="{base}/implications/">Levers</a><br />
-        <a href="{base}/about/">About</a><br />
-        <a href="{base}/embed/">Embeddable charts</a>
+        <a href="{base}/about/">About</a>
       </p>
     </aside>
   </section>
