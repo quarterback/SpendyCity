@@ -7,12 +7,10 @@
   import ChartFrame from '$lib/components/ChartFrame.svelte';
   import Scrolly from '$lib/components/Scrolly.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
-  import ShareBlock from '$lib/components/ShareBlock.svelte';
   import AgentMemoBlock from '$lib/components/AgentMemoBlock.svelte';
   import RunHistory from '$lib/components/RunHistory.svelte';
   import CouldFundList from '$lib/components/CouldFundList.svelte';
   import BlockerCard from '$lib/components/BlockerCard.svelte';
-  import { siteUrl } from '$lib/config';
   import { formatUSD, formatPct } from '$lib/utils/format';
   import type { PageProps } from './$types';
 
@@ -63,7 +61,6 @@
   description={fund.oneLineStatus}
   path={`/funds/${fund.slug}/`}
   type="article"
-  oembedIds={[`${fund.slug}-cash`, `${fund.slug}-promise`, `${fund.slug}-reserve`, `${fund.slug}-drift`]}
 />
 
 <article>
@@ -83,19 +80,14 @@
     </dl>
   </header>
 
-  {#if fund.blockerNews}
-    <section class="container">
-      <div class="stop-banner">
-        <p class="lbl">Live example</p>
-        <p>{fund.blockerNews}</p>
-      </div>
-    </section>
-  {/if}
-
   <section class="container two-col">
     <div class="prose">
-      <h2>What you voted for</h2>
-      <p>{intentLine}</p>
+      <p class="lede">
+        <strong>Voter intent.</strong> {intentLine}
+      </p>
+      <p>
+        What follows is a year-by-year reading of how the cash position of this fund evolved, annotated with the audit findings and council actions that produced its current shape. Below that, a visual of what the balance could pay for at today&rsquo;s published unit costs, the named mechanisms by which it currently can&rsquo;t, and what would change if those mechanisms were removed.
+      </p>
     </div>
     <aside class="margin-note">
       <h4>Original ballot text</h4>
@@ -105,18 +97,30 @@
 
   {#if fund.couldFund && fund.couldFund.length > 0}
     <section class="container">
-      <p class="section-eyebrow">What it could pay for tomorrow</p>
-      <h2 class="section-title">{formatUSD(fund.modeledBalance)} could fund any one of these</h2>
+      <p class="kicker">WHERE IT COULD HELP NOW</p>
+      <h2 class="section-title">What the balance is the size of</h2>
+      <p class="section-deck">
+        At the fund&rsquo;s modeled balance, and at the unit costs that already appear in city, county, and bureau budgets, the dollars are equivalent in scale to any one of these.
+      </p>
       <CouldFundList items={fund.couldFund} balance={fund.modeledBalance} />
+    </section>
+  {/if}
+
+  {#if fund.blockerNews}
+    <section class="container">
+      <div class="context-banner">
+        <p class="lbl">Current context</p>
+        <p>{fund.blockerNews}</p>
+      </div>
     </section>
   {/if}
 
   {#if fund.blockers && fund.blockers.length > 0}
     <section class="container">
-      <p class="section-eyebrow">What&rsquo;s blocking it</p>
-      <h2 class="section-title">Named obstacles, with the lever and the office</h2>
+      <p class="kicker">MECHANISMS</p>
+      <h2 class="section-title">What&rsquo;s in the way of spending it as voted</h2>
       <p class="section-deck">
-        Each blocker is a mechanism, not a personality. The defense is the line routinely offered for it. The rebuttal is why that line doesn&rsquo;t hold up.
+        Each item below is a named mechanism in code, charter, or council practice. The defense is the line routinely offered for it. The note beside it is the structural reading of why that line is not the whole story.
       </p>
       <div class="blocker-grid">
         {#each fund.blockers as b, i}
@@ -129,7 +133,7 @@
   {#if fund.ifUnblocked}
     <section class="container">
       <div class="if-unblocked">
-        <p class="lbl">If unblocked</p>
+        <p class="lbl">If those mechanisms were removed</p>
         <p>{fund.ifUnblocked}</p>
       </div>
     </section>
@@ -139,13 +143,13 @@
     <div class="prose">
       <h2>How the balance got here</h2>
       <p>
-        Each year-end balance, marked with the audits and council actions that shaped it. Scroll the right column to step through.
+        What follows is a year-by-year reading of how the cash position of this fund evolved. Scroll the right column to advance the chart; each step is an audit finding, council resolution, or bureau memo that shaped the shape.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Read this chart</h4>
+      <h4>Reading the chart</h4>
       <p>
-        The line is the year-end balance. Vertical marks line up with the events listed beside the chart.
+        The dark line is the modeled year-end balance. Vertical marks line up with the audit-trail events listed beside the chart, with the active step picked out as the page scrolls.
       </p>
     </aside>
   </section>
@@ -154,11 +158,9 @@
     <div class="scrolly-grid">
       <div class="scrolly-sticky">
         <ChartFrame
-          title="Balance over time, with key events"
-          sub="Year-end balance. Marks indicate audits and council actions."
-          source="PDX Spend"
+          title="Modeled cash position, with audit annotations"
+          sub="Annotations are auditor findings, council resolutions, and bureau memos. The active step is shown with a vertical rule."
           modeled={true}
-          chartId="{fund.slug}-cash"
           pngName="{fund.slug}-cash.png"
           csvHeaders={cashCsvHeaders}
           csvRows={cashCsvRows}
@@ -175,7 +177,6 @@
             <p class="step-year">{step.year}</p>
             <h3 class="step-label">{step.label}</h3>
             <p class="step-body">{step.body}</p>
-            {#if step.source}<p class="step-source">{step.source}</p>{/if}
           </div>
         {/each}
       </Scrolly>
@@ -184,26 +185,24 @@
 
   <section class="container two-col">
     <div class="prose">
-      <h2>Promised vs. delivered</h2>
+      <h2>Promise versus delivery</h2>
       <p>
-        Each pair shows what a budget cycle planned to spend, and what actually shipped. The gap becomes next year&rsquo;s carryover.
+        The chart on the right pairs each plan cycle&rsquo;s stated dollar promise with the dollar amount that was eventually delivered against it. The gap between the two — labelled in orange — is what flows into the next cycle&rsquo;s carryover, and what the audit narrative on the previous chart is, in part, accumulating into.
       </p>
     </div>
     <aside class="margin-note">
       <h4>Why the gap matters</h4>
       <p>
-        A balance that grows from under-delivery hands the bureau a reason to broaden what the dollars can be spent on.
+        A persistent gap between promised and delivered creates a structural surplus. Surplus does not stay neutral: it becomes governable, and ordinances begin to make it movable. This is the mechanical link between under-spending and scope drift.
       </p>
     </aside>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title="Promised vs. delivered, by budget cycle"
-      sub="Planned dollars next to dollars that actually shipped."
-      source="PDX Spend"
+      title="Promised vs. delivered, by fiscal cycle"
+      sub="Promised dollars are those committed in the bureau's published plan; delivered dollars are what shipped against the plan. Modeled."
       modeled={true}
-      chartId="{fund.slug}-promise"
       pngName="{fund.slug}-promise.png"
       csvHeaders={promiseCsvHeaders}
       csvRows={promiseCsvRows}
@@ -216,25 +215,23 @@
 
   <section class="container two-col">
     <div class="prose">
-      <h2>Money sitting unspent, year by year</h2>
+      <h2>Reserve growth</h2>
       <p>
-        When inflows beat delivery, the residual sits as money that has not been promised to anyone yet. This is the headroom every scope-broadening vote draws on.
+        When delivery lags collection, the residual accumulates as an unobligated reserve. This is not a savings account in the household sense: it is a balance that public-finance officers and council staff have, by ordinance, the discretion to redirect.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>Headroom</h4>
+      <h4>Reserve, plainly</h4>
       <p>
-        The share neither spent nor formally promised in a contract. The available room for redirection.
+        The reserve is the share of the fund that is neither already spent nor formally obligated. It is the available headroom for any future scope-broadening vote.
       </p>
     </aside>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title="Money sitting unspent, year by year"
-      source="PDX Spend"
+      title="Modeled unobligated reserve"
       modeled={true}
-      chartId="{fund.slug}-reserve"
       pngName="{fund.slug}-reserve.png"
       csvName="{fund.slug}-reserve.csv"
       csvHeaders={reserveCsvHeaders}
@@ -249,25 +246,23 @@
 
   <section class="container two-col">
     <div class="prose">
-      <h2>Share still aimed where you voted</h2>
+      <h2>Drift from voter intent</h2>
       <p>
-        100% means every dollar still maps to the original ballot text. Each council vote that broadens the eligible uses lowers the score.
+        The chart on the right is a <em>drift index</em>. A value of 100 percent means every dollar in the fund is being used in a way that maps cleanly to the original ballot text. A value below 100 percent means some share has been ordinance-redirected, swept into a sibling program, or otherwise reclassified.
       </p>
     </div>
     <aside class="margin-note">
-      <h4>How it&rsquo;s scored</h4>
+      <h4>How drift is constructed</h4>
       <p>
-        A 0–100 score from reading post-enactment ordinances against the original ballot text. See <a href="{base}/methodology/">Methodology</a>.
+        Drift is modeled by reading each post-enactment ordinance and resolution against the ballot text, scoring how much of the affected balance moved off the original-intent baseline, and compounding that score forward. See <a href="{base}/methodology/">Methodology</a>.
       </p>
     </aside>
   </section>
 
   <section class="container-wide">
     <ChartFrame
-      title="Share still aimed where you voted"
-      source="PDX Spend"
+      title="Drift index — voter intent vs. modeled actual disposition"
       modeled={true}
-      chartId="{fund.slug}-drift"
       pngName="{fund.slug}-drift.png"
       csvName="{fund.slug}-drift.csv"
       csvHeaders={driftCsvHeaders}
@@ -309,23 +304,6 @@
   {/if}
 
   <RunHistory runs={runs} />
-
-  <section class="container">
-    <h2 class="section-title">Where this comes from</h2>
-    <ul class="citations">
-      {#each fund.citations as c}
-        <li>{c}</li>
-      {/each}
-    </ul>
-  </section>
-
-  <section class="container">
-    <ShareBlock
-      headline="{fund.name}: {formatUSD(fund.modeledBalance)} could pay for what you voted for. Here&rsquo;s what&rsquo;s blocking it."
-      summary={fund.ifUnblocked ?? fund.oneLineStatus}
-      url={siteUrl(`/funds/${fund.slug}/`)}
-    />
-  </section>
 
   <section class="container fund-nav">
     <a class="nav-back" href="{base}/">← Back to all funds</a>

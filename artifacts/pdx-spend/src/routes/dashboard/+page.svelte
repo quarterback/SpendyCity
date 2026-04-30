@@ -3,11 +3,8 @@
   import StackedBarChart from '$lib/components/StackedBarChart.svelte';
   import ChartFrame from '$lib/components/ChartFrame.svelte';
   import SiteMeta from '$lib/components/SiteMeta.svelte';
-  import ShareBlock from '$lib/components/ShareBlock.svelte';
-  import { siteUrl } from '$lib/config';
   import { FUNDS, TOTAL_MODELED_BALANCE, TOTAL_MOVABLE } from '$lib/data/funds';
   import { formatUSD } from '$lib/utils/format';
-  import { chartIframeSnippet, CHART_REGISTRY } from '$lib/charts/registry';
 
   let mode = $state<'dollars' | 'percent' | 'trajectory'>('dollars');
 
@@ -24,16 +21,6 @@
 
   const csvHeaders = ['Fund', 'Balance', 'Restricted', 'Movable', 'Drift_Pct'];
   const csvRows = rows.map((r) => [r.shortName, Math.round(r.balance), Math.round(r.restricted), Math.round(r.movable), Math.round(r.drift)]);
-
-  const dashMeta = CHART_REGISTRY.get('dashboard')!;
-  const embedSnippet = chartIframeSnippet('dashboard', dashMeta);
-  let copied = $state(false);
-  function copyEmbed() {
-    navigator.clipboard.writeText(embedSnippet).then(() => {
-      copied = true;
-      setTimeout(() => (copied = false), 1800);
-    });
-  }
 </script>
 
 <SiteMeta
@@ -41,7 +28,6 @@
   description="All seven Portland-area voter funds in one frame. Three views: dollars, share re-aimed, and how much each is still on-mission."
   path="/dashboard/"
   type="article"
-  oembedIds={['dashboard']}
 />
 
 <article>
@@ -72,9 +58,7 @@
     <ChartFrame
       title={mode === 'dollars' ? 'Balance by fund' : mode === 'percent' ? 'Share re-aimed, by fund' : 'Share still on-mission, by fund'}
       sub={mode === 'trajectory' ? '100% means a fund is still spending entirely on what voters approved.' : 'Sorted by absolute balance. Click a fund to open it.'}
-      source="PDX Spend"
       modeled={true}
-      chartId="dashboard"
       pngName="dashboard-{mode}.png"
       csvHeaders={csvHeaders}
       csvRows={csvRows}
@@ -117,25 +101,4 @@
     </div>
   </section>
 
-  <section class="container two-col">
-    <div class="prose">
-      <h2>Embed this dashboard</h2>
-      <p>
-        Copy the snippet on the right. The chart fills its frame and stays readable on phones and tablets.
-      </p>
-    </div>
-    <aside class="margin-note">
-      <h4>Embed snippet</h4>
-      <pre class="snippet">{embedSnippet}</pre>
-      <button class="copy-btn" onclick={copyEmbed}>{copied ? 'Copied' : 'Copy snippet'}</button>
-    </aside>
-  </section>
-
-  <section class="container">
-    <ShareBlock
-      headline="Seven Portland-area voter funds, side by side. Same dollars, three angles."
-      summary="Dollars, share re-aimed, share still on-mission. Embeddable. PDX Spend."
-      url={siteUrl('/dashboard/')}
-    />
-  </section>
 </article>
