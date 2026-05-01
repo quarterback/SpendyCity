@@ -28,6 +28,9 @@
       <p>
         It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. Each fund&rsquo;s memo ships with the page, prerendered alongside the interactive charts.
       </p>
+      <p>
+        The site has a second beat — <a href="{base}/investigations/">Investigations</a> — that documents one quasi-governmental relationship at a time, in long form. Where a fund page reads a revenue stream, an investigation reads a contractor, a joint office, or a delegated administration arrangement. The first investigation is on the contractor layer behind Multnomah County&rsquo;s Supportive Housing Services spending.
+      </p>
 
       <h2>Who built it</h2>
       <p>
