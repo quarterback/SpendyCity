@@ -12,6 +12,9 @@
   }
 
   let { series, width = 820, height = 220, register }: Props = $props();
+  // Compact mobile height — the default 220 reads as a sliver on phones.
+  // Bumping to ~340 lets the area chart breathe alongside the y-axis ticks.
+  const COMPACT_HEIGHT = 340;
 
   let svgEl: SVGSVGElement | undefined = $state();
   let containerEl: HTMLDivElement | undefined = $state();
@@ -111,14 +114,15 @@
 
     const w = renderedW;
     const m = margin;
+    const h = isCompact ? COMPACT_HEIGHT : height;
     const innerW = w - m.left - m.right;
-    const innerH = height - m.top - m.bottom;
+    const innerH = h - m.top - m.bottom;
 
     svg
-      .attr('viewBox', `0 0 ${w} ${height}`)
+      .attr('viewBox', `0 0 ${w} ${h}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .attr('width', '100%')
-      .attr('height', height)
+      .attr('height', h)
       .attr('role', 'img')
       .attr('aria-label', a11yLabel);
 

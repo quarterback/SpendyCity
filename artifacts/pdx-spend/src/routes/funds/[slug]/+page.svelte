@@ -12,6 +12,7 @@
   import CouldFundList from '$lib/components/CouldFundList.svelte';
   import BlockerCard from '$lib/components/BlockerCard.svelte';
   import { formatUSD, formatPct } from '$lib/utils/format';
+  import { INVESTIGATIONS } from '$lib/data/investigations';
   import type { PageProps } from './$types';
 
   let { data }: PageProps = $props();
@@ -19,6 +20,10 @@
   const weeklyMemo = $derived(data.weeklyMemo);
   const monthlyCashFlow = $derived(data.monthlyCashFlow);
   const runs = $derived(data.runs);
+
+  const relatedInvestigations = $derived(
+    INVESTIGATIONS.filter((i) => i.relatedFundSlugs.includes(fund.slug))
+  );
 
   let activeStep = $state(0);
 
@@ -305,8 +310,73 @@
 
   <RunHistory runs={runs} />
 
+  {#if relatedInvestigations.length > 0}
+    <section class="container">
+      <p class="kicker">FURTHER READING</p>
+      <h2 class="section-title">Investigation tied to this fund</h2>
+      <div class="related-invest">
+        {#each relatedInvestigations as inv}
+          <a class="related-invest-card" href="{base}/investigations/{inv.slug}/">
+            <p class="meta">{inv.kicker}</p>
+            <h3>{inv.title}</h3>
+            <p class="deck">{inv.oneLineThesis}</p>
+            <p class="cta">Read the investigation →</p>
+          </a>
+        {/each}
+      </div>
+    </section>
+  {/if}
+
   <section class="container fund-nav">
     <a class="nav-back" href="{base}/">← Back to all funds</a>
     <a class="nav-back" href="{base}/dashboard/">Cross-fund dashboard →</a>
   </section>
 </article>
+
+<style>
+  .related-invest {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .related-invest-card {
+    display: block;
+    padding: 20px 22px 16px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .related-invest-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .related-invest-card .meta {
+    margin: 0 0 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-4);
+  }
+  .related-invest-card h3 {
+    margin: 0 0 8px;
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.22;
+  }
+  .related-invest-card .deck {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .related-invest-card .cta {
+    margin: 0;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+</style>

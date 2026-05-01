@@ -96,3 +96,49 @@ export interface Fund {
   citations: string[];
   memo: string;                     // pre-generated agent memo (markdown)
 }
+
+/**
+ * A long-form investigation page. Lives at /investigations/[slug] and is
+ * distinct from a fund detail page: where a fund page is a structural read
+ * of a single dedicated revenue stream, an investigation is a position on
+ * one quasi-governmental relationship — typically the contractor or
+ * delegated-administration layer that sits between a public dollar and
+ * the outcome it was sold as funding.
+ */
+export interface Investigation {
+  slug: string;
+  number: number;                   // ordinal in the series, e.g. 1
+  title: string;
+  kicker: string;                   // "INVESTIGATION 01"
+  oneLineThesis: string;            // article deck
+  publishedAt: string;              // ISO yyyy-mm-dd
+  relatedFundSlugs: string[];       // links rendered as "Related funds"
+  cashSeries?: CashPoint[];         // optional revenue/spend series for hero chart
+  cashSeriesTitle?: string;
+  cashSeriesSub?: string;
+  contractorTable?: ContractorRow[];
+  contractorTableTitle?: string;
+  contractorTableNote?: string;
+  sources: SourceRef[];
+}
+
+/**
+ * One row in a contractor obligation table. Dollar fields are USD, year is
+ * the fiscal year of the obligation. `outcomesPublic` is true if the
+ * provider publishes per-program outcome data (placements, retention, etc.)
+ * with enough specificity to recompute cost-per-outcome from public records.
+ */
+export interface ContractorRow {
+  provider: string;
+  obligationUSD: number;
+  fiscalYear: string;               // e.g. "FY2024-25"
+  primaryDeliverable: string;       // "Shelter beds", "Rapid rehousing", "Outreach"
+  outcomesPublic: boolean;
+  note?: string;
+}
+
+export interface SourceRef {
+  label: string;
+  url: string;
+  publishedAt?: string;             // ISO yyyy-mm-dd, when known
+}

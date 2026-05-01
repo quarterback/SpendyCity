@@ -26,11 +26,11 @@
   let liveMsg = $state('');
 
   const isCompact = $derived(renderedW < CHART_COMPACT_BREAKPOINT);
-  const innerHeight = $derived(isCompact ? Math.max(280, height - 40) : height);
+  const innerHeight = $derived(isCompact ? Math.max(440, height) : height);
 
   const margin = $derived(
     isCompact
-      ? { top: 22, right: 14, bottom: 32, left: 48 }
+      ? { top: 24, right: 12, bottom: 36, left: 44 }
       : { top: 28, right: 28, bottom: 36, left: 64 }
   );
 

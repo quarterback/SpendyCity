@@ -13,6 +13,7 @@
       <p>
         <a href="{base}/">Home</a><br />
         <a href="{base}/dashboard/">Cross-fund dashboard</a><br />
+        <a href="{base}/investigations/">Investigations</a><br />
         <a href="{base}/methodology/">Methodology &amp; glossary</a><br />
         <a href="{base}/implications/">Levers</a><br />
         <a href="{base}/about/">About</a>
@@ -28,7 +29,7 @@
     </div>
     <div>
       <h4>Use it</h4>
-      <p>Pick a fund. See what it could pay for. Find who holds the lever. Send them the page. Every chart downloads as PNG or CSV.</p>
+      <p>Pick a fund. See what it could pay for. Find who holds the lever. Send them the page.</p>
     </div>
   </div>
 </footer>

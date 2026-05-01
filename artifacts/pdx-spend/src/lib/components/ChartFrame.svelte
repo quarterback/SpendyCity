@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { downloadCSV, downloadSVGAsPNG } from '$lib/utils/format';
-
   interface Props {
     title: string;
     sub?: string;
@@ -21,25 +19,18 @@
     title,
     sub,
     modeled = false,
-    csvName,
+    csvName: _csvName,
     csvHeaders,
     csvRows,
-    pngName,
+    pngName: _pngName,
     a11ySummary,
     children
   }: Props = $props();
 
-  let svgEl: SVGSVGElement | undefined = $state();
-  function register(s: SVGSVGElement) {
-    svgEl = s;
-  }
-
-  function onPng() {
-    if (svgEl) downloadSVGAsPNG(svgEl, pngName ?? `${title.toLowerCase().replace(/\s+/g, '-')}.png`);
-  }
-  function onCsv() {
-    if (csvHeaders && csvRows) downloadCSV(csvName ?? `${title.toLowerCase().replace(/\s+/g, '-')}.csv`, csvHeaders, csvRows);
-  }
+  // The register callback is retained on the snippet API so existing call
+  // sites compile unchanged, but the chart frame itself no longer captures
+  // the SVG element — image and CSV downloads were removed.
+  function register(_s: SVGSVGElement) {}
 </script>
 
 <figure class="chart-frame">
@@ -51,12 +42,6 @@
   <div class="chart-body">
     {@render children({ register })}
   </div>
-  {#if (csvHeaders && csvRows) || svgEl}
-    <div class="chart-tools">
-      {#if svgEl}<button class="tool-btn" onclick={onPng}>Download PNG</button>{/if}
-      {#if csvHeaders && csvRows}<button class="tool-btn" onclick={onCsv}>Download CSV</button>{/if}
-    </div>
-  {/if}
 
   {#if csvHeaders && csvRows}
     <details class="chart-data-disclosure">
@@ -109,34 +94,6 @@
     border-radius: 2px;
     white-space: nowrap;
     flex-shrink: 0;
-  }
-  .chart-tools {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-  .tool-btn {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 10px 16px;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    background: transparent;
-    border: 1px solid var(--rule, #d4cfc4);
-    color: var(--ink-muted, #6b6357);
-    cursor: pointer;
-    border-radius: 2px;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  .tool-btn:hover {
-    border-color: var(--ink, #1a1714);
-    color: var(--ink, #1a1714);
-  }
-  .tool-btn:focus-visible {
-    outline: 2px solid var(--accent, #b23c1a);
-    outline-offset: 2px;
   }
 
   .chart-data-disclosure {

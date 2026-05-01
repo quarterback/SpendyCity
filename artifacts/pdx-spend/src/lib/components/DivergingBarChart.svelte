@@ -25,9 +25,14 @@
   function clearSelection() { selectedCycle = null; hideTip(true); }
 
   const isCompact = $derived(renderedW < CHART_COMPACT_BREAKPOINT);
+  // On mobile we drive the height from the row count so each cycle has
+  // ~56px of vertical space — enough for the bar pair plus its label and
+  // gap callout to be legible without horizontal scrolling.
+  const compactHeight = $derived(Math.max(420, data.length * 64 + 96));
+  const renderHeight = $derived(isCompact ? compactHeight : height);
   const margin = $derived(
     isCompact
-      ? { top: 22, right: 16, bottom: 56, left: 76 }
+      ? { top: 22, right: 14, bottom: 56, left: 64 }
       : { top: 28, right: 90, bottom: 36, left: 92 }
   );
 
@@ -56,14 +61,15 @@
 
     const w = renderedW;
     const m = margin;
+    const h = renderHeight;
     const innerW = w - m.left - m.right;
-    const innerH = height - m.top - m.bottom;
+    const innerH = h - m.top - m.bottom;
 
     svg
-      .attr('viewBox', `0 0 ${w} ${height}`)
+      .attr('viewBox', `0 0 ${w} ${h}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .attr('width', '100%')
-      .attr('height', height)
+      .attr('height', h)
       .attr('role', 'img')
       .attr('aria-label', a11yLabel);
 
@@ -186,7 +192,7 @@
     // legend (bottom on all sizes, but in compact stacks vertically)
     const legend = svg
       .append('g')
-      .attr('transform', `translate(${m.left}, ${height - (isCompact ? 24 : 10)})`);
+      .attr('transform', `translate(${m.left}, ${h - (isCompact ? 24 : 10)})`);
     legend.append('rect').attr('x', 0).attr('y', -10).attr('width', 12).attr('height', 8).attr('fill', chartColors.obligated);
     legend
       .append('text')
@@ -207,6 +213,7 @@
   $effect(() => {
     void data;
     void renderedW;
+    void renderHeight;
     draw();
   });
 
