@@ -5,7 +5,7 @@
 
 <SiteMeta
   title="About — PDX Spend"
-  description="Who built PDX Spend, how to cite it, how to use it, and how to send corrections."
+  description="Who built PDX Spend, how to use it, and how to send corrections."
   path="/about/"
   type="article"
 />
@@ -26,7 +26,7 @@
         PDX Spend is a single-issue tool. It documents seven public funds in one region. For each one it shows three things: what the fund could pay for at its current balance, what&rsquo;s blocking that, and who controls the lever.
       </p>
       <p>
-        It&rsquo;s a static, citable site. Every chart downloads. The dashboard embeds. Each fund&rsquo;s memo ships with the page, prerendered alongside the interactive charts.
+        Each fund&rsquo;s memo ships with the page, prerendered alongside the interactive charts.
       </p>
       <p>
         The site has a second beat — <a href="{base}/investigations/">Investigations</a> — that documents one quasi-governmental relationship at a time, in long form. Where a fund page reads a revenue stream, an investigation reads a contractor, a joint office, or a delegated administration arrangement. The first investigation is on the contractor layer behind Multnomah County&rsquo;s Supportive Housing Services spending.
@@ -42,7 +42,7 @@
 
       <h2>How to use it</h2>
       <p>
-        Pick a fund. Read what it could pay for. Read who controls the blocker. Send the page to that office. Every chart has download buttons for PNG and CSV.
+        Pick a fund. Read what it could pay for. Read who controls the blocker. Send the page to that office.
       </p>
 
       <h2>Status of the figures</h2>
@@ -55,10 +55,6 @@
       <p>
         Send a source document, an audited figure, or a correction to:<br />
         <a href="mailto:hello@publiccapacitylab.org">hello@publiccapacitylab.org</a>
-      </p>
-      <h4 style="margin-top: 22px">Cite this</h4>
-      <p>
-        Bronson, R. (2026). <em>PDX Spend: Seven Portland-area voter funds, what they could pay for, and what&rsquo;s blocking it.</em> Public Capacity Lab / State Capacity AI.
       </p>
       <h4 style="margin-top: 22px">License</h4>
       <p>

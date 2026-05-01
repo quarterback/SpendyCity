@@ -29,7 +29,7 @@
     </div>
     <div>
       <h4>Use it</h4>
-      <p>Pick a fund. See what it could pay for. Find who holds the lever. Send them the page. Every chart downloads as PNG or CSV.</p>
+      <p>Pick a fund. See what it could pay for. Find who holds the lever. Send them the page.</p>
     </div>
   </div>
 </footer>

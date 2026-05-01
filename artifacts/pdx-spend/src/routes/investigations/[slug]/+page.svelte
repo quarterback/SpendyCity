@@ -21,23 +21,6 @@
     ])
   );
 
-  const contractorCsvHeaders = [
-    'Provider',
-    'Fiscal year',
-    'Modeled obligation (USD)',
-    'Primary deliverable',
-    'Outcomes public'
-  ];
-  const contractorCsvRows = $derived(
-    (investigation.contractorTable ?? []).map((r) => [
-      r.provider,
-      r.fiscalYear,
-      Math.round(r.obligationUSD),
-      r.primaryDeliverable,
-      r.outcomesPublic ? 'Yes' : 'No'
-    ])
-  );
-
   const totalObligated = $derived(
     (investigation.contractorTable ?? []).reduce((s, r) => s + r.obligationUSD, 0)
   );
@@ -156,17 +139,6 @@
             </tfoot>
           </table>
         </div>
-
-        <p class="csv-link">
-          <a
-            href={`data:text/csv;charset=utf-8,${encodeURIComponent(
-              [contractorCsvHeaders, ...contractorCsvRows]
-                .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(','))
-                .join('\n')
-            )}`}
-            download="{investigation.slug}-contractors.csv"
-          >Download as CSV</a>
-        </p>
       </div>
     </section>
   {/if}
@@ -305,12 +277,6 @@
   }
   .badge.pos { color: var(--ink); }
   .badge.neg { color: var(--accent); }
-
-  .csv-link {
-    margin: 14px 0 0;
-    font-size: 13px;
-  }
-  .csv-link a { color: var(--accent); }
 
   .sources-list {
     margin: 14px 0 0 22px;
